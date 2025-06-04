@@ -2,14 +2,14 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-    @include('partials.head') {{-- head.blade.php --}}
+    @include('partials.head')
 </head>
 
 <body>
     @auth
-        @include('partials.header') {{-- header.blade.php --}}
+        @include('partials.header')
 
-        @include('partials.sidebar') {{-- sidebar.blade.php --}}
+        @include('partials.sidebar')
     @endauth
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">

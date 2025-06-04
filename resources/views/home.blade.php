@@ -2,7 +2,7 @@
 
  @section('content')
     <div class="themebody-wrap">
-      <!-- breadcrumb start-->
+     {{--  <!-- breadcrumb start-->
       <div class="codex-breadcrumb">
         <div class="breadcrumb-contain">
           <div class="left-breadcrumb">
@@ -24,7 +24,7 @@
           </div>
         </div>
       </div>
-      <!-- breadcrumb end-->
+      <!-- breadcrumb end--> --}}
       <!-- theme body start-->
       <div class="theme-body common-dash" data-simplebar>
         <div class="custom-container">
@@ -673,24 +673,8 @@
     <!-- back to top start //-->
       <div class="scroll-top"><i class="fa fa-angle-double-up"></i></div>
     <!-- back to top end //-->
-      <!-- main jquery-->
-      <script src="../assets/js/jquery-3.6.0.js"></script>
-      <!-- Config -->
-      <script src="../assets/js/layout-config.js"></script>
-      <!-- Theme Customizer-->
-      <script src="../assets/js/customizer.js"></script>
-      <!-- Feather icons js-->
-      <script src="../assets/js/icons/feather-icon/feather.js"></script>
-      <!-- Bootstrap js-->
-      <script src="../assets/js/bootstrap.bundle.min.js"></script>
-      <!-- Scrollbar-->
-      <script src="../assets/js/vendors/simplebar.js"></script>
-      <!-- apex chart-->
-      <script src="../assets/js/vendors/chart/apexcharts.js"></script>
-      <!-- dashboard-->
-      <script src="../assets/js/dashboard/dashboard.js"></script>
-      <!-- Custom script-->
-      <script src="../assets/js/custom-script.js"></script>
-  </body>
+      
+      @include('partials.scripts')
+    </body>
 </html>
 @endsection
