@@ -6,6 +6,16 @@ use Illuminate\Http\Request;
 
 class BranchController extends Controller
 {
+   /*  public function __construct()
+    {
+        $this->middleware('permission: Branches')->only('index');
+        $this->middleware('permission: Create Branch')->only('create', 'store');
+        $this->middleware('permission: View Branch')->only('show');
+        $this->middleware('permission: Edit Branch')->only('edit', 'update');
+        $this->middleware('permission: Delete Branch')->only('destroy');
+    }
+ */
+
     /**
      * Display a listing of the resource.
      */
@@ -19,7 +29,7 @@ class BranchController extends Controller
      */
     public function create()
     {
-        //
+        return view('branches.create');
     }
 
     /**
