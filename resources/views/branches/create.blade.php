@@ -6,28 +6,22 @@
         <div class="theme-body common-dash" data-simplebar>
             <div class="custom-container">
                 <div class="row">
-                    <div class="container">
-                        <h1>Create Branch</h1>
-
-                        <form action="{{ route('branches.store') }}" method="POST">
-                            @csrf
-
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Branch Name</label>
-                                <input type="text" name="name" id="name" class="form-control" required>
+                    <div class="col-12 col-md-8">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Create Branch</h4>
                             </div>
-
-                            <div class="mb-3">
-                                <label for="location" class="form-label">Location</label>
-                                <input type="text" name="location" id="location" class="form-control">
+                            <div class="card-body">
+                                @include('branches.partials.form', [
+                                    'action' => route('branches.store'),
+                                    'method' => 'POST',
+                                    'branch' => null
+                                ])
                             </div>
-
-                            <button type="submit" class="btn btn-primary">Save</button>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    @include('partials.scripts')
 @endsection

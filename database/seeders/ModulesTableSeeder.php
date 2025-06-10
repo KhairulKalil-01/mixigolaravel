@@ -69,7 +69,25 @@ class ModulesTableSeeder extends Seeder
                 'sorted' => 7,
                 'created_at' => now(),
                 'updated_at' => now()
+            ],
+            [
+                'name' => 'Billing',
+                'prefix' => 'billing',
+                'is_system' => true,
+                'sorted' => 8,
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'name' => 'Jobs & Services',
+                'prefix' => 'jobs_and_services',
+                'is_system' => true,
+                'sorted' => 9,
+                'created_at' => now(),
+                'updated_at' => now()
             ]
+            
+            
         ]);
     }
 }

@@ -79,3 +79,4 @@ Route::resource('clients', ClientController::class);
 Route::resource('patients', PatientController::class);
 Route::resource('quotations', QuotationController::class);
 Route::resource('caregivers', CaregiverController::class);
+
