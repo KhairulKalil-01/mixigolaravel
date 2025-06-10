@@ -105,7 +105,9 @@
                         <ul data-simplebar>
                             <li><a href="javascript:void(0);">
                                     <div class="media">
-                                        <div class="img-wrap"><img class="img-fluid" src="{{ asset('assets/images/ecom-dashboard/small-pro/1.jpg') }}" alt="">
+                                        <div class="img-wrap"><img class="img-fluid"
+                                                src="{{ asset('assets/images/ecom-dashboard/small-pro/1.jpg') }}"
+                                                alt="">
                                         </div>
                                         <div class="media-body">
                                             <h6>teddy bear</h6><span class="text-light">$250</span>
@@ -116,7 +118,8 @@
                             <li><a href="javascript:void(0);">
                                     <div class="media">
                                         <div class="img-wrap"><img class="img-fluid"
-                                                src="{{ asset('assets/images/ecom-dashboard/small-pro/2.jpg') }}" alt="">
+                                                src="{{ asset('assets/images/ecom-dashboard/small-pro/2.jpg') }}"
+                                                alt="">
                                         </div>
                                         <div class="media-body">
                                             <h6>iphone</h6><span class="text-light">$140</span>
@@ -127,7 +130,8 @@
                             <li><a href="javascript:void(0);">
                                     <div class="media">
                                         <div class="img-wrap"><img class="img-fluid"
-                                                src="{{ asset('assets/images/ecom-dashboard/small-pro/3.jpg') }}" alt="">
+                                                src="{{ asset('assets/images/ecom-dashboard/small-pro/3.jpg') }}"
+                                                alt="">
                                         </div>
                                         <div class="media-body">
                                             <h6>Apple Airpod</h6><span class="text-light">$310</span>
@@ -138,7 +142,8 @@
                             <li><a href="javascript:void(0);">
                                     <div class="media">
                                         <div class="img-wrap"><img class="img-fluid"
-                                                src="{{ asset('assets/images/ecom-dashboard/small-pro/4.jpg') }}" alt="">
+                                                src="{{ asset('assets/images/ecom-dashboard/small-pro/4.jpg') }}"
+                                                alt="">
                                         </div>
                                         <div class="media-body">
                                             <h6>Motors</h6><span class="text-light">$510</span>
@@ -149,7 +154,8 @@
                             <li><a href="javascript:void(0);">
                                     <div class="media">
                                         <div class="img-wrap"><img class="img-fluid"
-                                                src="{{ asset('assets/images/ecom-dashboard/small-pro/5.jpg') }}" alt="">
+                                                src="{{ asset('assets/images/ecom-dashboard/small-pro/5.jpg') }}"
+                                                alt="">
                                         </div>
                                         <div class="media-body">
                                             <h6>iphone</h6><span class="text-light">$140</span>
@@ -166,7 +172,8 @@
                 </li>
                 <li class="nav-profile">
                     <div class="media">
-                        <div class="user-icon"><img class="img-fluid rounded-50" src="{{ asset('assets/images/avtar/3.jpg') }}" alt=""></div>
+                        <div class="user-icon"><img class="img-fluid rounded-50"
+                                src="{{ asset('assets/images/avtar/3.jpg') }}" alt=""></div>
                         <div class="media-body">
                             <h6>Thomas Vactom</h6><span class="text-light">Web designer</span>
                         </div>

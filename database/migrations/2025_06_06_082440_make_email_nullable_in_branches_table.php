@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('service_receipts', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('branches', function (Blueprint $table) {
+            $table->string('email')->nullable()->change();
         });
     }
 
@@ -22,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('service_receipts');
+        Schema::table('branches', function (Blueprint $table) {
+            //
+        });
     }
 };
