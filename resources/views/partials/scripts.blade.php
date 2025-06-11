@@ -11,7 +11,7 @@
 <!-- Scrollbar-->
 <script src="{{ asset('assets/js/vendors/simplebar.js') }}"></script>
 <!-- apex chart-->
-<script src="{{ asset('assets/js/vendors/chart/apexcharts.js') }}"></script>
+{{-- <script src="{{ asset('assets/js/vendors/chart/apexcharts.js') }}"></script> --}}
 <!-- dashboard-->
 {{-- <script src="{{ asset('assets/js/dashboard/dashboard.js') }}"></script> --}}
 <!-- Custom script-->
