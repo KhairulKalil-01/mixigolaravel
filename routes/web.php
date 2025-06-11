@@ -62,7 +62,11 @@ Route::resource('wakaf', EntryWakafController::class);
 Route::resource('training', EntryTrainingController::class);
 
 Route::resource('users', UserController::class);
+
+// Branches
 Route::resource('branches', BranchController::class);
+Route::post('/fetch-branches', [BranchController::class, 'fetchBranches'])->name('branches.fetch');
+
 Route::resource('departments', DepartmentController::class);
 Route::resource('designations', DesignationController::class);
 Route::resource('roles', RoleController::class);

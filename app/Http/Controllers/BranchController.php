@@ -26,6 +26,15 @@ class BranchController extends Controller
         return view('branches.index', compact('branches'));
     }
 
+    public function fetchBranches(Request $request)
+    {
+        $branches = Branch::all();
+
+        return response()->json([
+            'data' => $branches
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -39,7 +48,7 @@ class BranchController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $validated = $request->validate([
             'branch_name' => 'required|string|max:225',
             'email' => 'nullable|email|max:225',
@@ -48,11 +57,11 @@ class BranchController extends Controller
             'address' => 'nullable|string|max:255',
             'mobileno' => 'nullable|string|max:20',
         ]);
-        
+
 
         Branch::create($validated);
 
-        
+
         return redirect()->route('branches.index')->with('success', 'Branch created.');
     }
 
