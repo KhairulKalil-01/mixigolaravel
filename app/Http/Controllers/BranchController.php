@@ -7,19 +7,6 @@ use Illuminate\Http\Request;
 
 class BranchController extends Controller
 {
-    /*  public function __construct()
-    {
-        $this->middleware('permission: Branches')->only('index');
-        $this->middleware('permission: Create Branch')->only('create', 'store');
-        $this->middleware('permission: View Branch')->only('show');
-        $this->middleware('permission: Edit Branch')->only('edit', 'update');
-        $this->middleware('permission: Delete Branch')->only('destroy');
-    }
- */
-
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $branches = Branch::all();
@@ -35,17 +22,11 @@ class BranchController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('branches.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
 
@@ -65,33 +46,28 @@ class BranchController extends Controller
         return redirect()->route('branches.index')->with('success', 'Branch created.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        //
+        $branch = Branch::findOrFail($id);
+        return view('branches.show', compact('branch'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+ 
     public function edit(string $id)
     {
+        $branch = Branch::findOrFail($id);
         return view('branches.edit', compact('branch'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Branch $branch)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
+            'branch_name' => 'required|string|max:255',
             'city' => 'nullable|string|max:255',
             'state' => 'nullable|string|max:255',
             'address' => 'nullable|string|max:255',
             'mobileno' => 'nullable|string|max:20',
+            'email' => 'nullable|string|max:255',
         ]);
 
         $branch->update($validated);
@@ -99,11 +75,11 @@ class BranchController extends Controller
         return redirect()->route('branches.index')->with('success', 'Branch updated.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        $branch = Branch::findOrFail($id);
+        $branch->delete();
+
+        return response()->json(['message' => 'Branch deleted successfully.']);
     }
 }
