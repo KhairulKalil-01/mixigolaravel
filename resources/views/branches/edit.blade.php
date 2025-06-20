@@ -24,5 +24,4 @@
             </div>
         </div>
     </div>
-    @include('partials.scripts')
 @endsection

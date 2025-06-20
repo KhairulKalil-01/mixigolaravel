@@ -15,7 +15,7 @@
                                 @include('departments.partials.form', [
                                     'action' => route('departments.store'),
                                     'method' => 'POST',
-                                    'branch' => null
+                                    'department' => null
                                 ])
                             </div>
                         </div>
