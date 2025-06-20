@@ -9,7 +9,7 @@ class ClientPatientRelationship extends Pivot
 
     protected $table = 'client_patient_relationship';
 
-    protected $guarded = ['']; // adjust as per your columns
+    protected $guarded = [''];
 
     // Relationships
     public function client()

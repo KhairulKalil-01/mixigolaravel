@@ -13,17 +13,14 @@
                     <div class="col-12 col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>All Branches</h4>
+                                <h4>All Department</h4>
                             </div>
                             <div class="card-body">
-                                <table id="branchesTable" class="display dataTable cell-border" style="width:100%">
+                                <table id="departmentsTable" class="display dataTable cell-border" style="width:100%">
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Branch Name</th>
-                                            <th>Email</th>
-                                            <th>Phone</th>
-                                            <th>State</th>
+                                            <th>Department Name</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -42,25 +39,25 @@
 
     <!-- Initialize DataTable -->
     <script>
-        var table_branch = "#branchesTable";
+        var table_department = "#departmentsTable";
 
         $(document).ready(function() {
             var buttons = ["copy", "csv", "excel", "pdf", "colvis", "pageLength"];
-            @can('Create Branch')
+            @can('Create Department')
                 buttons.push({
-                    text: "Create New Branch",
+                    text: "Create New Department",
                     attr: {
                         title: "Create",
                         id: "create"
                     },
                     className: "btn-primary",
                     action: function(e, dt, node, config) {
-                        window.location.href = "{{ route('branches.create') }}";
+                        window.location.href = "{{ route('departments.create') }}";
                     }
                 });
             @endcan
 
-            var table = $(table_branch).DataTable({
+            var table = $(table_department).DataTable({
                 destroy: true,
                 scrollX: true,
                 lengthChange: false,
@@ -76,7 +73,7 @@
                 serverMethod: "POST",
                 bDeferRender: true,
                 ajax: {
-                    url: "{{ route('branches.fetch') }}", 
+                    url: "/fetch-departments",
                     type: "POST",
                     data: {
                         _token: "{{ csrf_token() }}",
@@ -89,16 +86,7 @@
                         }
                     },
                     {
-                        data: "branch_name"
-                    },
-                    {
-                        data: "email"
-                    },
-                    {
-                        data: "mobileno"
-                    },
-                    {
-                        data: "state"
+                        data: "department_name"
                     },
                     {
                         data: null
@@ -108,24 +96,21 @@
                     [0, "asc"]
                 ],
                 columnDefs: [{
-                    targets: 5,
+                    targets: 2,
                     orderable: false,
                     render: function(data, type, row, meta) {
                         let buttons = "";
 
                         @can('View Branch')
-                            buttons +=
-                                `<a href="/branches/${row.id}" class="btn btn-info viewBtn">View</a>&nbsp;`;
+                            buttons += `<a href="/departments/${row.id}" class="btn btn-info viewBtn">View</a>&nbsp;`;
                         @endcan
 
                         @can('Edit Branch')
-                            buttons +=
-                                `<a href="/branches/${row.id}/edit" class="btn btn-primary editBtn">Edit</a>&nbsp;`;
+                            buttons += `<a href="/departments/${row.id}/edit" class="btn btn-primary editBtn">Edit</a>&nbsp;`;
                         @endcan
 
                         @can('Delete Branch')
-                            buttons +=
-                                `<button class="btn btn-danger deleteBtn" data-id="${row.id}">Delete</button>`;
+                            buttons += `<button class="btn btn-danger deleteBtn" data-id="${row.id}">Delete</button>`;
                         @endcan
 
                         return buttons;
@@ -134,12 +119,12 @@
             });
 
             // AJAX DELETE
-            $(table_branch + " tbody").on("click", ".deleteBtn", function() {
+            $(table_department + " tbody").on("click", ".deleteBtn", function() {
                 let branchId = $(this).data("id");
-                let url = `/branches/${branchId}`;
+                let url = `/departments/${branchId}`;
                 let csrfToken = "{{ csrf_token() }}";
 
-                if (confirm("Are you sure you want to delete this branch?")) {
+                if (confirm("Are you sure you want to delete this department?")) {
                     $.ajax({
                         url: url,
                         type: 'DELETE',
@@ -147,11 +132,11 @@
                             _token: csrfToken
                         },
                         success: function(response) {
-                            alert(response.message || 'Branch deleted successfully.');
+                            alert(response.message || 'Department deleted successfully.');
                             table.ajax.reload(); // Refresh the table
                         },
                         error: function(xhr) {
-                            alert('Failed to delete the branch.');
+                            alert('Failed to delete the department.');
                         }
                     });
                 }

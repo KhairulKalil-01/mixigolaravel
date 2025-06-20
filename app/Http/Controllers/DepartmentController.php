@@ -2,63 +2,71 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Department;
 use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        //
+        $departments = Department::all();
+        return view('departments.index', compact('departments'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    public function fetchDepartments(Request $request)
+    {
+        $departments = Department::all();
+
+        return response()->json([
+            'data' => $departments
+        ]);
+    }
+
     public function create()
     {
-        //
+        return view('departments.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'department_name' => 'required|string|max:225'
+        ]);
+
+        Department::create($validated);
+        return redirect()->route('departments.index')->with('success', 'Department created.');
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(string $id)
     {
-        //
+        $department = Department::findOrFail($id);
+        return view('departments.show', compact('department'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+
     public function edit(string $id)
     {
-        //
+        $department = Department::findOrFail($id);
+        return view('departments.edit', compact('department'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Department $department)
     {
-        //
+        $validated = $request->validate([
+            'department_name' => 'required|string|max:255'
+        ]);
+
+        $department->update($validated);
+
+        return redirect()->route('departments.index')->with('success', 'Department updated.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+    public function destroy(string $id) {
+        $department = Department::findOrFail($id);
+        $department->delete();
+
+        return response()->json(['message' => 'Department deleted successfully.']);
     }
 }
