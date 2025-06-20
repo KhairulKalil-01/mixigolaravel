@@ -61,13 +61,17 @@ Route::resource('quotation-entries', EntryQuotationController::class)->only(['in
 Route::resource('wakaf', EntryWakafController::class);
 Route::resource('training', EntryTrainingController::class);
 
+// User
 Route::resource('users', UserController::class);
 
 // Branches
 Route::resource('branches', BranchController::class);
 Route::post('/fetch-branches', [BranchController::class, 'fetchBranches'])->name('branches.fetch');
 
+// Departments
 Route::resource('departments', DepartmentController::class);
+Route::post('/fetch-departments', [DepartmentController::class, 'fetchDepartments'])->name('departments.fetch');
+
 Route::resource('designations', DesignationController::class);
 Route::resource('roles', RoleController::class);
 Route::resource('permissions', PermissionController::class); 

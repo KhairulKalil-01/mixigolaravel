@@ -29,7 +29,6 @@ class BranchController extends Controller
 
     public function store(Request $request)
     {
-
         $validated = $request->validate([
             'branch_name' => 'required|string|max:225',
             'email' => 'nullable|email|max:225',
@@ -39,10 +38,7 @@ class BranchController extends Controller
             'mobileno' => 'nullable|string|max:20',
         ]);
 
-
         Branch::create($validated);
-
-
         return redirect()->route('branches.index')->with('success', 'Branch created.');
     }
 
