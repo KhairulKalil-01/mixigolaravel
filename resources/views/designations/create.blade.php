@@ -9,13 +9,13 @@
                     <div class="col-12 col-md-8">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Edit Department</h4>
+                                <h4>Create Designation</h4>
                             </div>
                             <div class="card-body">
-                                @include('departments.partials.form',[
-                                    'action' =>route('departments.update', $department->id),
-                                    'method' => 'PUT',
-                                    'department' => $department
+                                @include('designations.partials.form', [
+                                    'action' => route('designations.store'),
+                                    'method' => 'POST',
+                                    'designation' => null
                                 ])
                             </div>
                         </div>
