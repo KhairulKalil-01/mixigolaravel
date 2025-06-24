@@ -5,70 +5,119 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use App\Models\Module;
+use Illuminate\Support\Facades\Auth;
 
 class RoleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $roles = Role::all();
+        //exclude superadmin
+        $roles = Role::where('id', '!=', 1)->get();
         return view('roles.index', compact('roles'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function fetchRoles(Request $request)
     {
-        $permissions = Permission::all();
-        return view('roles.create', compact('permissions'));
+        //exclude superadmin
+        $roles = Role::where('id', '!=', 1)->get();
+
+        return response()->json([
+            'data' => $roles
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function create()
     {
+        // Only superadmin can create role
+        if (!Auth::check() || !Auth::user()->hasRole('superadmin')) {
+            abort(403, 'Contact superadmin to complete the task.');
+        }
+
+        $modules = Module::with('permissions')->get();
+        return view('roles.create', compact('modules'));
+    }
+
+    public function store(Request $request)
+    {/* 
         $role = Role::create(['name' => $request->name]);
         $role->syncPermissions($request->permissions);
         return redirect()->route('roles.index')->with('success', 'Role created');
+         */
+
+        $validated = $request->validate([
+            'name' => 'required|string|unique:roles,name',
+            'guard_name' => 'required|string',
+            'permissions' => 'required|array',
+        ]);
+
+        // Create new role
+        $role = Role::create([
+            'name' => $validated['name'],
+            'guard_name' => $validated['guard_name'],
+        ]);
+
+        // Assign selected permissions
+        $permissionNames = Permission::whereIn('id', $validated['permissions'])->pluck('name')->toArray();
+        $role->syncPermissions($permissionNames);
+
+        return redirect()->route('roles.index')->with('success', 'Role created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(Role $role)
     {
-        //
+        $modules = Module::with('permissions')->get();
+
+        return view('roles.show', compact('role', 'modules'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Role $role)
     {
-        $permissions = Permission::all();
-        $rolePermissions = $role->permissions->pluck('name')->toArray();
-        return view('roles.edit', compact('role', 'permissions', 'rolePermissions'));
+        // Prevent from editing superadmin role from direct url
+        if ($role->id == 1) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        // only superadmin can create role
+        if (!Auth::check() || !Auth::user()->hasRole('superadmin')) {
+            abort(403, 'Contact superadmin to complete the task.');
+        }
+
+        $modules = Module::with('permissions')->get();
+        $rolePermissions = $role->permissions->pluck('id')->toArray();
+
+        return view('roles.edit', compact('role', 'modules', 'rolePermissions'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Role $role)
     {
+        $request->validate([
+            'name' => 'required|unique:roles,name,' . $role->id,
+            'permissions' => 'required|array',
+        ]);
+
         $role->update(['name' => $request->name]);
-        $role->syncPermissions($request->permissions);
+
+        // Convert IDs to names
+        $permissionNames = Permission::whereIn('id', $request->permissions)->pluck('name')->toArray();
+
+        $role->syncPermissions($permissionNames);
+
         return redirect()->route('roles.index')->with('success', 'Role updated');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Role $role)
     {
+        // Prevent from deleting superadmin role
+        if ($role->id == 1) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        // Only superadmin can delete roles
+        if (!Auth::check() || !Auth::user()->hasRole('superadmin')) {
+            abort(403, 'Contact superadmin to complete the task.');
+        }
+
         $role->delete();
         return redirect()->route('roles.index')->with('success', 'Role deleted');
     }

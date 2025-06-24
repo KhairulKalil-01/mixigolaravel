@@ -101,15 +101,15 @@
                     render: function(data, type, row, meta) {
                         let buttons = "";
 
-                        @can('View Branch')
+                        @can('View Department')
                             buttons += `<a href="/departments/${row.id}" class="btn btn-info viewBtn">View</a>&nbsp;`;
                         @endcan
 
-                        @can('Edit Branch')
+                        @can('Edit Department')
                             buttons += `<a href="/departments/${row.id}/edit" class="btn btn-primary editBtn">Edit</a>&nbsp;`;
                         @endcan
 
-                        @can('Delete Branch')
+                        @can('Delete Department')
                             buttons += `<button class="btn btn-danger deleteBtn" data-id="${row.id}">Delete</button>`;
                         @endcan
 
@@ -120,8 +120,8 @@
 
             // AJAX DELETE
             $(table_department + " tbody").on("click", ".deleteBtn", function() {
-                let branchId = $(this).data("id");
-                let url = `/departments/${branchId}`;
+                let departmentId = $(this).data("id");
+                let url = `/departments/${departmentId}`;
                 let csrfToken = "{{ csrf_token() }}";
 
                 if (confirm("Are you sure you want to delete this department?")) {

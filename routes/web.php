@@ -76,7 +76,10 @@ Route::post('/fetch-departments', [DepartmentController::class, 'fetchDepartment
 Route::resource('designations', DesignationController::class);
 Route::post('fetch-designations', [DesignationController::class, 'fetchDesignations'])->name('designations.fetch');
 
+// Roles
 Route::resource('roles', RoleController::class);
+Route::post('fetch-roles', [RoleController::class, 'fetchRoles'])->name('roles.fetch');
+
 Route::resource('permissions', PermissionController::class); 
 Route::resource('salary-records', SalaryRecordController::class); 
 Route::resource('salary-assign', SalaryAssignController::class);
