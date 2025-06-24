@@ -13,13 +13,13 @@
                     <div class="col-12 col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Branch Details</h4>
+                                <h4>Department Details</h4>
                             </div>
                             <div class="card-body">
                                 <table class="table table-bordered" style="width:100%">
                                     <tbody>
                                         <tr>
-                                            <th>Branch Name</th>
+                                            <th>Department Name</th>
                                             <td>{{ $department->department_name }}</td>
                                         </tr>
                                     </tbody>
