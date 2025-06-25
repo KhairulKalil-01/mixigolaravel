@@ -89,7 +89,11 @@ Route::resource('invoices', InvoiceController::class);
 Route::resource('jobs', JobController::class);
 Route::resource('client-payments', ClientPaymentController::class);
 Route::resource('service-receipts', ServiceReceiptController::class);
+
+//Client
 Route::resource('clients', ClientController::class);
+Route::post('fetch-clients', [ClientController::class, 'fetchClient'])->name('clients.fetch');
+
 Route::resource('patients', PatientController::class);
 Route::resource('quotations', QuotationController::class);
 Route::resource('caregivers', CaregiverController::class);

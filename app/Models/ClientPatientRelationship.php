@@ -9,7 +9,8 @@ class ClientPatientRelationship extends Pivot
 
     protected $table = 'client_patient_relationship';
 
-    protected $guarded = [''];
+    protected $guarded = [];
+    public $timestamps = true;
 
     // Relationships
     public function client()
