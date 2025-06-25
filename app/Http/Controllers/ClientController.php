@@ -2,63 +2,98 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
+use App\Models\Patient;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $clients = Client::all();
+        return view('clients.index', compact('clients'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    public function fetchClient(Request $request)
+    {
+        $clients = Client::all();
+
+        return response()->json([
+            'data' => $clients
+        ]);
+    }
+
     public function create()
     {
-        //
+        $patients = Patient::all();
+
+        return view('clients.create', compact('patients'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'ic_num' => 'nullable|string|max:255',
+            'sex' => 'required|string|max:255',
+            'mobileno' => 'required|string|max:20',
+            'email' => 'nullable|string|max:255',
+            'address' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'state' => 'required|string|max:255',
+            'is_active' => 'nullable|boolean',
+        ]);
+
+        Client::create($validated);
+
+        return redirect()->route('clients.index')->with('success', 'Client created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(Client $client)
     {
-        //
+         $client->load('patients');
+         
+        return view('clients.show', compact('client'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function edit(Client $client)
     {
-        //
+        $patients = Patient::all(); // Get all patients
+        $clientPatientIds = $client->patients->pluck('id')->toArray();
+
+        return view('clients.edit', compact('client', 'patients', 'clientPatientIds'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Client $client)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'ic_num' => 'nullable|string|max:255',
+            'mobileno' => 'required|string|max:20',
+            'email' => 'nullable|string|max:255',
+            'address' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'state' => 'required|string|max:255',
+            'is_active' => 'nullable|boolean',
+            'patients' => 'array',
+        ]);
+
+        $client->update($validated);
+
+        if ($request->has('patients')) {
+            $client->patients()->sync($request->patients); // Update the pivot table
+        } else {
+            // If no patients selected, detach all
+            $client->patients()->detach();
+        }
+
+        return redirect()->route('clients.index')->with('success', 'Client updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(Client $client)
     {
-        //
+        $client->delete();
+
+        return redirect()->route('clients.index')->with('success', 'Client deleted successfully.');
     }
 }
