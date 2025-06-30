@@ -51,8 +51,8 @@ class ClientController extends Controller
 
     public function show(Client $client)
     {
-         $client->load('patients');
-         
+        $client->load('patients');
+
         return view('clients.show', compact('client'));
     }
 
@@ -78,7 +78,7 @@ class ClientController extends Controller
             'patients' => 'array',
         ]);
 
-        $client->update($validated);
+        $client->update(collect($validated)->except('patients')->toArray());
 
         if ($request->has('patients')) {
             $client->patients()->sync($request->patients); // Update the pivot table

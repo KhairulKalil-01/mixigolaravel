@@ -9,19 +9,23 @@
         <label class="form-label">Name <span class="text-danger">*</span></label>
         <input type="text" name="name" class="form-control" value="{{ old('name', $client->name ?? '') }}" required>
     </div>
-
+    
     <!-- Assign Patient -->
     <div class="form-group mt-3">
-        <label>Assign Patients</label>
-        <select name="patients[]" class="form-control" multiple>
+        <label class="form-label">Add Patients</label>
+        <div class="d-flex flex-column gap-2">
             @foreach ($patients as $patient)
-                <option value="{{ $patient->id }}"
-                    {{ in_array($patient->id, $clientPatientIds ?? []) ? 'selected' : '' }}>
-                    {{ $patient->name }}
-                </option>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="patients[]" value="{{ $patient->id }}"
+                        {{ in_array($patient->id, $clientPatientIds ?? []) ? 'checked' : '' }}>
+                    <label class="form-check-label">
+                        {{ $patient->name }}
+                    </label>
+                </div>
             @endforeach
-        </select>
+        </div>
     </div>
+
 
     <!-- IC Number -->
     <div class="form-group mt-3">
