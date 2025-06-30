@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Patient extends Model
 {
+
+    protected $guarded = [];
+
     public function clientRelationships()
     {
         return $this->hasMany(ClientPatientRelationship::class);
