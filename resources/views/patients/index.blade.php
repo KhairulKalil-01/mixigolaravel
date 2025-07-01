@@ -78,7 +78,7 @@
                 serverMethod: "POST",
                 bDeferRender: true,
                 ajax: {
-                    url: "{{ route('patients.fetch') }}", 
+                    url: "{{ route('patients.fetch') }}",
                     type: "POST",
                     data: {
                         _token: "{{ csrf_token() }}",
@@ -141,19 +141,22 @@
                 }]
             });
 
+            // Set CSRF header for all AJAX requests
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            });
+
             // AJAX DELETE
             $(table_patient + " tbody").on("click", ".deleteBtn", function() {
                 let patientId = $(this).data("id");
                 let url = `/patients/${patientId}`;
-                let csrfToken = "{{ csrf_token() }}";
 
                 if (confirm("Are you sure you want to delete this patient?")) {
                     $.ajax({
                         url: url,
                         type: 'DELETE',
-                        data: {
-                            _token: csrfToken
-                        },
                         success: function(response) {
                             alert(response.message || 'Patient deleted successfully.');
                             table.ajax.reload();
