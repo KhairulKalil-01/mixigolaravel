@@ -18,4 +18,9 @@ class Patient extends Model
     {
         return $this->belongsToMany(Client::class, 'client_patient_relationship')->using(ClientPatientRelationship::class);;
     }
+
+    public function branch()
+{
+    return $this->belongsTo(Branch::class);
+}
 }

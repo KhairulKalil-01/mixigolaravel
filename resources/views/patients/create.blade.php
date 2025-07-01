@@ -18,6 +18,7 @@
                                     'method' => 'POST',
                                     'patient' => null,
                                     'clients' => $clients,
+                                    'branches' => $branches,
                                     'clientPatientIds' => null,
                                 ])
                             </div>

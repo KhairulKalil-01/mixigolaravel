@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\Designation;
-use App\Models\User;
+use App\Models\BankList;
+//use App\Models\Designation;
+//use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -25,7 +26,8 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class,
             RoleSeeder::class,
             DepartmentSeeder::class,
-            Designation::class,
+            DesignationSeeder::class,
+            BankListSeeder::class,
         ]);
     }
 }
