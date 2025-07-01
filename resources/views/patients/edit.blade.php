@@ -17,6 +17,7 @@
                                     'action' => route('patients.update', $patient->id),
                                     'method' => 'PUT',
                                     'patient' => $patient,
+                                    'branches' => $branches,
                                     'clients' => $clients,
                                     'clientPatientIds' => $clientPatientIds,
                                 ])

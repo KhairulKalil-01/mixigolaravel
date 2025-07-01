@@ -17,12 +17,17 @@
                                     <h4>Patient Details</h4>
 
                                     <p><strong>Name:</strong> {{ $patient->name }}</p>
+                                    <p><strong>Branch:</strong> {{ $patient->branch?->branch_name ?? 'N/A' }}</p>
                                     <p><strong>IC Number:</strong> {{ $patient->ic_num }}</p>
+                                    <p><strong>Age:</strong> {{ $patient->age }}</p>
+                                    <p><strong>Gender:</strong> {{ $patient->sex }}</p>
+                                    <p><strong>Weight:</strong> {{ $patient->weight }}</p>
+                                    <p><strong>Condition:</strong> {{ $patient->condition_description }}</p>
                                     <p><strong>Mobile:</strong> {{ $patient->mobileno }}</p>
                                     <p><strong>Address:</strong> {{ $patient->address }}</p>
                                     <p><strong>City:</strong> {{ $patient->city }}</p>
-                                    <p><strong>Branch:</strong> {{ $patient->branch }}</p>
-
+                                    <p><strong>State:</strong> {{ $patient->state }}</p>
+                                    <p><strong>Status:</strong> {{ $patient->is_active }}</p>
                                     <hr>
 
                                     <h4>Related Clients</h4>

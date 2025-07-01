@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use App\Models\Patient;
+use App\Models\Branch;
 use Illuminate\Http\Request;
 
 class PatientController extends Controller
@@ -25,56 +26,72 @@ class PatientController extends Controller
 
     public function create()
     {
+        $branches = Branch::all();
         $clients = Client::all();
 
-        return view('patients.create', compact('clients'));
+        return view('patients.create', compact('clients', 'branches'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
+            'branch_id' => 'required|int',
             'ic_num' => 'nullable|string|max:255',
+            'age' => 'nullable|int',
             'sex' => 'required|string|max:255',
+            'weight' => 'nullable|int',
+            'condition_description' => 'nullable|string|max:255',
             'mobileno' => 'required|string|max:20',
-            'email' => 'nullable|string|max:255',
             'address' => 'required|string|max:255',
             'city' => 'required|string|max:255',
             'state' => 'required|string|max:255',
             'is_active' => 'nullable|boolean',
+            'clients' => 'nullable|array',
         ]);
 
-        Patient::create($validated);
+        $patientData = collect($validated)->except('clients')->toArray();
+        $patient = Patient::create($patientData);
+
+        if (!empty($validated['clients'])) {
+            $patient->clients()->sync($validated['clients']);
+        }
 
         return redirect()->route('patients.index')->with('success', 'Patient created successfully.');
     }
 
     public function show(Patient $patient)
     {
-        $patient->load('clients');
+        $patient->load(['clients', 'branch']);
 
         return view('patients.show', compact('patient'));
     }
 
     public function edit(Patient $patient)
     {
+        $branches = Branch::all();
         $clients = Client::all(); // Get all clients
         $clientPatientIds = $patient->clients->pluck('id')->toArray();
 
-        return view('patients.edit', compact('patient', 'clients', 'clientPatientIds'));
+        return view('patients.edit', compact('patient', 'clients', 'clientPatientIds', 'branches'));
     }
 
     public function update(Request $request, Patient $patient)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
+            'branch_id' => 'required|int',
             'ic_num' => 'nullable|string|max:255',
+            'age' => 'nullable|int',
+            'sex' => 'required|string|max:255',
+            'weight' => 'nullable|int',
+            'condition_description' => 'nullable|string|max:255',
             'mobileno' => 'required|string|max:20',
-            'email' => 'nullable|string|max:255',
             'address' => 'required|string|max:255',
             'city' => 'required|string|max:255',
             'state' => 'required|string|max:255',
             'is_active' => 'nullable|boolean',
+
             'clients' => 'nullable|array',
         ]);
 
