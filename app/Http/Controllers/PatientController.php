@@ -109,8 +109,11 @@ class PatientController extends Controller
 
     public function destroy(Patient $patient)
     {
-        $patient->delete();
-
-        return redirect()->route('patients.index')->with('success', 'Patient deleted successfully.');
+        try {
+            $patient->delete();
+            return response()->json(['success' => true, 'message' => 'Patient deleted successfully.']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Failed to delete patient.'], 500);
+        }
     }
 }
