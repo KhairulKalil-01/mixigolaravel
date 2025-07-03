@@ -15,6 +15,11 @@ class Caregiver extends Model
         return $this->belongsTo(Branch::class, 'branch_id');
     }
 
+    public function bank()
+    {
+        return $this->belongsTo(BankList::class, 'bank_list_id');
+    }
+
     public function getEmploymentTypeLabelAttribute(): string
     {
         $employmentType = EmploymentType::tryFrom($this->employment_type);

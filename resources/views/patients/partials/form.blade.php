@@ -4,10 +4,26 @@
         @method('PUT')
     @endif
 
+    <!-- Assign Branch -->
+    <div class="form-group mt-3">
+        <label class="form-label">Branch</label>
+        <select name="branch_id" class="form-control" required>
+            <option value="">-- Select Branch --</option>
+            @foreach ($branches as $branch)
+                <option value="{{ $branch->id }}"
+                    {{ old('branch_id', $patient->branch_id ?? null) == $branch->id ? 'selected' : '' }}>
+                    {{ $branch->branch_name }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+
+
     <!-- Name -->
     <div class="form-group">
         <label class="form-label">Patient Name <span class="text-danger">*</span></label>
-        <input type="text" name="name" class="form-control" value="{{ old('name', $patient->name ?? '') }}" required>
+        <input type="text" name="name" class="form-control" value="{{ old('name', $patient->name ?? '') }}"
+            required>
     </div>
 
     <!-- Assign Client to the Patient -->
@@ -32,6 +48,14 @@
         <input type="text" name="ic_num" class="form-control" value="{{ old('ic_num', $patient->ic_num ?? '') }}">
     </div>
 
+    <!-- Age -->
+    <div class="form-group">
+        <label class="form-label">Age <span class="text-danger">*</span></label>
+        <input type="number" name="age" class="form-control" value="{{ old('age', $patient->age ?? '') }}" required
+            min="0" max="150" step="1">
+    </div>
+
+    <!-- Sex -->
     <div class="form-group mt-3">
         <label class="form-label">Gender <span class="text-danger">*</span></label>
         <select name="sex" class="form-control" required>
@@ -41,11 +65,24 @@
         </select>
     </div>
 
+    <!-- Weight -->
+    <div class="form-group">
+        <label class="form-label">Weight (Kg) <span class="text-danger">*</span></label>
+        <input type="number" name="weight" class="form-control" value="{{ old('weight', $patient->weight ?? '') }}"
+            required min="0" max="150">
+    </div>
+
+    <!-- Condition Description -->
+    <div class="form-group mt-3">
+        <label class="form-label">Patient's Condition/Diagnosis</label>
+        <textarea name="condition_description" class="form-control" rows="3">{{ old('condition_description', $patient->condition_description ?? '') }}</textarea>
+    </div>
+
     <!-- Mobile Number -->
     <div class="form-group mt-3">
-        <label class="form-label">Mobile Number <span class="text-danger">*</span></label>
+        <label class="form-label">Mobile Number</label>
         <input type="text" name="mobileno" class="form-control"
-            value="{{ old('mobileno', $patient->mobileno ?? '') }}" required>
+            value="{{ old('mobileno', $patient->mobileno ?? '') }}">
     </div>
 
     <!-- Address -->
