@@ -14,4 +14,9 @@ class Branch extends Model
         'address',
         'mobileno',
     ];
+
+    public function caregivers()
+    {
+        return $this->hasMany(Caregiver::class, 'branch_id');
+    }
 }
