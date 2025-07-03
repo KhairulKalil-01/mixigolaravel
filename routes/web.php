@@ -32,7 +32,6 @@ use App\Http\Controllers\ServicePricingController;
 use App\Http\Controllers\ServiceReceiptController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\UserController;
-use App\Models\Branch;
 
 Route::get('/', function () {
     return view('welcome');
@@ -99,5 +98,7 @@ Route::resource('patients', PatientController::class);
 Route::post('fetch-patients', [PatientController::class, 'fetchPatient'])->name('patients.fetch');
 
 Route::resource('quotations', QuotationController::class);
-Route::resource('caregivers', CaregiverController::class);
 
+// Caregivers
+Route::resource('caregivers', CaregiverController::class);
+Route::post('fetch-caregivers', [CaregiverController::class, 'fetchCaregiver'])->name('caregivers.fetch');
