@@ -21,6 +21,7 @@ class RoleController extends Controller
     {
         //exclude superadmin
         $roles = Role::where('id', '!=', 1)->get();
+        //roles = Role::all();
 
         return response()->json([
             'data' => $roles

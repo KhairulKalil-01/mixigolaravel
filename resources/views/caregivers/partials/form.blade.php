@@ -230,7 +230,7 @@
     <!-- Submit Button -->
     <div class="form-group mt-4">
         <button type="submit" class="btn btn-primary">
-            {{ $method === 'PUT' ? 'Update' : 'Create' }} caregiver
+            {{ $method === 'PUT' ? 'Update' : 'Create' }} Caregiver
         </button>
     </div>
 </form>

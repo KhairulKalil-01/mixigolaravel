@@ -37,7 +37,9 @@
                                     @else
                                         <ul>
                                             @foreach ($patient->clients as $client)
-                                                <li>{{ $client->name }} (IC: {{ $client->ic_num }})</li>
+                                                <li><b>Client Name: </b> {{ $client->name }}</li>
+                                                 <li><b>Client Phone: </b>    (IC: {{ $client->mobileno }})</li>
+                                                 <br>
                                             @endforeach
                                         </ul>
                                     @endif

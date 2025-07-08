@@ -79,7 +79,12 @@ Route::post('fetch-designations', [DesignationController::class, 'fetchDesignati
 Route::resource('roles', RoleController::class);
 Route::post('fetch-roles', [RoleController::class, 'fetchRoles'])->name('roles.fetch');
 
-Route::resource('permissions', PermissionController::class); 
+// Route::resource('permissions', PermissionController::class); 
+
+// Service pricings
+Route::resource('service-pricings', ServicePricingController::class);
+Route::post('fetch-service-pricings', [ServicePricingController::class, 'fetchServicePricings'])->name('service-pricings.fetch');
+
 Route::resource('salary-records', SalaryRecordController::class); 
 Route::resource('salary-assign', SalaryAssignController::class);
 Route::resource('caregiver-payments',CaregiverPaymentController::class);
