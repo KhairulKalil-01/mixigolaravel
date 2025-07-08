@@ -79,11 +79,18 @@ class PermissionSeeder extends Seeder
             ['name' => 'Delete Role', 'slug' => 'roles.destroy', 'visible_in_menu' => '0', 'module_id' => '4'],
 
             // Permissions
-            ['name' => 'Permissions', 'slug' => 'permissions.index', 'visible_in_menu' => '1', 'module_id' => '4'],
+            ['name' => 'Permissions', 'slug' => 'permissions.index', 'visible_in_menu' => '0', 'module_id' => '4'],
             ['name' => 'Create Permission', 'slug' => 'permissions.create', 'visible_in_menu' => '0', 'module_id' => '4'],
             ['name' => 'View Permission', 'slug' => 'permissions.show', 'visible_in_menu' => '0', 'module_id' => '4'],
             ['name' => 'Edit Permission', 'slug' => 'permissions.edit', 'visible_in_menu' => '0', 'module_id' => '4'],
             ['name' => 'Delete Permission', 'slug' => 'permissions.destroy', 'visible_in_menu' => '0', 'module_id' => '4'],
+
+            // Service Pricings
+            ['name' => 'Service Pricings', 'slug' => 'service-pricings.index', 'visible_in_menu' => '1', 'module_id' => '4'],
+            ['name' => 'Create Service Pricings', 'slug' => 'service-pricings.create', 'visible_in_menu' => '0', 'module_id' => '4'],
+            ['name' => 'View Service Pricings', 'slug' => 'service-pricings.show', 'visible_in_menu' => '0', 'module_id' => '4'],
+            ['name' => 'Edit Service Pricings', 'slug' => 'service-pricings.edit', 'visible_in_menu' => '0', 'module_id' => '4'],
+            ['name' => 'Delete Service Pricings', 'slug' => 'service-pricings.destroy', 'visible_in_menu' => '0', 'module_id' => '4'],
 
             // Salary Records
             ['name' => 'Salary Records', 'slug' => 'salary-records.index', 'visible_in_menu' => '1', 'module_id' => '5'],
@@ -171,7 +178,7 @@ class PermissionSeeder extends Seeder
             // Prepaid Tracker
             //['name' => 'Prepaid Tracker', 'slug' => 'prepaid-tracker.index', 'visible_in_menu' => '1', 'module_id' => '9']
         ];
-        
+
         foreach ($permissions as $perm) {
             Permission::updateOrCreate(
                 ['name' => $perm['name']],
@@ -182,6 +189,5 @@ class PermissionSeeder extends Seeder
                 ]
             );
         }
-
     }
 }
