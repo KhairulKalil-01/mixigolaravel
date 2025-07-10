@@ -32,7 +32,7 @@
                                     @else
                                         <ul>
                                             @foreach ($client->patients as $patient)
-                                                <li>{{ $patient->name }} (IC: {{ $patient->ic_num }})</li>
+                                                <li>{{ $patient->name }} (Condition: {{ $patient->condition_description }})</li>
                                             @endforeach
                                         </ul>
                                     @endif

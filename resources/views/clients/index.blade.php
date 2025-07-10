@@ -21,11 +21,8 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Name</th>
-                                            <th>Gender</th>
                                             <th>Phone</th>
-                                            <th>Address</th>
-                                            <th>City</th>
-                                            <th>State</th>
+                                            <th>Patient</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -78,7 +75,7 @@
                 serverMethod: "POST",
                 bDeferRender: true,
                 ajax: {
-                    url: "{{ route('clients.fetch') }}", 
+                    url: "{{ route('clients.fetch') }}",
                     type: "POST",
                     data: {
                         _token: "{{ csrf_token() }}",
@@ -94,20 +91,19 @@
                         data: "name"
                     },
                     {
-                        data: "sex"
-                    },
-                    {
                         data: "mobileno"
                     },
                     {
-                        data: "address"
+                        data: "patients",
+                        render: function(data, type, row, meta) {
+                            if (!data || data.length === 0) {
+                                return '-';
+                            }
+
+                            return data.map(patient => patient.name).join(', ');
+                        }
                     },
-                    {
-                        data: "city"
-                    },
-                    {
-                        data: "state"
-                    },
+
                     {
                         data: null
                     }
@@ -116,7 +112,7 @@
                     [0, "asc"]
                 ],
                 columnDefs: [{
-                    targets: 7,
+                    targets: 4,
                     orderable: false,
                     render: function(data, type, row, meta) {
                         let buttons = "";
