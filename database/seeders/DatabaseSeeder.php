@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\BankList;
+use App\Models\ServicePricing;
 //use App\Models\Designation;
 //use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -28,6 +29,7 @@ class DatabaseSeeder extends Seeder
             DepartmentSeeder::class,
             DesignationSeeder::class,
             BankListSeeder::class,
+            ServicePricingSeeder::class,
         ]);
     }
 }

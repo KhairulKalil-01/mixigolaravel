@@ -102,7 +102,9 @@ Route::post('fetch-clients', [ClientController::class, 'fetchClient'])->name('cl
 Route::resource('patients', PatientController::class);
 Route::post('fetch-patients', [PatientController::class, 'fetchPatient'])->name('patients.fetch');
 
+// Quotations
 Route::resource('quotations', QuotationController::class);
+Route::post('fetch-quotations', [QuotationController::class, 'fetchQuotation'])->name('quotations.fetch');
 
 // Caregivers
 Route::resource('caregivers', CaregiverController::class);
