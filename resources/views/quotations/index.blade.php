@@ -13,16 +13,17 @@
                     <div class="col-12 col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>All Patients</h4>
+                                <h4>All Quotations</h4>
                             </div>
                             <div class="card-body">
-                                <table id="PatientsTable" class="display dataTable cell-border" style="width:100%">
+                                <table id="branchesTable" class="display dataTable cell-border" style="width:100%">
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Name</th>
-                                            <th>Gender</th>
                                             <th>Client</th>
+                                            <th>Email</th>
+                                            <th>Phone</th>
+                                            <th>State</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -41,25 +42,25 @@
 
     <!-- Initialize DataTable -->
     <script>
-        var table_patient = "#PatientsTable";
+        var table_branch = "#branchesTable";
 
         $(document).ready(function() {
             var buttons = ["copy", "csv", "excel", "pdf", "colvis", "pageLength"];
-            @can('Create Patient')
+            @can('Create Branch')
                 buttons.push({
-                    text: "Create New Patient",
+                    text: "Create New Quotation",
                     attr: {
                         title: "Create",
                         id: "create"
                     },
                     className: "btn-primary",
                     action: function(e, dt, node, config) {
-                        window.location.href = "{{ route('patients.create') }}";
+                        window.location.href = "{{ route('quotations.create') }}";
                     }
                 });
             @endcan
 
-            var table = $(table_patient).DataTable({
+            var table = $(table_branch).DataTable({
                 destroy: true,
                 scrollX: true,
                 lengthChange: false,
@@ -75,7 +76,7 @@
                 serverMethod: "POST",
                 bDeferRender: true,
                 ajax: {
-                    url: "{{ route('patients.fetch') }}",
+                    url: "{{ route('branches.fetch') }}", 
                     type: "POST",
                     data: {
                         _token: "{{ csrf_token() }}",
@@ -88,20 +89,16 @@
                         }
                     },
                     {
-                        data: "name"
+                        data: "branch_name"
                     },
                     {
-                        data: "sex"
+                        data: "email"
                     },
                     {
-                        data: "clients",
-                        render: function(data, type, row, meta) {
-                            if (!data || data.length === 0) {
-                                return '-';
-                            }
-
-                            return data.map(client => client.name).join(', ');
-                        }
+                        data: "mobileno"
+                    },
+                    {
+                        data: "state"
                     },
                     {
                         data: null
@@ -111,22 +108,22 @@
                     [0, "asc"]
                 ],
                 columnDefs: [{
-                    targets: 4,
+                    targets: 5,
                     orderable: false,
                     render: function(data, type, row, meta) {
                         let buttons = "";
 
-                        @can('View Patient')
+                        @can('View Branch')
                             buttons +=
-                                `<a href="/patients/${row.id}" class="btn btn-info viewBtn">View</a>&nbsp;`;
+                                `<a href="/branches/${row.id}" class="btn btn-info viewBtn">View</a>&nbsp;`;
                         @endcan
 
-                        @can('Edit Patient')
+                        @can('Edit Branch')
                             buttons +=
-                                `<a href="/patients/${row.id}/edit" class="btn btn-primary editBtn">Edit</a>&nbsp;`;
+                                `<a href="/branches/${row.id}/edit" class="btn btn-primary editBtn">Edit</a>&nbsp;`;
                         @endcan
 
-                        @can('Delete Patient')
+                        @can('Delete Branch')
                             buttons +=
                                 `<button class="btn btn-danger deleteBtn" data-id="${row.id}">Delete</button>`;
                         @endcan
@@ -136,28 +133,25 @@
                 }]
             });
 
-            // Set CSRF header for all AJAX requests
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                }
-            });
-
             // AJAX DELETE
-            $(table_patient + " tbody").on("click", ".deleteBtn", function() {
-                let patientId = $(this).data("id");
-                let url = `/patients/${patientId}`;
+            $(table_branch + " tbody").on("click", ".deleteBtn", function() {
+                let branchId = $(this).data("id");
+                let url = `/branches/${branchId}`;
+                let csrfToken = "{{ csrf_token() }}";
 
-                if (confirm("Are you sure you want to delete this patient?")) {
+                if (confirm("Are you sure you want to delete this branch?")) {
                     $.ajax({
                         url: url,
                         type: 'DELETE',
+                        data: {
+                            _token: csrfToken
+                        },
                         success: function(response) {
-                            alert(response.message || 'Patient deleted successfully.');
-                            table.ajax.reload();
+                            alert(response.message || 'Branch deleted successfully.');
+                            table.ajax.reload(); // Refresh the table
                         },
                         error: function(xhr) {
-                            alert('Failed to delete the patient.');
+                            alert('Failed to delete the branch.');
                         }
                     });
                 }
