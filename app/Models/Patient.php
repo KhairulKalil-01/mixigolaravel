@@ -16,7 +16,7 @@ class Patient extends Model
 
     public function clients()
     {
-        return $this->belongsToMany(Client::class, 'client_patient_relationship')->using(ClientPatientRelationship::class);;
+        return $this->belongsToMany(Client::class, 'client_patient_relationship')->using(ClientPatientRelationship::class);
     }
 
     public function branch()

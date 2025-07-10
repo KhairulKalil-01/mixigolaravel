@@ -16,7 +16,7 @@ class ClientController extends Controller
 
     public function fetchClient(Request $request)
     {
-        $clients = Client::all();
+        $clients = Client::with('patients')->get();
 
         return response()->json([
             'data' => $clients

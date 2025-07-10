@@ -17,7 +17,7 @@ class PatientController extends Controller
 
     public function fetchPatient(Request $request)
     {
-        $patients = Patient::all();
+        $patients = Patient::with('clients')->get();
 
         return response()->json([
             'data' => $patients
