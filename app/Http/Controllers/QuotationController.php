@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Quotation;
 use App\Models\Client;
-use App\Models\Patient;
 use App\Models\ServicePricing;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
+use App\QuotationStatus;
 use Illuminate\Http\Request;
+
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class QuotationController extends Controller
 {
@@ -21,20 +21,31 @@ class QuotationController extends Controller
 
     public function fetchQuotation(Request $request)
     {
-        $quotations = Quotation::all();
+        $quotations = Quotation::with('client')->orderBy('created_at', 'desc')->get();
 
-        return response()->json([
-            'data' => $quotations
-        ]);
+        $quotations = $quotations->map(function ($quotation) {
+            return [
+                'id' => $quotation->id,
+                'quotation_number' => $quotation->quotation_number,
+                'client_name' => $quotation->client->name ?? '-',
+                'status_label' => $quotation->status_label,
+                'final_price' => $quotation->final_price,
+            ];
+        });
+
+        return response()->json(['data' => $quotations]);
     }
 
     public function create()
     {
         $clients = Client::all();
-        $patients = Patient::all();
         $servicePricings = ServicePricing::all();
+        $statuses = QuotationStatus::cases();
 
-        return view('quotations.create', compact('clients', 'patients', 'servicePricings'));
+        // dummy items for the form
+        $items = collect([['service_pricing_id' => '', 'quantity' => 1, 'subtotal' => '']]);
+
+        return view('quotations.create', compact('clients', 'servicePricings', 'items', 'statuses'));
     }
 
     public function store(Request $request)
@@ -50,49 +61,128 @@ class QuotationController extends Controller
             $sequence = 1;
         }
 
-        $quotationNumber = 'QTN-' . $year . '-' . str_pad($sequence, 4, '0', STR_PAD_LEFT);
+        $quotationNumber = 'QUO-' . $year . '-' . str_pad($sequence, 4, '0', STR_PAD_LEFT);
 
-        // Proceed to validate and create the quotation
+        // Validate the request data
         $validated = $request->validate([
-            //drop service_start_date
             'client_id' => 'required|exists:clients,id',
-            'patient_id' => 'nullable|exists:clients,id',
-            
+            'mileage' => 'nullable|numeric',
+            'discount' => 'nullable|numeric',
+            'final_price' => 'nullable|numeric',
+            'remarks' => 'nullable|string|max:255',
+            'valid_until' => 'nullable|date',
+            'items' => 'required|array|min:1',
+            'items.*.service_pricing_id' => 'required|exists:service_pricings,id',
+            'items.*.quantity' => 'required|integer|min:1',
 
+            'status' => 'required|integer',
         ]);
 
         $validated['quotation_number'] = $quotationNumber;
 
-        Quotation::create($validated);
+        //Quotation::create($validated);
+        $quotation = Quotation::create([
+            'quotation_number' => $validated['quotation_number'],
+            'client_id' => $request->client_id,
+            'mileage' => $request->mileage,
+            'discount' => $request->discount,
+            'final_price' => $request->final_price,
+            'remarks' => $request->remarks,
+            'valid_until' => $request->valid_until,
+
+            'status' => $request->status,
+        ]);
+
+        foreach ($request->items as $item) {
+            $service = ServicePricing::findOrFail($item['service_pricing_id']);
+            $unitPrice = $service->price;
+            $quantity = $item['quantity'];
+            $subtotal = $unitPrice * $quantity;
+
+            $quotation->items()->create([
+                'service_pricing_id' => $service->id,
+                'quantity' => $quantity,
+                'unit_price' => $unitPrice,
+                'subtotal' => $subtotal,
+                'service_name' => $service->service_name,
+            ]);
+        }
 
         return redirect()->route('quotations.index')->with('success', 'Quotation created.');
     }
 
     public function show(string $id)
     {
-        $quotation = Quotation::findOrFail($id);
+        //$quotation = Quotation::findOrFail($id);
+        $quotation = Quotation::with('items', 'client')->findOrFail($id);
         return view('quotations.show', compact('quotation'));
+    }
+
+    // Generate PDF
+    public function downloadPdf($id)
+    {
+        $quotation = Quotation::with('items', 'client')->findOrFail($id);
+        $pdf = Pdf::loadView('quotations.pdf', compact('quotation'))->setPaper('A4');
+
+        //return $pdf->download("Quotation-{$quotation->quotation_number}.pdf");
+        return $pdf->stream('quotation-' . $quotation->quotation_number . '.pdf');
     }
 
 
     public function edit(string $id)
     {
-        $quotation = Quotation::findOrFail($id);
-        return view('quotations.edit', compact('quotation'));
+        $quotation = Quotation::with('items')->findOrFail($id);
+        $clients = Client::all();
+        $servicePricings = ServicePricing::all();
+        $statuses = QuotationStatus::cases();
+        $items = $quotation->items;
+
+        return view('quotations.edit', compact('clients', 'servicePricings', 'quotation', 'items', 'statuses'));
     }
 
     public function update(Request $request, Quotation $quotation)
     {
         $validated = $request->validate([
-            'branch_name' => 'required|string|max:255',
-            'city' => 'nullable|string|max:255',
-            'state' => 'nullable|string|max:255',
-            'address' => 'nullable|string|max:255',
-            'mobileno' => 'nullable|string|max:20',
-            'email' => 'nullable|string|max:255',
+            'client_id' => 'required|exists:clients,id',
+            'mileage' => 'nullable|numeric',
+            'discount' => 'nullable|numeric',
+            'final_price' => 'nullable|numeric',
+            'remarks' => 'nullable|string|max:255',
+            'valid_until' => 'nullable|date',
+
+            'items' => 'required|array|min:1',
+            'items.*.service_pricing_id' => 'required|exists:service_pricings,id',
+            'items.*.quantity' => 'required|integer|min:1',
+            'status' => 'required|integer',
         ]);
 
-        $quotation->update($validated);
+        $quotation->update([
+            'client_id' => $validated['client_id'],
+            'mileage' => $validated['mileage'] ?? 0,
+            'discount' => $validated['discount'] ?? 0,
+            'final_price' => $validated['final_price'] ?? 0,
+            'remarks' => $validated['remarks'] ?? null,
+            'valid_until' => $validated['valid_until'] ?? null,
+            'status' => $request->status,
+        ]);
+
+        // Delete existing items and re-insert
+        $quotation->items()->delete();
+
+        foreach ($validated['items'] as $item) {
+            $service = ServicePricing::findOrFail($item['service_pricing_id']);
+            $unitPrice = $service->price;
+            $quantity = $item['quantity'];
+            $subtotal = $unitPrice * $quantity;
+
+            $quotation->items()->create([
+                'service_pricing_id' => $service->id,
+                'quantity' => $quantity,
+                'unit_price' => $unitPrice,
+                'subtotal' => $subtotal,
+                'service_name' => $service->service_name,
+            ]);
+        }
 
         return redirect()->route('quotations.index')->with('success', 'Quotation updated.');
     }

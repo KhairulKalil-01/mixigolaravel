@@ -12,6 +12,7 @@ enum EmploymentType: int
         return match ($this) {
             self::FullTime => 'Full-time',
             self::PartTime => 'Part-time',
+            default => 'Unknown',
         };
     }
 }

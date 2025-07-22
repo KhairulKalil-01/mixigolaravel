@@ -43,9 +43,6 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
-Route::get('/home-old', [HomeController::class, 'oldindex'])->name('home-old');
-
-
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 // Reports
@@ -89,9 +86,20 @@ Route::resource('salary-records', SalaryRecordController::class);
 Route::resource('salary-assign', SalaryAssignController::class);
 Route::resource('caregiver-payments',CaregiverPaymentController::class);
 Route::resource('overtimes', OvertimeController::class);
+
+// Invoices
 Route::resource('invoices', InvoiceController::class);
+Route::post('fetch-invoices', [InvoiceController::class, 'fetchInvoice'])->name('invoices.fetch');
+Route::get('/invoices/{invoice}/download-pdf', [InvoiceController::class, 'downloadPdf'])->name('invoices.download_pdf');
+
+
 Route::resource('jobs', JobController::class);
+
+// Client Payments
 Route::resource('client-payments', ClientPaymentController::class);
+Route::post('fetch-client-payments', [ClientPaymentController::class, 'fetchClientPayment'])->name('client-payments.fetch');
+Route::get('/client-payments/{client_payment}/download-pdf', [ClientPaymentController::class, 'downloadPdf'])->name('client-payments.download_pdf');
+
 Route::resource('service-receipts', ServiceReceiptController::class);
 
 // Client
@@ -105,6 +113,7 @@ Route::post('fetch-patients', [PatientController::class, 'fetchPatient'])->name(
 // Quotations
 Route::resource('quotations', QuotationController::class);
 Route::post('fetch-quotations', [QuotationController::class, 'fetchQuotation'])->name('quotations.fetch');
+Route::get('/quotations/{quotation}/download-pdf', [QuotationController::class, 'downloadPdf'])->name('quotations.download_pdf');
 
 // Caregivers
 Route::resource('caregivers', CaregiverController::class);

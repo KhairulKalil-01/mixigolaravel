@@ -11,65 +11,59 @@
         <select name="client_id" class="form-control" required>
             <option value="">-- Select Client --</option>
             @foreach ($clients as $client)
-                <option value="{{ $client->id }}">{{ $client->name }}</option>
+                <option value="{{ $client->id }}"
+                    {{ old('client_id', $quotation->client_id ?? '') == $client->id ? 'selected' : '' }}>
+                    {{ $client->name }} - {{ $client->mobileno }}
+                </option>
             @endforeach
         </select>
     </div>
-
-    <!-- Patient Selection -->
-    <div class="form-group">
-        <label class="form-label" for="patient_id">Patient</label>
-        <select name="patient_id" class="form-control" required>
-            <option value="">-- Select Patient --</option>
-            @foreach ($patients as $patient)
-                <option value="{{ $patient->id }}">{{ $patient->name }}</option>
-            @endforeach
-        </select>
-    </div>
-
     <hr>
 
     <!-- Quotation Items (Repeatable Group) -->
     <h5>Services</h5>
     <div id="quotation-items-wrapper">
-        <div class="quotation-item border p-3 mb-2">
-            <div class="row align-items-end">
-                <!-- Service Select (6 columns) -->
-                <div class="form-group col-md-6">
-                    <label class="form-label">Service</label>
-                    <select name="items[0][service_pricing_id]" class="form-control service-select" required>
-                        <option value="">-- Select Service --</option>
-                        @foreach ($servicePricings as $service)
-                            <option value="{{ $service->id }}" data-name="{{ $service->service_name }}"
-                                data-price="{{ $service->price }}">
-                                {{ $service->service_name }} - RM{{ number_format($service->price, 2) }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
+        @foreach ($items as $index => $item)
+            <div class="quotation-item border p-3 mb-2">
+                <div class="row align-items-end">
+                    <!-- Service Select -->
+                    <div class="form-group col-md-6">
+                        <label class="form-label">Service</label>
+                        <select name="items[{{ $index }}][service_pricing_id]"
+                            class="form-control service-select" required>
+                            <option value="">-- Select Service --</option>
+                            @foreach ($servicePricings as $service)
+                                <option value="{{ $service->id }}" data-name="{{ $service->service_name }}"
+                                    data-price="{{ $service->price }}"
+                                    @if ($service->id == $item['service_pricing_id']) selected @endif>
+                                    {{ $service->service_name }} - RM{{ number_format($service->price, 2) }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
 
-                <!-- Quantity (2 columns) -->
-                <div class="form-group col-md-1">
-                    <label class="form-label">Qty</label>
-                    <input type="number" name="items[0][quantity]" class="form-control quantity-input" value="1"
-                        min="1" required>
-                </div>
+                    <!-- Quantity -->
+                    <div class="form-group col-md-1">
+                        <label class="form-label">Qty</label>
+                        <input type="number" name="items[{{ $index }}][quantity]"
+                            class="form-control quantity-input" value="{{ $item['quantity'] ?? 1 }}">
+                    </div>
 
-                <!-- Subtotal (3 columns) -->
-                <div class="form-group col-md-3">
-                    <label class="form-label">Subtotal (RM)</label>
-                    <input type="text" name="items[0][subtotal]" class="form-control subtotal-output" readonly>
-                </div>
+                    <!-- Subtotal -->
+                    <div class="form-group col-md-3">
+                        <label class="form-label">Subtotal (RM)</label>
+                        <input type="text" name="items[{{ $index }}][subtotal]"
+                            class="form-control subtotal-output" value="{{ $item['subtotal'] ?? '' }}" readonly>
+                    </div>
 
-                <!-- Remove Button (1 column) -->
-                <div class="form-group col-md-1">
-                    <button type="button" class="btn btn-danger remove-item w-100 mt-4">X</button>
+                    <!-- Remove Button -->
+                    <div class="form-group col-md-1">
+                        <button type="button" class="btn btn-danger remove-item w-100 mt-4">X</button>
+                    </div>
                 </div>
             </div>
-        </div>
-
+        @endforeach
     </div>
-
     <button type="button" class="btn btn-secondary" id="add-service-item">+ Add Another Service</button>
 
     <hr>
@@ -89,18 +83,31 @@
     <div class="form-group">
         <label class="form-label" for="discount">Grand Total (RM)</label>
         <input type="number" name="final_price" id="final_price" class="form-control" step="0.01"
-            value="{{ old('final_price', $quotation->final_price ?? '') }}">
+            value="{{ old('final_price', $quotation->final_price ?? '') }}" readonly>
     </div>
 
     <div class="form-group">
         <label class="form-label" for="remarks">Remarks</label>
-        <textarea name="remarks" class="form-control" rows="3" value="{{ old('remarks', $quotation->remarks ?? '') }}"></textarea>
+        <textarea name="remarks" class="form-control" rows="3"
+            placeholder="Patient Name and any other additional information.">{{ old('remarks', $quotation->remarks ?? '') }}</textarea>
     </div>
 
     <div class="form-group col-12 col-md-12 col-xl-4">
         <label class="form-label" for="valid_until">Valid Until</label>
         <input type="date" name="valid_until" class="form-control"
             value="{{ old('valid_until', $quotation->valid_until ?? '') }}">
+    </div>
+
+    <div class="form-group col-12 col-md-12 col-xl-4">
+        <label for="status">Status</label>
+        <select name="status" id="status" class="form-control" required>
+            @foreach ($statuses as $status)
+                <option value="{{ $status->value }}"
+                    {{ old('status', $quotation->status ?? '') == $status->value ? 'selected' : '' }}>
+                    {{ $status->label() }}
+                </option>
+            @endforeach
+        </select>
     </div>
 
     <button class="btn btn-primary" type="submit">Submit</button>
