@@ -13,17 +13,17 @@
                     <div class="col-12 col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>All Quotations</h4>
+                                <h4>All Payments</h4>
                             </div>
                             <div class="card-body">
-                                <table id="quotationsTable" class="display dataTable cell-border" style="width:100%">
+                                <table id="paymentsTable" class="display dataTable cell-border" style="width:100%">
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Quo Num.</th>
                                             <th>Client</th>
-                                            <th>Price (RM)</th>
-                                            <th>Status</th>
+                                            <th>Inv Num</th>
+                                            <th>Amount (RM)</th>
+                                            <th>Date</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -42,25 +42,25 @@
 
     <!-- Initialize DataTable -->
     <script>
-        var table_quotation = "#quotationsTable";
+        var table_payment = "#paymentsTable";
 
         $(document).ready(function() {
             var buttons = ["copy", "csv", "excel", "pdf", "colvis", "pageLength"];
-            @can('Create Quotation')
+            @can('Create Client Payment')
                 buttons.push({
-                    text: "Create New Quotation",
+                    text: "Create New Payment",
                     attr: {
                         title: "Create",
                         id: "create"
                     },
                     className: "btn-primary",
                     action: function(e, dt, node, config) {
-                        window.location.href = "{{ route('quotations.create') }}";
+                        window.location.href = "{{ route('client-payments.create') }}";
                     }
                 });
             @endcan
 
-            var table = $(table_quotation).DataTable({
+            var table = $(table_payment).DataTable({
                 destroy: true,
                 scrollX: true,
                 lengthChange: false,
@@ -76,7 +76,7 @@
                 serverMethod: "POST",
                 bDeferRender: true,
                 ajax: {
-                    url: "{{ route('quotations.fetch') }}", 
+                    url: "{{ route('client-payments.fetch') }}",
                     type: "POST",
                     data: {
                         _token: "{{ csrf_token() }}",
@@ -89,16 +89,16 @@
                         }
                     },
                     {
-                        data: "quotation_number"
+                        data: "client_name"
                     },
                     {
-                      data: 'client_name'
+                        data: 'invoice_number'
                     },
                     {
-                        data: "final_price"
+                        data: "amount"
                     },
                     {
-                        data: "status_label"
+                        data: "payment_date"
                     },
                     {
                         data: null
@@ -113,17 +113,17 @@
                     render: function(data, type, row, meta) {
                         let buttons = "";
 
-                        @can('View Quotation')
+                        @can('View Client Payment')
                             buttons +=
-                                `<a href="/quotations/${row.id}" class="btn btn-info viewBtn">View</a>&nbsp;`;
+                                `<a href="/client-payments/${row.id}" class="btn btn-info viewBtn">View</a>&nbsp;`;
                         @endcan
 
-                        @can('Edit Quotation')
+                        @can('Edit Client Payment')
                             buttons +=
-                                `<a href="/quotations/${row.id}/edit" class="btn btn-primary editBtn">Edit</a>&nbsp;`;
+                                `<a href="/client-payments/${row.id}/edit" class="btn btn-primary editBtn">Edit</a>&nbsp;`;
                         @endcan
 
-                        @can('Delete Quotation')
+                        @can('Delete Client Payment')
                             buttons +=
                                 `<button class="btn btn-danger deleteBtn" data-id="${row.id}">Delete</button>`;
                         @endcan
@@ -134,12 +134,12 @@
             });
 
             // AJAX DELETE
-            $(table_quotation + " tbody").on("click", ".deleteBtn", function() {
-                let quotationId = $(this).data("id");
-                let url = `/quotations/${quotationId}`;
+            $(table_payment + " tbody").on("click", ".deleteBtn", function() {
+                let paymentId = $(this).data("id");
+                let url = `/client-payments/${paymentId}`;
                 let csrfToken = "{{ csrf_token() }}";
 
-                if (confirm("Are you sure you want to delete this quotation?")) {
+                if (confirm("Are you sure you want to delete this payment?")) {
                     $.ajax({
                         url: url,
                         type: 'DELETE',
@@ -147,11 +147,11 @@
                             _token: csrfToken
                         },
                         success: function(response) {
-                            alert(response.message || 'Quotation deleted successfully.');
-                            table.ajax.reload(); // Refresh the table
+                            alert(response.message || 'Client payment deleted successfully.');
+                            table.ajax.reload(); 
                         },
                         error: function(xhr) {
-                            alert('Failed to delete the quotation.');
+                            alert('Failed to delete the client payment.');
                         }
                     });
                 }

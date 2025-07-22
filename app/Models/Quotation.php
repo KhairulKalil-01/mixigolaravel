@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\QuotationStatus;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Quotation extends Model
 {
+    use SoftDeletes;
     protected $guarded = [];
 
     public function items()
@@ -21,5 +24,16 @@ class Quotation extends Model
     public function patient()
     {
         return $this->belongsTo(Patient::class);
+    }
+
+    public function getStatusLabelAttribute(): string
+    {
+        $status = QuotationStatus::tryFrom($this->status);
+        return $status?->label() ?? 'Unknown';
+    }
+    
+    public function invoice()
+    {
+        return $this->hasOne(Invoice::class);
     }
 }
