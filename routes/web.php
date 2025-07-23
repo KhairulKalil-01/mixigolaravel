@@ -17,6 +17,8 @@ use App\Http\Controllers\EntryWakafController;
 use App\Http\Controllers\EntryTrainingController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\CreditNoteController;
+use App\Http\Controllers\RefundController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\OperationReportController;
 use App\Http\Controllers\OvertimeController;
@@ -92,6 +94,15 @@ Route::resource('invoices', InvoiceController::class);
 Route::post('fetch-invoices', [InvoiceController::class, 'fetchInvoice'])->name('invoices.fetch');
 Route::get('/invoices/{invoice}/download-pdf', [InvoiceController::class, 'downloadPdf'])->name('invoices.download_pdf');
 
+// Credit Notes
+Route::resource('credit-notes', CreditNoteController::class);
+Route::post('fetch-credit-notes', [CreditNoteController::class, 'fetchCreditNote'])->name('credit-notes.fetch');
+Route::get('/credit-notes/{credit_note}/download-pdf', [CreditNoteController::class, 'downloadPdf'])->name('credit-notes.download_pdf');
+
+// Refunds
+Route::resource('refunds', RefundController::class);
+Route::post('fetch-refunds', [RefundController::class, 'fetchRefund'])->name('refunds.fetch');
+Route::get('/refunds/{refund}/download-pdf', [RefundController::class, 'downloadPdf'])->name('refunds.download_pdf');
 
 Route::resource('jobs', JobController::class);
 

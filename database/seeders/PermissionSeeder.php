@@ -140,6 +140,20 @@ class PermissionSeeder extends Seeder
             ['name' => 'Edit Invoice', 'slug' => 'invoices.edit', 'visible_in_menu' => '0', 'module_id' => '8'],
             ['name' => 'Delete Invoice', 'slug' => 'invoices.destroy', 'visible_in_menu' => '0', 'module_id' => '8'],
 
+            // Credit Notes
+            ['name' => 'Credit Notes', 'slug' => 'credit-notes.index', 'visible_in_menu' => '1', 'module_id' => '8'],
+            ['name' => 'Create Credit Note', 'slug' => 'credit-notes.create', 'visible_in_menu' => '0', 'module_id' => '8'],
+            ['name' => 'View Credit Note', 'slug' => 'credit-notes.show', 'visible_in_menu' => '0', 'module_id' => '8'],
+            ['name' => 'Edit Credit Note', 'slug' => 'credit-notes.edit', 'visible_in_menu' => '0', 'module_id' => '8'],
+            ['name' => 'Delete Credit Note', 'slug' => 'credit-notes.destroy', 'visible_in_menu' => '0', 'module_id' => '8'],
+
+            // Refunds
+            ['name' => 'Refunds', 'slug' => 'refunds.index', 'visible_in_menu' => '1', 'module_id' => '8'],
+            ['name' => 'Create Refund', 'slug' => 'refunds.create', 'visible_in_menu' => '0', 'module_id' => '8'],
+            ['name' => 'View Refund', 'slug' => 'refunds.show', 'visible_in_menu' => '0', 'module_id' => '8'],
+            ['name' => 'Edit Refund', 'slug' => 'refunds.edit', 'visible_in_menu' => '0', 'module_id' => '8'],
+            ['name' => 'Delete Refund', 'slug' => 'refunds.destroy', 'visible_in_menu' => '0', 'module_id' => '8'],
+
             // Jobs
             ['name' => 'Jobs', 'slug' => 'jobs.index', 'visible_in_menu' => '1', 'module_id' => '9'],
             ['name' => 'Create Job', 'slug' => 'jobs.create', 'visible_in_menu' => '0', 'module_id' => '9'],
