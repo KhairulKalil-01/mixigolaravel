@@ -13,15 +13,16 @@ class RoleController extends Controller
     public function index()
     {
         //exclude superadmin
-        $roles = Role::where('id', '!=', 1)->get();
+        //$roles = Role::where('id', '!=', 1)->get();
+        $roles = Role::all();
         return view('roles.index', compact('roles'));
     }
 
     public function fetchRoles(Request $request)
     {
         //exclude superadmin
-        $roles = Role::where('id', '!=', 1)->get();
-        //roles = Role::all();
+        //$roles = Role::where('id', '!=', 1)->get();
+        $roles = Role::all();
 
         return response()->json([
             'data' => $roles
@@ -70,9 +71,9 @@ class RoleController extends Controller
     public function edit(Role $role)
     {
         // Prevent from editing superadmin role from direct url
-        if ($role->id == 1) {
+       /*  if ($role->id == 1) {
             abort(403, 'Unauthorized action.');
-        }
+        } */
 
         // only superadmin can create role
         if (!Auth::check() || !Auth::user()->hasRole('superadmin')) {

@@ -17,4 +17,9 @@ class Client extends Model
     {
         return $this->belongsToMany(Patient::class, 'client_patient_relationship')->using(ClientPatientRelationship::class);;
     }
+
+    public function refunds()
+    {
+        return $this->hasMany(Refund::class);
+    }
 }

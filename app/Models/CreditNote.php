@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ClientPayment extends Model
+class CreditNote extends Model
 {
     use SoftDeletes;
-    protected $guarded = [];
 
+    protected $guarded =[];
+    protected $table = 'credit_notes';
 
     public function client()
     {
@@ -21,9 +22,13 @@ class ClientPayment extends Model
         return $this->belongsTo(Invoice::class);
     }
 
-    public function creditNotes()
+    public function clientPayment()
     {
-        return $this->hasMany(CreditNote::class);
+        return $this->belongsTo(ClientPayment::class);
     }
 
+    public function refund()
+    {
+        return $this->hasOne(Refund::class);
+    }
 }
