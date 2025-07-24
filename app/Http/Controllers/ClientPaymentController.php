@@ -112,7 +112,20 @@ class ClientPaymentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validated = $request->validate([
+            'invoice_id' => 'required|exists:invoices,id',
+            'payment_type' => 'nullable|integer',
+            'payment_status' => 'required|integer',
+            'payment_method' => 'required|integer',
+            'amount' => 'required|numeric|min:0',
+            'payment_date' => 'required|date',
+            'remarks' => 'nullable|string|max:255',
+        ]);
+
+        $client_payment = ClientPayment::findOrFail($id);
+        $client_payment->update($validated);
+
+        return redirect()->route('client-payments.index')->with('success', 'Client payment updated successfully.');
     }
 
     /**

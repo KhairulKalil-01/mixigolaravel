@@ -24,4 +24,9 @@ class Refund extends Model
     {
         return $this->belongsTo((CreditNote::class));
     }
+
+    public function bank()
+    {
+        return $this->belongsTo((BankList::class));
+    }
 }
