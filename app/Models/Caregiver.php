@@ -10,6 +10,13 @@ class Caregiver extends Model
 {
     protected $guarded = [];
 
+    public function getEmploymentTypeLabelAttribute(): string
+    {
+        $employmentType = EmploymentType::tryFrom($this->employment_type);
+
+        return $employmentType?->label() ?? 'Unknown';
+    }
+
     public function branch()
     {
         return $this->belongsTo(Branch::class, 'branch_id');
@@ -20,10 +27,9 @@ class Caregiver extends Model
         return $this->belongsTo(BankList::class, 'bank_list_id');
     }
 
-    public function getEmploymentTypeLabelAttribute(): string
+    public function nationality()
     {
-        $employmentType = EmploymentType::tryFrom($this->employment_type);
-
-        return $employmentType?->label() ?? 'Unknown';
+        return $this->belongsTo(Nationality::class, 'nationality');
     }
+    
 }

@@ -175,7 +175,7 @@
                         <div class="user-icon"><img class="img-fluid rounded-50"
                                 src="{{ asset('assets/images/avtar/3.jpg') }}" alt=""></div>
                         <div class="media-body">
-                            <h6>Thomas Vactom</h6><span class="text-light">Web designer</span>
+                            <h6>{{ Auth::user()->name }}</h6><span class="text-light">{{ Auth::user()->getRoleNames()->first() }}</span>
                         </div>
                     </div>
                     <div class="hover-dropdown navprofile-drop">

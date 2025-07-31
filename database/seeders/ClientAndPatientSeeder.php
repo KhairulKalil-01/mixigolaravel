@@ -42,6 +42,9 @@ class ClientAndPatientSeeder extends Seeder
             ['id' => 25, 'name' => 'Puan Aiman Atikah', 'ic_num' => null, 'sex' => 'Female', 'mobileno' => '966 53 750 2347', 'email' => null, 'address' => '7 Teratai Villas, Jalan Merah Saga Empat, U9/5D  Kayangan Heights, 40150,  Shah Alam', 'city' => 'Shah Alam', 'state' => 'Selangor', 'remarks' => null],
             ['id' => 26, 'name' => 'Encik Amar', 'ic_num' => null, 'sex' => 'Male', 'mobileno' => '0135357334', 'email' => null, 'address' => '57, Jalan P11 C/8, Presint 11, 62000, Putrajaya', 'city' => 'Putrajaya', 'state' => 'Selangor', 'remarks' => null],
             ['id' => 27, 'name' => 'Pn Dayana@Pn. Razlin', 'ic_num' => null, 'sex' => 'Female', 'mobileno' => '01159909506', 'email' => null, 'address' => 'No 6, Jalan Nuri 7/17a, Kota Damansara, 47810 Petaling Jaya', 'city' => 'Petaling Jaya', 'state' => 'Selangor', 'remarks' => null],
+            ['id' => 28, 'name' => 'En Nuruddin', 'ic_num' => null, 'sex' => 'Male', 'mobileno' => '0173449609', 'email' => null, 'address' => 'D-25-10, Residensi Adelia 2, Blok D Persiarn Bangi Avenue2, Taman Bangi Avenue, 43000 Kajang Selangor', 'city' => 'Kajang', 'state' => 'Selangor', 'remarks' => null],
+            ['id' => 29, 'name' => 'Pn Noorishah', 'ic_num' => null, 'sex' => 'Male', 'mobileno' => '0163610606', 'email' => null, 'address' => '35, Jalan Kampong Pandan Dalam, Kuala Lumpur 53100 WP KL', 'city' => 'Kuala Lumpur', 'state' => 'Wilayah Persekutuan Kuala Lumpur', 'remarks' => null],
+
 
         ];
 
@@ -72,6 +75,8 @@ class ClientAndPatientSeeder extends Seeder
             ['id' => 24, 'branch_id' => 1, 'name' => 'Puan Tik', 'ic_num' => null, 'age' => 94, 'sex' => 'Female', 'weight' => 40, 'condition_description' => 'Diagnosis pesakit: CHF. Basics screening (vitals, glucose, and recommendation)', 'mobileno' => null, 'address' => null, 'city' => null, 'state' => null, 'remarks' => null],
             ['id' => 25, 'branch_id' => 1, 'name' => 'Pn. Natrah', 'ic_num' => null, 'age' => 70, 'sex' => 'Female', 'weight' => 65, 'condition_description' => 'Brain tumor / diamentia/ bedridden', 'mobileno' => null, 'address' => null, 'city' => null, 'state' => null, 'remarks' => null],
             ['id' => 26, 'branch_id' => 1, 'name' => 'En. Ramli Hashim', 'ic_num' => null, 'age' => 60, 'sex' => 'Male', 'weight' => 80, 'condition_description' => 'Bilateral Cerebellar Hemorrhagic Stroke', 'mobileno' => null, 'address' => null, 'city' => null, 'state' => null, 'remarks' => null],
+            ['id' => 27, 'branch_id' => 1, 'name' => 'Pn Norsuhaiza', 'ic_num' => null, 'age' => 52, 'sex' => 'Female', 'weight' => 70, 'condition_description' => 'Stroke', 'mobileno' => null, 'address' => null, 'city' => null, 'state' => null, 'remarks' => null],
+            ['id' => 28, 'branch_id' => 1, 'name' => 'En. Mohd Noor', 'ic_num' => null, 'age' => 92, 'sex' => 'Male', 'weight' => 70, 'condition_description' => 'Bedridden and dehydrated', 'mobileno' => null, 'address' => null, 'city' => null, 'state' => null, 'remarks' => null],
         ];
 
         // Insert Clients
@@ -87,33 +92,34 @@ class ClientAndPatientSeeder extends Seeder
         // Define relationships (many-to-many)
         $relations = [
             // patient_id => [client_id1, client_id2, ...]
-            1 => [1, 15],       // Suzana binti Hassan is related to Pn Aida Aziza Mohd Jamaludin and Schinkels Sdn Bhd
-            2 => [2],           // Patient Zulkifli is related to En Ahmad Hezril Zulkifli
-            3 => [3],           // Patient Husin Mohamed is related to Pn Huzaidah Husin Mohamed
-            4 => [4],           // Patient Mary is related to En Nelson
-            5 => [5],           // Patient Rusiah Abdullah is related to Pn Ruzianah Shariff
-            6 => [6],           // Patient M Ishan Hj Bakar is related to Pn Siti Marlina
-
-            7 => [7],           // Patient Esheensai is related to Pn Thevaletchume
-            8 => [8],           // Patient Normazian binti Ahmad is related to En Zuhairi
-            9  => [9],          // Patient Irene is related to Pn Leela
-            10 => [10],         // Patient M Ishan Hj 
-            11 => [11],         // Patient Narziha Ahmad Zahudi is related to Pn Norhayati Mohd Yusoff
-            12 => [12],         // Patient Yan Chee is related to Pn May
-            13 => [13],         //patient Wan Mat bin Wan Daud is related to Pn Wan Hanira
-            14 => [14],         // Patient Ali Hj Ahmad is related to Pn Fadwa
-            15 => [16],         // Patient Omar bin Abd Razak is related to Pn Aida
-            16 => [17],     // Patient Kong Sung Thai is related to Pn Theresa
-            17 => [18],     // Patient Vijayan Krishnan is related to Pn Jayanthi
-            18 => [19],     // Patient Michael Lim is related to Lim Teck Foo & Leong Wing Yan
-            19 => [20],     // Patient Syed Aziz is related to Pn Sharifah Junainah
-            20 => [21],     // Patient Neza is related to Pn Rose
-            21 => [22],     // Patient Abd Manan is related to Pn Nur Afiqah Binti Abd Manan
-            22 => [23],     // Patient Jamil Ali is related to Pn Sakinah
-            23 => [24],     // Patient Ramli Hashim is related to Encik Ramli Hashim
-            24 => [25],     // Patient Puan Tik is related to Puan Aiman Atikah
-            25 => [26],     // Patient Pn. Natrah is related to Encik Amar
-            26 => [27],     // Patient En. Ramli Hashim is related to Pn Dayana@Pn. Razllin
+            1 => [1, 15],  // Suzana binti Hassan is related to Pn Aida Aziza Mohd Jamaludin and Schinkels Sdn Bhd
+            2 => [2],      // Patient Zulkifli is related to En Ahmad Hezril Zulkifli
+            3 => [3],      // Patient Husin Mohamed is related to Pn Huzaidah Husin Mohamed
+            4 => [4],      // Patient Mary is related to En Nelson
+            5 => [5],      // Patient Rusiah Abdullah is related to Pn Ruzianah Shariff
+            6 => [6],      // Patient M Ishan Hj Bakar is related to Pn Siti Marlina
+            7 => [7],      // Patient Esheensai is related to Pn Thevaletchume
+            8 => [8],      // Patient Normazian binti Ahmad is related to En Zuhairi
+            9  => [9],     // Patient Irene is related to Pn Leela
+            10 => [10],    // Patient M Ishan Hj 
+            11 => [11],    // Patient Narziha Ahmad Zahudi is related to Pn Norhayati Mohd Yusoff
+            12 => [12],    // Patient Yan Chee is related to Pn May
+            13 => [13],    // Patient Wan Mat bin Wan Daud is related to Pn Wan Hanira
+            14 => [14],    // Patient Ali Hj Ahmad is related to Pn Fadwa
+            15 => [16],    // Patient Omar bin Abd Razak is related to Pn Aida
+            16 => [17],    // Patient Kong Sung Thai is related to Pn Theresa
+            17 => [18],    // Patient Vijayan Krishnan is related to Pn Jayanthi
+            18 => [19],    // Patient Michael Lim is related to Lim Teck Foo & Leong Wing Yan
+            19 => [20],    // Patient Syed Aziz is related to Pn Sharifah Junainah
+            20 => [21],    // Patient Neza is related to Pn Rose
+            21 => [22],    // Patient Abd Manan is related to Pn Nur Afiqah Binti Abd Manan
+            22 => [23],    // Patient Jamil Ali is related to Pn Sakinah
+            23 => [24],    // Patient Ramli Hashim is related to Encik Ramli Hashim
+            24 => [25],    // Patient Puan Tik is related to Puan Aiman Atikah
+            25 => [26],    // Patient Pn. Natrah is related to Encik Amar
+            26 => [27],    // Patient En. Ramli Hashim is related to Pn Dayana@Pn. Razllin
+            27 => [28],    // Patient Pn Norsuhaiza is related to En Nuruddin
+            28 => [29],    // Patient En. Mohd Noor is related to Pn Noorishah
         ];
 
         foreach ($relations as $patientId => $clientIds) {

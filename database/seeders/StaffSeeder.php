@@ -12,39 +12,67 @@ class StaffSeeder extends Seeder
 {
     public function run(): void
     {
-        /* $user = User::create([
-            'name' => 'Fauziah',
-            'email' => 'fauziah@test.com',
-            'password' => bcrypt('11223344'),
-        ]);
-
-        // Assign role
-        $user->assignRole('humanresource');
-
-        // Create staff record linked to the user
-        Staff::create([
-            'user_id' => $user->id,
-            'branch_id' =>  '1',
-            'department_id' => '3',
-            'full_name' => 'Fauziah binti Abdullah',
-            'ic_num' => '000000112222',
-        ]); */
-
-        $userId = 3;
-        $user = User::find($userId);
-
-        if ($user) {
-            // Insert into staffs only if no existing record
-            Staff::firstOrCreate(
-                ['user_id' => $userId],
-                [
-                    'branch_id' =>  '1',
-                    'department_id' => '3',
+        $staffList = [
+            [
+                'user' => [
+                    'name' => 'Taufik Jamain',
+                    'email' => 'taufik@test.com',
+                    'password' => bcrypt('11223344'),
+                ],
+                'staff' => [
+                    'full_name' => 'Mohd Taufik bin Jamain',
+                    'ic_num' => '000000334455',
+                    'branch_id' => 1,
+                    'department_id' => 2,
+                ],
+                'role' => 'admin',
+            ],
+            [
+                'user' => [
+                    'name' => 'Fauziah',
+                    'email' => 'fauziah@test.com',
+                    'password' => bcrypt('11223344'),
+                ],
+                'staff' => [
                     'full_name' => 'Fauziah binti Abdullah',
                     'ic_num' => '000000112222',
-                    'created_at'    => now(),
-                    'updated_at'    => now(),
-                ]
+                    'branch_id' => 1,
+                    'department_id' => 3,
+                ],
+                'role' => 'humanresource',
+            ],
+            [
+                'user' => [
+                    'name' => 'Zara',
+                    'email' => 'zara@test.com',
+                    'password' => bcrypt('11223344'),
+                ],
+                'staff' => [
+                    'full_name' => 'Zara Mixigo',
+                    'ic_num' => '000000334455',
+                    'branch_id' => 1,
+                    'department_id' => 6,
+                ],
+                'role' => 'admin',
+            ],
+        ];
+
+        foreach ($staffList as $item) {
+            // Create user
+            $user = User::firstOrCreate(
+                ['email' => $item['user']['name']],
+                $item['user']
+            );
+
+            // Assign role
+            if (!$user->hasRole($item['role'])) {
+                $user->assignRole($item['role']);
+            }
+
+            // Create staff record
+            Staff::firstOrCreate(
+                ['user_id' => $user->id],
+                $item['staff']
             );
         }
     }
