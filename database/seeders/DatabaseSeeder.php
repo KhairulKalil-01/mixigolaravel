@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\BankList;
+use App\Models\Nationality;
 use App\Models\ServicePricing;
 //use App\Models\Designation;
 //use App\Models\User;
@@ -28,6 +29,9 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             DepartmentSeeder::class,
             DesignationSeeder::class,
+            BranchSeeder::class,
+            Nationality::class,
+            StaffSeeder::class,
             BankListSeeder::class,
             ServicePricingSeeder::class,
         ]);
