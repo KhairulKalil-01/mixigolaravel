@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CreditNote;
 use Illuminate\Http\Request;
 use App\Models\Invoice;
+use App\CreditNoteStatus;;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class CreditNoteController extends Controller
@@ -37,7 +38,8 @@ class CreditNoteController extends Controller
     public function create()
     {
         $invoices = Invoice::all();
-        return view('credit-notes.create', compact('invoices'));
+        $statuses = CreditNoteStatus::cases();
+        return view('credit-notes.create', compact('invoices', 'statuses'));
     }
 
 
@@ -61,6 +63,7 @@ class CreditNoteController extends Controller
             'credit_note_date' => 'required|date',
             'credit_amount' => 'required|numeric|min:0',
             'reason_type' => 'nullable|integer',
+            'status' => 'required|integer|in:0,1,2',
             'remarks' => 'nullable|string|max:255',
         ]);
 
@@ -93,8 +96,9 @@ class CreditNoteController extends Controller
     {
         $invoices = Invoice::all();
         $credit_note = CreditNote::findOrFail($id);
+        $statuses = CreditNoteStatus::cases();
 
-        return view('credit-notes.edit', compact('invoices', 'credit_note'));
+        return view('credit-notes.edit', compact('invoices', 'credit_note', 'statuses'));
     }
 
 
@@ -107,6 +111,7 @@ class CreditNoteController extends Controller
             'credit_note_date' => 'required|date',
             'credit_amount' => 'required|numeric|min:0',
             'reason_type' => 'nullable|integer',
+            'status' => 'required|integer|in:0,1,2',
             'remarks' => 'nullable|string|max:255',
         ]);
 

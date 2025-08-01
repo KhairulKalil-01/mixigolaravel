@@ -47,6 +47,18 @@
     </div>
 
     <div class="form-group">
+        <label class="form-label" for="status">Status</label>
+        <select name="status" id="status" class="form-control" required>
+            @foreach ($statuses as $status)
+                <option value="{{ $status->value }}"
+                    {{ old('status', $quotation->status ?? '') == $status->value ? 'selected' : '' }}>
+                    {{ $status->label() }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+
+    <div class="form-group">
         <label class="form-label" for="remarks">Remarks</label>
         <textarea name="remarks" id="remarks" class="form-control">{{ old('remarks', $credit_note->remarks ?? '') }}</textarea>
     </div>

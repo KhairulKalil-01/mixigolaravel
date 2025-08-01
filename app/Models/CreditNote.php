@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\CreditNoteStatus;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CreditNote extends Model
@@ -31,4 +32,11 @@ class CreditNote extends Model
     {
         return $this->hasOne(Refund::class);
     }
+
+     public function getStatusLabelAttribute(): string
+    {
+        $status = CreditNoteStatus::tryFrom($this->status);
+        return $status?->label() ?? 'Unknown';
+    }
+    
 }

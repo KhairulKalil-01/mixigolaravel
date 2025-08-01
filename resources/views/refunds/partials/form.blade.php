@@ -55,7 +55,7 @@
     <!-- Bank Details-->
     <div class="form-group">
         <label class="form-label" for="bank_id">Bank</label>
-        <select name="bank_id" id="bank_id" class="form-select" required>
+        <select name="bank_id" id="bank_id" class="form-control" required>
             <option value="">-- Select Bank --</option>
             @foreach ($banks as $bank)
                 <option value="{{ $bank->id }}"
