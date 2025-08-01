@@ -43,6 +43,10 @@
                                             <td>{{ $credit_note->credit_note_date }}</td>
                                         </tr>
                                         <tr>
+                                            <th>Status</th>
+                                            <td>{{ $credit_note->status_label }}</td>
+                                        </tr>
+                                        <tr>
                                             <th>Remarks</th>
                                             <td>{{ $credit_note->remarks }}</td>
                                         </tr>
