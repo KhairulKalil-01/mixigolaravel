@@ -50,6 +50,10 @@
                                             <th>Remarks</th>
                                             <td>{{ $credit_note->remarks }}</td>
                                         </tr>
+                                        <tr>
+                                            <th>Reason</th>
+                                            <td>{{ $credit_note->reason_type }}</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                                 <br>

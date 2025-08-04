@@ -106,12 +106,8 @@
                                             <td>{{ $invoice->updated_at->format('d-m-Y H:i:s') }}</td>
                                         </tr>
                                         <tr>
-                                            <th>Payment Status</th>
-                                            <td>{{ $invoice->payment_status }}</td>
-                                        </tr>
-                                        <tr>
                                             <th>Invoice Status</th>
-                                            <td>{{ $invoice->payment_status }}</td>
+                                            <td>{{ $invoice->status_label }}</td>
                                         </tr>
                                     </tbody>
                                 </table>

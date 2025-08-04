@@ -8,7 +8,7 @@
     <!-- Credit Note Select -->
     <div class="form-group">
         <label class="form-label" for="credit_note_id">Credit Note</label>
-        <select name="credit_note_id" id="credit_note_id" class="form-select" required>
+        <select name="credit_note_id" id="credit_note_id" class="form-control" required>
             <option value="">-- Select Credit Note --</option>
             @foreach ($credit_notes as $credit_note)
                 <option value="{{ $credit_note->id }}"
@@ -17,18 +17,6 @@
                     RM{{ number_format($credit_note->credit_amount, 2) }}
                 </option>
             @endforeach
-        </select>
-    </div>
-
-    <!-- Status -->
-    <div class="form-group">
-        <label class="form-label" for="status">Status</label>
-        <select name="status" id="status" class="form-control" required>
-            <option value="">-- Select Status --</option>
-            <option value="1" {{ old('status', $refund->status ?? '') == 1 ? 'selected' : '' }}>
-                Pending</option>
-            <option value="2" {{ old('status', $refund->status ?? '') == 2 ? 'selected' : '' }}>
-                Completed</option>
         </select>
     </div>
 
@@ -69,7 +57,7 @@
     <div class="form-group">
         <label class="form-label" for="bank_account">Bank Account Number</label>
         <input type="text" name="bank_account" id="bank_account" class="form-control"
-            value="{{ old('bank_account', $refund->bank_account ?? '') }}" required>
+            value="{{ old('bank_account', $refund->bank_account ?? '') }}">
     </div>
 
 
@@ -79,6 +67,20 @@
         <input type="number" name="amount" id="amount" class="form-control" step="0.01"
             value="{{ old('amount', $refund->amount ?? '') }}" required>
     </div>
+
+    <!-- Status -->
+    <div class="form-group">
+        <label class="form-label" for="status">Status</label>
+        <select name="status" id="status" class="form-control" required>
+            @foreach ($statuses as $status)
+                <option value="{{ $status->value }}"
+                    {{ old('status', $refund->status ?? '') == $status->value ? 'selected' : '' }}>
+                    {{ $status->label() }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+
 
     <div class="form-group">
         <label class="form-label" for="remarks">Remarks</label>

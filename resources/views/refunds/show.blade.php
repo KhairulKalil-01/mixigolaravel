@@ -43,6 +43,10 @@
                                             <td>{{ $refund->amount }}</td>
                                         </tr>
                                         <tr>
+                                            <th>Status</th>
+                                            <td>{{ $refund->status_label }}</td>
+                                        </tr>
+                                        <tr>
                                             <th>Refund Date</th>
                                             <td>{{ $refund->refund_date }}</td>
                                         </tr>

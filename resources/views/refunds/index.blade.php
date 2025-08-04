@@ -23,6 +23,7 @@
                                             <th>Refund Num. </th>
                                             <th>Client</th>
                                             <th>Amount (RM)</th>
+                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -97,6 +98,9 @@
                         data: "amount"
                     },
                     {
+                        data: "status_label"
+                    },
+                    {
                         data: null
                     }
                 ],
@@ -104,7 +108,7 @@
                     [0, "asc"]
                 ],
                 columnDefs: [{
-                    targets: 4,
+                    targets: 5,
                     orderable: false,
                     render: function(data, type, row, meta) {
                         let buttons = "";

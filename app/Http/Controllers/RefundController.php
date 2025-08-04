@@ -6,14 +6,15 @@ use App\Models\BankList;
 use App\Models\Refund;
 use Illuminate\Http\Request;
 use App\Models\CreditNote;
+use App\RefundStatus;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class RefundController extends Controller
 {
     public function index()
     {
-        $refunds =  Refund::all();
-        return view('refunds.index', compact('refunds'));
+        //$refunds =  Refund::all();
+        return view('refunds.index');
     }
 
     public function fetchRefund()
@@ -27,6 +28,7 @@ class RefundController extends Controller
                 'client_name' => $refund->invoice->client->name ?? '-',
                 'amount' => $refund->amount,
                 'status' => $refund->status,
+                'status_label' => $refund->status_label,
             ];
         });
 
@@ -37,7 +39,8 @@ class RefundController extends Controller
     {
         $credit_notes = CreditNote::all();
         $banks = BankList::all();
-        return view('refunds.create', compact('credit_notes', 'banks'));
+        $statuses = RefundStatus::cases();
+        return view('refunds.create', compact('credit_notes', 'banks', 'statuses'));
     }
 
     public function store(Request $request)
@@ -58,9 +61,9 @@ class RefundController extends Controller
         // Validate input based on form fields
         $validated = $request->validate([
             'credit_note_id' => 'required|exists:credit_notes,id',
-            'status' => 'required|in:1,2',
+            'status' => 'required',
             'refund_date' => 'required|date',
-            'reason_type' => 'required|integer|in:1,2,3',
+            'reason_type' => 'required',
             'bank_id' => 'nullable|exists:bank_lists,id',
             'bank_account' => 'nullable|string|max:255',
             'amount' => 'required|numeric|min:0',
@@ -99,8 +102,9 @@ class RefundController extends Controller
         $refund = Refund::findOrFail($id);
         $credit_notes = CreditNote::with('client')->get();
         $banks = BankList::all();
+        $statuses = RefundStatus::cases();
 
-        return view('refunds.edit', compact('refund', 'credit_notes', 'banks'));
+        return view('refunds.edit', compact('refund', 'credit_notes', 'banks', 'statuses'));
     }
 
     /**
@@ -113,9 +117,9 @@ class RefundController extends Controller
         // Validate input based on form fields
         $validated = $request->validate([
             'credit_note_id' => 'required|exists:credit_notes,id',
-            'status' => 'required|in:1,2',
+            'status' => 'required|integer|in:0,1,2',
             'refund_date' => 'required|date',
-            'reason_type' => 'required|integer|in:1,2,3',
+            'reason_type' => 'required|integer|in:0,1,2',
             'bank_id' => 'nullable|exists:bank_lists,id',
             'bank_account' => 'nullable|string|max:255',
             'amount' => 'required|numeric|min:0',

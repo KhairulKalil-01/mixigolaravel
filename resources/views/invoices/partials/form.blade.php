@@ -5,10 +5,14 @@
         @method('PUT')
     @endif
 
+    @php
+        $invoice = $invoice ?? null;
+    @endphp
+
     <!-- Quotation Select -->
     <div class="form-group">
         <label class="form-label" for="quotation_id" class="form-label">Quotation</label>
-        <select name="quotation_id" id="quotation_id" class="form-select" required>
+        <select name="quotation_id" id="quotation_id" class="form-control" required>
             <option value="">-- Select Quotation --</option>
             @foreach ($quotations as $quotation)
                 <option value="{{ $quotation->id }}"
@@ -20,18 +24,32 @@
         </select>
     </div>
 
+
     <!-- Invoice Date -->
     <div class="form-group">
         <label for="invoice_date">Invoice Date</label>
         <input type="date" name="invoice_date" id="invoice_date" class="form-control"
-            value="{{ old('invoice_date', optional($invoice->invoice_date)->format('Y-m-d') ?? date('Y-m-d')) }}">
+            value="{{ old('invoice_date', isset($invoice->invoice_date) ? \Carbon\Carbon::parse($invoice->invoice_date)->format('Y-m-d') : '') }}">
     </div>
 
     <!-- Due Date -->
     <div class="form-group">
         <label for="due_date">Due Date</label>
         <input type="date" name="due_date" id="due_date" class="form-control"
-            value="{{ old('due_date', optional($invoice->due_date)->format('Y-m-d') ?? \Carbon\Carbon::now()->addMonth()->format('Y-m-d')) }}">
+            value="{{ old('due_date', isset($invoice->due_date) ? \Carbon\Carbon::parse($invoice->due_date)->format('Y-m-d') : '') }}">
+    </div>
+
+    <!-- Status -->
+    <div class="form-group">
+        <label class="form-label" for="status">Status</label>
+        <select name="status" id="status" class="form-control" required>
+            @foreach ($statuses as $status)
+                <option value="{{ $status->value }}"
+                    {{ old('status', $invoice->payment_status ?? '') == $status->value ? 'selected' : '' }}>
+                    {{ $status->label() }}
+                </option>
+            @endforeach
+        </select>
     </div>
 
     <div class="form-group">

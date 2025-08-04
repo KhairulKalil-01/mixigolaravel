@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\RefundStatus;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Refund extends Model
@@ -28,5 +29,11 @@ class Refund extends Model
     public function bank()
     {
         return $this->belongsTo((BankList::class));
+    }
+
+    public function getStatusLabelAttribute(): string
+    {
+        $status = RefundStatus::tryFrom($this->status);
+        return $status?->label() ?? 'Unknown';
     }
 }

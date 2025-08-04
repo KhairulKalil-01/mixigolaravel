@@ -8,7 +8,7 @@
     <!-- Invoice Select -->
     <div class="form-group">
         <label class="form-label" for="quotation_id" class="form-label">Invoice</label>
-        <select name="invoice_id" id="quotation_id" class="form-select" required>
+        <select name="invoice_id" id="quotation_id" class="form-control" required>
             <option value="">-- Select Invoice --</option>
             @foreach ($invoices as $invoice)
                 <option value="{{ $invoice->id }}"
@@ -51,7 +51,7 @@
         <select name="status" id="status" class="form-control" required>
             @foreach ($statuses as $status)
                 <option value="{{ $status->value }}"
-                    {{ old('status', $quotation->status ?? '') == $status->value ? 'selected' : '' }}>
+                    {{ old('status', $credit_note->status ?? '') == $status->value ? 'selected' : '' }}>
                     {{ $status->label() }}
                 </option>
             @endforeach
