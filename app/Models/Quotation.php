@@ -26,14 +26,14 @@ class Quotation extends Model
         return $this->belongsTo(Patient::class);
     }
 
+    public function invoice()
+    {
+        return $this->hasOne(Invoice::class);
+    }
+
     public function getStatusLabelAttribute(): string
     {
         $status = QuotationStatus::tryFrom($this->status);
         return $status?->label() ?? 'Unknown';
-    }
-    
-    public function invoice()
-    {
-        return $this->hasOne(Invoice::class);
     }
 }

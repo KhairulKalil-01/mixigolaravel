@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Invoice;
 use App\Models\Quotation;
+use App\InvoiceStatus;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class InvoiceController extends Controller
@@ -19,7 +20,8 @@ class InvoiceController extends Controller
     public function create()
     {
         $quotations = Quotation::all();
-        return view('invoices.create', compact('quotations'));
+        $statuses = InvoiceStatus::cases();
+        return view('invoices.create', compact('quotations', 'statuses'));
     }
 
     public function fetchInvoice()
@@ -32,7 +34,7 @@ class InvoiceController extends Controller
                 'invoice_number' => $invoices->invoice_number,
                 'client_name' => $invoices->quotation->client->name ?? '-',
                 'total_amount' => $invoices->total_amount,
-                'payment_status' => $invoices->payment_status,
+                'payment_status' => $invoices->status_label,
 
             ];
         });
@@ -71,7 +73,7 @@ class InvoiceController extends Controller
             'client_id' => $quotation->client_id,
             'paid_amount' => 0,
             'total_amount' => $quotation->final_price,
-            'payment_status' => 'unpaid',
+            'payment_status' => '0',
             'invoice_date' => $validated['invoice_date'],
             'due_date' => $validated['due_date'],
             'remarks' => $validated['remarks'] ?? null,
@@ -100,8 +102,9 @@ class InvoiceController extends Controller
     {
         $invoice = Invoice::findOrFail($id);
         $quotations = Quotation::with('client')->get();
+        $statuses = InvoiceStatus::cases();
 
-        return view('invoices.edit', compact('invoice', 'quotations'));
+        return view('invoices.edit', compact('invoice', 'quotations', 'statuses'));
     }
 
     public function update(Request $request, $id)
@@ -112,8 +115,11 @@ class InvoiceController extends Controller
             'quotation_id' => 'required|exists:quotations,id',
             'invoice_date' => 'required|date',
             'due_date' => 'required|date|after_or_equal:invoice_date',
+            'status' => 'required',
             'remarks' => 'nullable|string|max:255',
         ]);
+
+       //dd($validated);
 
         $quotation = Quotation::findOrFail($validated['quotation_id']);
 
@@ -124,6 +130,7 @@ class InvoiceController extends Controller
             'due_date' => $validated['due_date'],
             'total_amount' => $quotation->final_price,
             'remarks' => $validated['remarks'],
+            'payment_status' => $validated['status'],
         ]);
 
         return redirect()->route('invoices.index')->with('success', 'Invoice updated successfully.');

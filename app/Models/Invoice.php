@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\InvoiceStatus;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Invoice extends Model
@@ -34,5 +34,11 @@ class Invoice extends Model
     public function refunds()
     {
         return $this->hasMany(Refund::class);
+    }
+
+    public function getStatusLabelAttribute(): string
+    {
+        $status = InvoiceStatus::tryFrom($this->payment_status);
+        return $status?->label() ?? 'Unknown';
     }
 }
