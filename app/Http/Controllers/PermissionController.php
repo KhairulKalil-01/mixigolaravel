@@ -1,12 +1,21 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
 
 class PermissionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', PermissionMiddleware::class . ':View Permission'])->only(['index', 'show']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Create Permission'])->only(['create', 'store']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Edit Permission'])->only(['edit', 'update']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Delete Permission'])->only(['destroy']);
+    }
+
     public function index()
     {
         $permissions = Permission::all();

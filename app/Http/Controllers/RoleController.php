@@ -10,6 +10,14 @@ use Illuminate\Support\Facades\Auth;
 
 class RoleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', PermissionMiddleware::class . ':View Role'])->only(['index', 'show', 'fetchRoles']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Create Role'])->only(['create', 'store']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Edit Role'])->only(['edit', 'update']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Delete Role'])->only(['destroy']);
+    }
+
     public function index()
     {
         //exclude superadmin

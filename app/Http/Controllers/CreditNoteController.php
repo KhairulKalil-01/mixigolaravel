@@ -1,15 +1,24 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use App\Models\CreditNote;
 use Illuminate\Http\Request;
 use App\Models\Invoice;
 use App\CreditNoteStatus;;
+
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class CreditNoteController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', PermissionMiddleware::class . ':View Credit Note'])->only(['index', 'show', 'downloadPdf', 'fetchCreditNote']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Create Credit Note'])->only(['create', 'store']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Edit Credit Note'])->only(['edit', 'update']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Delete Credit Note'])->only(['destroy']);
+    }
 
     public function index()
     {

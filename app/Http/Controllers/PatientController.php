@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use App\Models\Client;
 use App\Models\Patient;
@@ -9,6 +10,14 @@ use Illuminate\Http\Request;
 
 class PatientController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', PermissionMiddleware::class . ':View Patient'])->only(['index', 'show', 'fetchPatient']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Create Patient'])->only(['create', 'store']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Edit Patient'])->only(['edit', 'update']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Delete Patient'])->only(['destroy']);
+    }
+
     public function index()
     {
         $patients = Patient::all();

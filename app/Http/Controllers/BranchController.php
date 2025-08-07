@@ -1,12 +1,21 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use App\Models\Branch;
 use Illuminate\Http\Request;
 
 class BranchController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', PermissionMiddleware::class . ':View Branch'])->only(['index', 'show', 'fetchBranches']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Create Branch'])->only(['create', 'store']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Edit Branch'])->only(['edit', 'update']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Delete Branch'])->only(['destroy']);
+    }
+
     public function index()
     {
         $branches = Branch::all();
@@ -48,7 +57,7 @@ class BranchController extends Controller
         return view('branches.show', compact('branch'));
     }
 
- 
+
     public function edit(string $id)
     {
         $branch = Branch::findOrFail($id);

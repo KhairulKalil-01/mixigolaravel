@@ -1,11 +1,20 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use Illuminate\Http\Request;
 
 class JobController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', PermissionMiddleware::class . ':View Job'])->only(['index', 'show', 'downloadPdf', 'fetchJob']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Create Job'])->only(['create', 'store']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Edit Job'])->only(['edit', 'update']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Delete Job'])->only(['destroy']);
+    }
+
     /**
      * Display a listing of the resource.
      */

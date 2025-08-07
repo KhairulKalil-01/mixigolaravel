@@ -7,6 +7,13 @@ use Illuminate\Http\Request;
 
 class ServicePricingController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', PermissionMiddleware::class . ':View Service Pricings'])->only(['index', 'show', 'fetchServicePricings']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Create Service Pricings'])->only(['create', 'store']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Edit Service Pricings'])->only(['edit', 'update']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Delete Service Pricings'])->only(['destroy']);
+    }
 
     public function index()
     {
