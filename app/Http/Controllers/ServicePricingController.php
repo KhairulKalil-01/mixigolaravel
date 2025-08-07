@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Spatie\Permission\Middleware\PermissionMiddleware;
 use App\Models\ServicePricing;
 use Illuminate\Http\Request;
 

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Spatie\Permission\Middleware\PermissionMiddleware;
 use App\Models\ClientPayment;
 use App\Models\Client;
 use App\Models\Quotation;

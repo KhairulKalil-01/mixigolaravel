@@ -2,15 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use Spatie\Permission\Middleware\PermissionMiddleware;
 use App\Models\BankList;
 use App\Models\Refund;
 use Illuminate\Http\Request;
 use App\Models\CreditNote;
 use App\RefundStatus;
+use App\RefundReason;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class RefundController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', PermissionMiddleware::class . ':View Refund'])->only(['index', 'show', 'downloadPdf', 'fetchRefund']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Create Refund'])->only(['create', 'store']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Edit Refund'])->only(['edit', 'update']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Delete Refund'])->only(['destroy']);
+    }
+
     public function index()
     {
         //$refunds =  Refund::all();
@@ -29,6 +39,7 @@ class RefundController extends Controller
                 'amount' => $refund->amount,
                 'status' => $refund->status,
                 'status_label' => $refund->status_label,
+                'reason' => $refund->reason_label,
             ];
         });
 
@@ -40,7 +51,8 @@ class RefundController extends Controller
         $credit_notes = CreditNote::all();
         $banks = BankList::all();
         $statuses = RefundStatus::cases();
-        return view('refunds.create', compact('credit_notes', 'banks', 'statuses'));
+        $reasons = RefundReason::cases();
+        return view('refunds.create', compact('credit_notes', 'banks', 'statuses', 'reasons'));
     }
 
     public function store(Request $request)
@@ -103,8 +115,9 @@ class RefundController extends Controller
         $credit_notes = CreditNote::with('client')->get();
         $banks = BankList::all();
         $statuses = RefundStatus::cases();
+        $reasons = RefundReason::cases();
 
-        return view('refunds.edit', compact('refund', 'credit_notes', 'banks', 'statuses'));
+        return view('refunds.edit', compact('refund', 'credit_notes', 'banks', 'statuses', 'reasons'));
     }
 
     /**
@@ -119,7 +132,7 @@ class RefundController extends Controller
             'credit_note_id' => 'required|exists:credit_notes,id',
             'status' => 'required|integer|in:0,1,2',
             'refund_date' => 'required|date',
-            'reason_type' => 'required|integer|in:0,1,2',
+            'reason_type' => 'required',
             'bank_id' => 'nullable|exists:bank_lists,id',
             'bank_account' => 'nullable|string|max:255',
             'amount' => 'required|numeric|min:0',

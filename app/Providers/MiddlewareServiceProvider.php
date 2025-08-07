@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Route;
-use Spatie\Permission\Middlewares\PermissionMiddleware;
+use Spatie\Permission\Middleware\PermissionMiddleware;
 
 class MiddlewareServiceProvider extends ServiceProvider
 {
