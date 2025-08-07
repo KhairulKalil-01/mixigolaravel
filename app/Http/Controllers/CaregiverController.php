@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use App\Models\Caregiver;
 use App\Models\Branch;
@@ -10,6 +11,14 @@ use App\EmploymentType;
 
 class CaregiverController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', PermissionMiddleware::class . ':View Caregiver'])->only(['index', 'show', 'fetchCaregiver']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Create Caregiver'])->only(['create', 'store']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Edit Caregiver'])->only(['edit', 'update']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Delete Caregiver'])->only(['destroy']);
+    }
+
     public function index()
     {
         return view('caregivers.index');

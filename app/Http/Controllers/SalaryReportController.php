@@ -6,5 +6,8 @@ use Illuminate\Http\Request;
 
 class SalaryReportController extends Controller
 {
-    //
+    public function __construct()
+    {
+        $this->middleware(['auth', PermissionMiddleware::class . ':Salary Report']);
+    }
 }

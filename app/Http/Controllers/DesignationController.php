@@ -1,12 +1,21 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use App\Models\Designation;
 use Illuminate\Http\Request;
 
 class DesignationController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', PermissionMiddleware::class . ':View Designation'])->only(['index', 'show', 'fetchDesignations']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Create Designation'])->only(['create', 'store']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Edit Designation'])->only(['edit', 'update']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Delete Designation'])->only(['destroy']);
+    }
+
     public function index()
     {
         $designations = Designation::all();

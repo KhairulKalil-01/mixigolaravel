@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use App\Models\Quotation;
 use App\Models\Client;
@@ -12,6 +13,13 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class QuotationController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', PermissionMiddleware::class . ':View Quotation'])->only(['index', 'show', 'downloadPdf', 'fetchQuotation']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Create Quotation'])->only(['create', 'store']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Edit Quotation'])->only(['edit', 'update']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Delete Quotation'])->only(['destroy']);
+    }
 
     public function index()
     {

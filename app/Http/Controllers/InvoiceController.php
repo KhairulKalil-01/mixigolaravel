@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use Illuminate\Http\Request;
 use App\Models\Invoice;
@@ -10,6 +11,14 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class InvoiceController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', PermissionMiddleware::class . ':View Invoice'])->only(['index', 'show', 'downloadPdf', 'fetchInvoice']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Create Invoice'])->only(['create', 'store']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Edit Invoice'])->only(['edit', 'update']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Delete Invoice'])->only(['destroy']);
+    }
+
     public function index()
     {
         $invoices = Invoice::all();
@@ -119,7 +128,7 @@ class InvoiceController extends Controller
             'remarks' => 'nullable|string|max:255',
         ]);
 
-       //dd($validated);
+        //dd($validated);
 
         $quotation = Quotation::findOrFail($validated['quotation_id']);
 

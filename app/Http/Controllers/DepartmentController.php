@@ -1,12 +1,21 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use App\Models\Department;
 use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', PermissionMiddleware::class . ':View Department'])->only(['index', 'show', 'fetchDepartments']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Create Department'])->only(['create', 'store']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Edit Department'])->only(['edit', 'update']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Delete Department'])->only(['destroy']);
+    }
+
 
     public function index()
     {
@@ -63,7 +72,8 @@ class DepartmentController extends Controller
         return redirect()->route('departments.index')->with('success', 'Department updated.');
     }
 
-    public function destroy(string $id) {
+    public function destroy(string $id)
+    {
         $department = Department::findOrFail($id);
         $department->delete();
 

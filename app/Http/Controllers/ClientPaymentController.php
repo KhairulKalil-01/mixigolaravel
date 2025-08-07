@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use App\Models\ClientPayment;
 use App\Models\Client;
@@ -13,6 +14,14 @@ use Illuminate\Http\Request;
 
 class ClientPaymentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', PermissionMiddleware::class . ':View Client Payment'])->only(['index', 'show', 'downloadPdf', 'fetchClientPayment']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Create Client Payment'])->only(['create', 'store']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Edit Client Payment'])->only(['edit', 'update']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Delete Client Payment'])->only(['destroy']);
+    }
+
     public function index()
     {
         $clientPayments = ClientPayment::all();

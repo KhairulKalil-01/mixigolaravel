@@ -6,6 +6,14 @@ use Illuminate\Http\Request;
 
 class ServiceReceiptController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', PermissionMiddleware::class . ':View Service Receipt'])->only(['index', 'show', 'downloadPdf', 'fetchServiceRceipt']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Create Service Receipt'])->only(['create', 'store']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Edit Service Receipt'])->only(['edit', 'update']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Delete Servcie Receipt'])->only(['destroy']);
+    }
+
     /**
      * Display a listing of the resource.
      */
