@@ -24,6 +24,7 @@
                                             <th>Client</th>
                                             <th>Amount (RM)</th>
                                             <th>Status</th>
+                                            <th>Reason</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -101,6 +102,9 @@
                         data: "status_label"
                     },
                     {
+                        data: "reason"
+                    },
+                    {
                         data: null
                     }
                 ],
@@ -108,7 +112,7 @@
                     [0, "asc"]
                 ],
                 columnDefs: [{
-                    targets: 5,
+                    targets: 6,
                     orderable: false,
                     render: function(data, type, row, meta) {
                         let buttons = "";

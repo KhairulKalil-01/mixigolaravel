@@ -1,8 +1,8 @@
 <?php
 
+use Spatie\Permission\Middleware\PermissionMiddleware;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\CaregiverController;
 use App\Http\Controllers\CaregiverPaymentController;
@@ -10,7 +10,7 @@ use App\Http\Controllers\CaregiverReportController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ClientPaymentController;
 use App\Http\Controllers\ClientReportController;
-use App\Http\Controllers\DepartmentController; 
+use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DesignationController;
 use App\Http\Controllers\EntryQuotationController;
 use App\Http\Controllers\EntryWakafController;
@@ -34,6 +34,7 @@ use App\Http\Controllers\ServicePricingController;
 use App\Http\Controllers\ServiceReceiptController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\UserController;
+use Spatie\Permission\Contracts\Permission;
 
 Route::get('/', function () {
     return view('welcome');
@@ -84,9 +85,9 @@ Route::post('fetch-roles', [RoleController::class, 'fetchRoles'])->name('roles.f
 Route::resource('service-pricings', ServicePricingController::class);
 Route::post('fetch-service-pricings', [ServicePricingController::class, 'fetchServicePricings'])->name('service-pricings.fetch');
 
-Route::resource('salary-records', SalaryRecordController::class); 
+Route::resource('salary-records', SalaryRecordController::class);
 Route::resource('salary-assign', SalaryAssignController::class);
-Route::resource('caregiver-payments',CaregiverPaymentController::class);
+Route::resource('caregiver-payments', CaregiverPaymentController::class);
 Route::resource('overtimes', OvertimeController::class);
 
 // Invoices
@@ -103,6 +104,7 @@ Route::get('/credit-notes/{credit_note}/download-pdf', [CreditNoteController::cl
 Route::resource('refunds', RefundController::class);
 Route::post('fetch-refunds', [RefundController::class, 'fetchRefund'])->name('refunds.fetch');
 Route::get('/refunds/{refund}/download-pdf', [RefundController::class, 'downloadPdf'])->name('refunds.download_pdf');
+//Route::get('refunds', [RefundController::class, 'index'])->name('refunds.index')->middleware(['auth', PermissionMiddleware::class . ':View Salary Record']);
 
 Route::resource('jobs', JobController::class);
 

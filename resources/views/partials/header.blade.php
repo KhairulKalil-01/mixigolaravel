@@ -13,6 +13,7 @@
         </div>
         <div class="header-right d-flex align-items-center justify-content-end">
             <ul class="nav-iconlist">
+            {{-- 
                 <li>
                     <div class="navicon-wrap action-dark"><i class="fa fa-moon-o icon-dark"></i><i
                             class="fa fa-sun-o icon-light" style="display:none;"></i></div>
@@ -21,6 +22,7 @@
                     <div class="navicon-wrap"><i data-feather="bell"></i>
                         <div class="noti-count">88</div>
                     </div>
+                     
                     <div class="hover-dropdown navnotification-drop">
                         <div class="drop-header">
                             <h5>notification<span>88</span></h5>
@@ -90,99 +92,31 @@
                                         </div>
                                     </div>
                                 </a></li>
-                        </ul>
+                        </ul> 
                         <div class="drop-footer"><a href="email-inbox.html">See All Notification</a></div>
                     </div>
                 </li>
-                <li>
-                    <div class="navicon-wrap"><i data-feather="shopping-cart"></i>
-                        <div class="noti-count">88</div>
-                    </div>
-                    <div class="hover-dropdown navshop-drop">
-                        <div class="drop-header">
-                            <h5>Shopping<span>7</span></h5>
-                        </div>
-                        <ul data-simplebar>
-                            <li><a href="javascript:void(0);">
-                                    <div class="media">
-                                        <div class="img-wrap"><img class="img-fluid"
-                                                src="{{ asset('assets/images/ecom-dashboard/small-pro/1.jpg') }}"
-                                                alt="">
-                                        </div>
-                                        <div class="media-body">
-                                            <h6>teddy bear</h6><span class="text-light">$250</span>
-                                        </div>
-                                        <div class="close-pro"><i class="ti-trash"></i></div>
-                                    </div>
-                                </a></li>
-                            <li><a href="javascript:void(0);">
-                                    <div class="media">
-                                        <div class="img-wrap"><img class="img-fluid"
-                                                src="{{ asset('assets/images/ecom-dashboard/small-pro/2.jpg') }}"
-                                                alt="">
-                                        </div>
-                                        <div class="media-body">
-                                            <h6>iphone</h6><span class="text-light">$140</span>
-                                        </div>
-                                        <div class="close-pro"><i class="ti-trash"></i></div>
-                                    </div>
-                                </a></li>
-                            <li><a href="javascript:void(0);">
-                                    <div class="media">
-                                        <div class="img-wrap"><img class="img-fluid"
-                                                src="{{ asset('assets/images/ecom-dashboard/small-pro/3.jpg') }}"
-                                                alt="">
-                                        </div>
-                                        <div class="media-body">
-                                            <h6>Apple Airpod</h6><span class="text-light">$310</span>
-                                        </div>
-                                        <div class="close-pro"><i class="ti-trash"></i></div>
-                                    </div>
-                                </a></li>
-                            <li><a href="javascript:void(0);">
-                                    <div class="media">
-                                        <div class="img-wrap"><img class="img-fluid"
-                                                src="{{ asset('assets/images/ecom-dashboard/small-pro/4.jpg') }}"
-                                                alt="">
-                                        </div>
-                                        <div class="media-body">
-                                            <h6>Motors</h6><span class="text-light">$510</span>
-                                        </div>
-                                        <div class="close-pro"><i class="ti-trash"></i></div>
-                                    </div>
-                                </a></li>
-                            <li><a href="javascript:void(0);">
-                                    <div class="media">
-                                        <div class="img-wrap"><img class="img-fluid"
-                                                src="{{ asset('assets/images/ecom-dashboard/small-pro/5.jpg') }}"
-                                                alt="">
-                                        </div>
-                                        <div class="media-body">
-                                            <h6>iphone</h6><span class="text-light">$140</span>
-                                        </div>
-                                        <div class="close-pro"><i class="ti-trash"></i></div>
-                                    </div>
-                                </a></li>
-                        </ul>
-                        <div class="drop-footer"><a href="checkout.html">Checkout All</a></div>
-                    </div>
-                </li>
+           
                 <li>
                     <div class="navicon-wrap btn-windowfull"><i data-feather="maximize"></i></div>
                 </li>
+            --}}
                 <li class="nav-profile">
                     <div class="media">
                         <div class="user-icon"><img class="img-fluid rounded-50"
-                                src="{{ asset('assets/images/avtar/3.jpg') }}" alt=""></div>
+                                src="{{ asset('assets/images/avtar/profile.jpg') }}" alt=""></div>
                         <div class="media-body">
-                            <h6>{{ Auth::user()->name }}</h6><span class="text-light">{{ Auth::user()->getRoleNames()->first() }}</span>
+                            <h6>{{ Auth::user()->name }}</h6><span
+                                class="text-light">{{ Auth::user()->getRoleNames()->first() }}</span>
                         </div>
                     </div>
                     <div class="hover-dropdown navprofile-drop">
                         <ul>
-                            <li><a href="profile.html"><i class="ti-user"></i>profile</a></li>
-                            <li><a href="email-inbox.html"><i class="ti-email"></i>inbox</a></li>
-                            <li><a href="user-edit.html"><i class="ti-settings"></i>setting</a></li>
+                            {{--  
+                                <li><a href="profile.html"><i class="ti-user"></i>profile</a></li>
+                                <li><a href="email-inbox.html"><i class="ti-email"></i>inbox</a></li>
+                                <li><a href="user-edit.html"><i class="ti-settings"></i>setting</a></li>
+                            --}}
                             <li>
                                 <a href="{{ route('logout') }}"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

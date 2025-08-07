@@ -30,13 +30,13 @@
     <div class="form-group">
         <label class="form-label" for="reason_type">Reason</label>
         <select name="reason_type" id="reason_type" class="form-control" required>
-            <option value="">-- Select Reason --</option>
-            <option value="1" {{ old('reason_type', $refund->reason_type ?? '') == 1 ? 'selected' : '' }}>
-                Cancellation</option>
-            <option value="2" {{ old('reason_type', $refund->reason_type ?? '') == 2 ? 'selected' : '' }}>
-                Discount Adjustment</option>
-            <option value="3" {{ old('reason_type', $refund->reason_type ?? '') == 3 ? 'selected' : '' }}>
-                Overpayment</option>
+          <option value="">-- Select Reason --</option>
+            @foreach ($reasons as $reason)
+                <option value="{{ $reason->value }}"
+                    {{ old('reason_type', $refund->reason_type ?? null) == $reason->value ? 'selected' : '' }}>
+                    {{ $reason->label() }}
+                </option>
+            @endforeach
         </select>
     </div>
 

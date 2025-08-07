@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\RefundStatus;
+use App\RefundReason;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Refund extends Model
@@ -35,5 +36,11 @@ class Refund extends Model
     {
         $status = RefundStatus::tryFrom($this->status);
         return $status?->label() ?? 'Unknown';
+    }
+
+    public function getReasonLabelAttribute(): string
+    {
+        $reason = RefundReason::tryFrom($this->reason_type);
+        return $reason?->label() ?? 'Unknown';
     }
 }
