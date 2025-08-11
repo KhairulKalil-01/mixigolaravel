@@ -45,7 +45,7 @@ class PermissionSeeder extends Seeder
 
             // Users
             ['name' => 'Users', 'slug' => 'users.index', 'visible_in_menu' => '1', 'module_id' => '3'],
-            ['name' => 'Create Users', 'slug' => 'users.create', 'visible_in_menu' => '0', 'module_id' => '3'],
+            ['name' => 'Create User', 'slug' => 'user.create', 'visible_in_menu' => '0', 'module_id' => '3'],
             ['name' => 'View User', 'slug' => 'users.show', 'visible_in_menu' => '0', 'module_id' => '3'],
             ['name' => 'Edit User', 'slug' => 'users.edit', 'visible_in_menu' => '0', 'module_id' => '3'],
             ['name' => 'Delete User', 'slug' => 'users.destroy', 'visible_in_menu' => '0', 'module_id' => '3'],
@@ -98,6 +98,7 @@ class PermissionSeeder extends Seeder
             ['name' => 'View Salary Record', 'slug' => 'salary-records.show', 'visible_in_menu' => '0', 'module_id' => '5'],
             ['name' => 'Edit Salary Record', 'slug' => 'salary-records.edit', 'visible_in_menu' => '0', 'module_id' => '5'],
             ['name' => 'Delete Salary Record', 'slug' => 'salary-records.destroy', 'visible_in_menu' => '0', 'module_id' => '5'],
+    
 
             // Salary Assign
             ['name' => 'Salary Assign', 'slug' => 'salary-assign.index', 'visible_in_menu' => '1', 'module_id' => '5'],
@@ -111,6 +112,13 @@ class PermissionSeeder extends Seeder
             ['name' => 'View Caregiver Payment', 'slug' => 'caregiver-payments.show', 'visible_in_menu' => '0', 'module_id' => '5'],
             ['name' => 'Edit Caregiver Payment', 'slug' => 'caregiver-payments.edit', 'visible_in_menu' => '0', 'module_id' => '5'],
             ['name' => 'Delete Caregiver Payment', 'slug' => 'caregiver-payments.destroy', 'visible_in_menu' => '0', 'module_id' => '5'],
+
+            // Staff
+            ['name' => 'Staff', 'slug' => 'staff.index', 'visible_in_menu' => '1', 'module_id' => '5'],
+            ['name' => 'Create Staff', 'slug' => 'staff.create', 'visible_in_menu' => '0', 'module_id' => '5'],
+            ['name' => 'View Staff', 'slug' => 'staff.show', 'visible_in_menu' => '0', 'module_id' => '5'],
+            ['name' => 'Edit Staff', 'slug' => 'staff.edit', 'visible_in_menu' => '0', 'module_id' => '5'],
+            ['name' => 'Delete Staff', 'slug' => 'staff.destroy', 'visible_in_menu' => '0', 'module_id' => '5'],
 
             // Clients
             ['name' => 'Clients', 'slug' => 'clients.index', 'visible_in_menu' => '1', 'module_id' => '6'],

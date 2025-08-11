@@ -9,4 +9,9 @@ class Staff extends Model
     protected $table = 'staffs';
     protected $guarded = [];
 
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

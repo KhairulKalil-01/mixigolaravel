@@ -62,6 +62,7 @@ Route::resource('training', EntryTrainingController::class);
 
 // User
 Route::resource('users', UserController::class);
+Route::post('fetch-users', [UserController::class, 'fetchUser'])->name('users.fetch');
 
 // Branches
 Route::resource('branches', BranchController::class);
@@ -89,6 +90,11 @@ Route::resource('salary-records', SalaryRecordController::class);
 Route::resource('salary-assign', SalaryAssignController::class);
 Route::resource('caregiver-payments', CaregiverPaymentController::class);
 Route::resource('overtimes', OvertimeController::class);
+
+// Staff
+Route::resource('staff', StaffController::class);
+Route::post('fetch-staff', [StaffController::class, 'fetchStaff'])->name('staff.fetch');
+
 
 // Invoices
 Route::resource('invoices', InvoiceController::class);
