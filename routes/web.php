@@ -35,6 +35,7 @@ use App\Http\Controllers\ServiceReceiptController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\UserController;
 use Spatie\Permission\Contracts\Permission;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -63,6 +64,13 @@ Route::resource('training', EntryTrainingController::class);
 // User
 Route::resource('users', UserController::class);
 Route::post('fetch-users', [UserController::class, 'fetchUser'])->name('users.fetch');
+
+// Profile
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+});
 
 // Branches
 Route::resource('branches', BranchController::class);
