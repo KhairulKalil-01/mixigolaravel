@@ -117,6 +117,7 @@
                                 <li><a href="email-inbox.html"><i class="ti-email"></i>inbox</a></li>
                                 <li><a href="user-edit.html"><i class="ti-settings"></i>setting</a></li>
                             --}}
+                            <li><a href="{{ route('profile.show') }}">Profile</a></li>
                             <li>
                                 <a href="{{ route('logout') }}"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

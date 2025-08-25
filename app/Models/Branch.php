@@ -24,4 +24,9 @@ class Branch extends Model
     {
         return $this->hasMany(Patient::class);
     }
+
+    public function staff()
+    {
+        return $this->hasMany(Staff::class);
+    }
 }
