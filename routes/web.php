@@ -26,7 +26,7 @@ use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\QuotationController;
 use App\Http\Controllers\RoleController;
-use App\Http\Controllers\SalaryAssignController;
+use App\Http\Controllers\SalaryStructureController;
 use App\Http\Controllers\SalaryRecordController;
 use App\Http\Controllers\SalaryReportController;
 use App\Http\Controllers\SalesReportController;
@@ -95,7 +95,12 @@ Route::resource('service-pricings', ServicePricingController::class);
 Route::post('fetch-service-pricings', [ServicePricingController::class, 'fetchServicePricings'])->name('service-pricings.fetch');
 
 Route::resource('salary-records', SalaryRecordController::class);
-Route::resource('salary-assign', SalaryAssignController::class);
+
+// Salary Structures
+Route::resource('salary-structures', SalaryStructureController::class);
+Route::post('salary-structures', [SalaryStructureController::class, 'fetchSalaryStructure'])->name('salary-structures.fetch');
+
+
 Route::resource('caregiver-payments', CaregiverPaymentController::class);
 Route::resource('overtimes', OvertimeController::class);
 

@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Staff;
+use App\Models\SalaryStructure;
 
 class existingUserSeeder extends Seeder
 {

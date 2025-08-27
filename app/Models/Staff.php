@@ -21,4 +21,9 @@ class Staff extends Model
     {
         return $this->belongsTo(Branch::class);
     }
+
+    public function salaryStructure()
+    {
+        return $this->hasOne(SalaryStructure::class);
+    }
 }

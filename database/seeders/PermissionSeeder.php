@@ -99,12 +99,11 @@ class PermissionSeeder extends Seeder
             ['name' => 'Edit Salary Record', 'slug' => 'salary-records.edit', 'visible_in_menu' => '0', 'module_id' => '5'],
             ['name' => 'Delete Salary Record', 'slug' => 'salary-records.destroy', 'visible_in_menu' => '0', 'module_id' => '5'],
     
-
-            // Salary Assign
-            ['name' => 'Salary Assign', 'slug' => 'salary-assign.index', 'visible_in_menu' => '1', 'module_id' => '5'],
-            ['name' => 'View Salary Assign', 'slug' => 'salary-assign.show', 'visible_in_menu' => '0', 'module_id' => '5'],
-            ['name' => 'Edit Salary Assign', 'slug' => 'salary-assign.edit', 'visible_in_menu' => '0', 'module_id' => '5'],
-            ['name' => 'Delete Salary Assign', 'slug' => 'salary-assign.destroy', 'visible_in_menu' => '0', 'module_id' => '5'],
+            // Salary Assign - Salary  Structures
+            ['name' => 'Salary Structures', 'slug' => 'salary-structures.index', 'visible_in_menu' => '1', 'module_id' => '5'],
+            ['name' => 'View Salary Structure', 'slug' => 'salary-structures.show', 'visible_in_menu' => '0', 'module_id' => '5'],
+            ['name' => 'Edit Salary Structure', 'slug' => 'salary-structures.edit', 'visible_in_menu' => '0', 'module_id' => '5'],
+            ['name' => 'Delete Salary Structure', 'slug' => 'salary-structures.destroy', 'visible_in_menu' => '0', 'module_id' => '5'],
 
             // Caregiver Payments
             ['name' => 'Caregiver Payments', 'slug' => 'caregiver-payments.index', 'visible_in_menu' => '1', 'module_id' => '5'],

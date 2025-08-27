@@ -29,10 +29,11 @@
                                     <p><strong>Permanent Address:</strong> {{ $user->staff->permanent_address }}</p>
                                     <p><strong>Emergency Contact:</strong> {{ $user->staff->emergency_contact }}</p>
                                     <p><strong>Emergency Contact Phone:</strong> {{ $user->staff->emergency_phone_no }}</p>
-
+                                    <br>
+                                    <a href="{{ route('profile.edit') }}" class="btn btn-primary">Edit Profile</a>
                                 </div>
 
-                                <a href="{{ route('profile.edit') }}" class="btn btn-primary">Edit Profile</a>
+
                             </div>
                         </div>
 

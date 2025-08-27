@@ -11,6 +11,15 @@ use Illuminate\Http\Request;
 class StaffController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware(['auth', PermissionMiddleware::class . ':View Staff'])->only(['index', 'show', 'fetchStaff']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Create Staff'])->only(['create', 'store']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Edit Staff'])->only(['edit', 'update']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Delete Staff'])->only(['destroy']);
+    }
+
+
     public function index()
     {
         return view('staff.index');
