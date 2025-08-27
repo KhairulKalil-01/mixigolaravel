@@ -6,7 +6,7 @@ use Spatie\Permission\Middleware\PermissionMiddleware;
 use App\Models\CreditNote;
 use Illuminate\Http\Request;
 use App\Models\Invoice;
-use App\CreditNoteStatus;;
+use App\CreditNoteStatus;
 
 use Barryvdh\DomPDF\Facade\Pdf;
 
