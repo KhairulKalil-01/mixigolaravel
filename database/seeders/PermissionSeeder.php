@@ -105,6 +105,13 @@ class PermissionSeeder extends Seeder
             ['name' => 'Edit Salary Structure', 'slug' => 'salary-structures.edit', 'visible_in_menu' => '0', 'module_id' => '5'],
             ['name' => 'Delete Salary Structure', 'slug' => 'salary-structures.destroy', 'visible_in_menu' => '0', 'module_id' => '5'],
 
+            // Staff Claim
+            ['name' => 'Staff Claims', 'slug' => 'staff-claims.index', 'visible_in_menu' => '1', 'module_id' => '5'],
+            ['name' => 'Create Staff Claim', 'slug' => 'staff-claims.create', 'visible_in_menu' => '0', 'module_id' => '5'],
+            ['name' => 'View Staff Claim', 'slug' => 'staff-claims.show', 'visible_in_menu' => '0', 'module_id' => '5'],
+            ['name' => 'Edit Staff Claim', 'slug' => 'staff-claims.edit', 'visible_in_menu' => '0', 'module_id' => '5'],
+            ['name' => 'Delete Staff Claim', 'slug' => 'staff-claims.destroy', 'visible_in_menu' => '0', 'module_id' => '5'],
+
             // Caregiver Payments
             ['name' => 'Caregiver Payments', 'slug' => 'caregiver-payments.index', 'visible_in_menu' => '1', 'module_id' => '5'],
             ['name' => 'Create Caregiver Payment', 'slug' => 'caregiver-payments.create', 'visible_in_menu' => '0', 'module_id' => '5'],

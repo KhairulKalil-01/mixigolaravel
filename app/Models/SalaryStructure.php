@@ -17,4 +17,9 @@ class SalaryStructure extends Model
     {
         return $this->belongsTo(Staff::class);
     }
+
+    public function allowances()
+    {
+        return $this->hasMany(StaffAllowance::class);
+    }
 }

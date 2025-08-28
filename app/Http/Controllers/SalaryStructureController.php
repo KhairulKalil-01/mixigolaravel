@@ -6,6 +6,7 @@ use Spatie\Permission\Middleware\PermissionMiddleware;
 use Illuminate\Http\Request;
 use App\Models\Staff;
 use App\Models\SalaryStructure;
+use App\Models\StaffAllowance;
 use Illuminate\Support\Carbon;
 
 class SalaryStructureController extends Controller
@@ -32,10 +33,7 @@ class SalaryStructureController extends Controller
             ->where(function ($query) use ($today) {
                 $query->whereNull('effective_to')
                     ->orWhere('effective_to', '>=', $today);
-            })
-            ->orderBy('base_salary', 'desc')
-            ->get()
-            ->map(function ($salary) {
+            })->orderBy('base_salary', 'desc')->get()->map(function ($salary) {
                 return [
                     'id' => $salary->id,
                     'staff_id' => $salary->staff_id,
@@ -59,7 +57,8 @@ class SalaryStructureController extends Controller
     {
         $staff = Staff::findOrFail($id);
 
-        $salary_history = $staff->SalaryStructure()
+        $salary_history = $staff->salaryStructure()
+            ->with('allowances')
             ->orderBy('effective_to', 'asc')
             ->get();
 
@@ -71,9 +70,10 @@ class SalaryStructureController extends Controller
         return view('salary-structures.show', compact('staff', 'current_salary', 'salary_history'));
     }
 
-    public function edit(string $id)
+    public function edit(SalaryStructure $salary_structure)
     {
-        $salary_structure = SalaryStructure::findOrFail($id);
+        $salary_structure->load('allowances');
+
         return view('salary-structures.edit', compact('salary_structure'));
     }
 
@@ -87,16 +87,37 @@ class SalaryStructureController extends Controller
         ]);
 
         // Create a new record
-        SalaryStructure::create([
+        $newSalaryStructure = SalaryStructure::create([
             'staff_id' => $staffId,
             'base_salary' => $request->base_salary,
             'epf_employee' => $request->epf_employee,
             'epf_employer' => $request->epf_employer,
             'work_day_per_week' => $request->work_day_per_week,
             'work_hour_per_day' => $request->work_hour_per_day,
-            'effective_from' => Carbon::today(), // starts today
-            'effective_to' => null, // current record
+            'effective_from' => Carbon::today(),
+            'effective_to' => null,
         ]);
+
+        // End the current allowances for this salary structure
+        StaffAllowance::where('salary_structure_id', $salaryStructure->id)
+            ->update(['effective_to' => Carbon::yesterday()]);
+
+        // Create new allowance records (if provided in request)
+        if ($request->has('allowances') && !empty($request->allowances)) {
+            foreach ($request->allowances as $allowance) {
+                // Skip empty rows (e.g., no type, no amount)
+
+                if (!empty($allowance['type']) && !empty($allowance['amount'])) {
+                    StaffAllowance::create([
+                        'salary_structure_id' => $newSalaryStructure->id,
+                        'allowance_type' => $allowance['type'],
+                        'amount' => $allowance['amount'],
+                        'effective_from' => Carbon::today(),
+                        'effective_to' => null,
+                    ]);
+                }
+            }
+        }
 
         return redirect()->route('salary-structures.index')->with('success', 'Salary structure updated successfully.');
     }

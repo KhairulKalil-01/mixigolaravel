@@ -40,6 +40,7 @@
                                         <div class="card-body">
                                             <div class="container">
                                                 <h5>Salary Structure History</h5>
+                                                <br>
                                                 <div class="salary-history">
                                                     @forelse ($salary_history as $history)
                                                         <div
@@ -54,8 +55,13 @@
                                                                             {{ $history->epf_employee }}%</p>
                                                                         <p class="mb-1">EPF Employer:
                                                                             {{ $history->epf_employer }}%</p>
-                                                                    </div>
-                                                                    <div class="text-end">
+                                                                        <h5 class="mb-1">Allowances: </h5>
+                                                                            @foreach ($history->allowances as $allowance)
+                                                                                <p class='mb-1'>
+                                                                                    {{ $allowance->allowance_type }}: RM
+                                                                                    {{ number_format($allowance->amount, 2) }}
+                                                                                </p>
+                                                                            @endforeach
                                                                         <span class="badge bg-primary">
                                                                             From:
                                                                             {{ $history->effective_from->format('d-m-Y') }}

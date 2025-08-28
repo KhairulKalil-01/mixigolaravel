@@ -52,5 +52,87 @@
             value="{{ old('socso_employer', $salaryStructure->socso_employer ?? 0) }}">
     </div>
 
+    <h5>Allowances</h5>
+    <br>
+    <div id="allowances">
+        @if (isset($salary_structure) && $salary_structure->allowances->isNotEmpty())
+            @foreach ($salary_structure->allowances as $index => $allowance)
+                <div class="row mb-2 allowance-row">
+                    <div class="col-md-6">
+                        <input type="text" name="allowances[{{ $index }}][type]" class="form-control"
+                            placeholder="Allowance Type" value="{{ $allowance->allowance_type }}">
+                    </div>
+                    <div class="col-md-4">
+                        <input type="number" name="allowances[{{ $index }}][amount]" class="form-control"
+                            placeholder="Amount" value="{{ $allowance->amount }}">
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-danger remove-allowance">Remove</button>
+                    </div>
+                </div>
+            @endforeach
+        @else
+            <!-- Empty default row if no allowances -->
+            <div class="row mb-2 allowance-row">
+                <div class="col-md-6">
+                    <input type="text" name="allowances[0][type]" class="form-control" placeholder="Allowance Type">
+                </div>
+                <div class="col-md-4">
+                    <input type="number" name="allowances[0][amount]" class="form-control" placeholder="Amount">
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-danger remove-allowance">Remove</button>
+                </div>
+            </div>
+        @endif
+    </div>
+
+    <!-- Hidden template row -->
+    <div id="allowance-template" class="d-none">
+        <div class="row mb-2 allowance-row">
+            <div class="col-md-6">
+                <input type="text" class="form-control allowance-type" placeholder="Allowance Type">
+            </div>
+            <div class="col-md-4">
+                <input type="number" class="form-control allowance-amount" placeholder="Amount">
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-danger remove-allowance">Remove</button>
+            </div>
+        </div>
+    </div>
+
+    <button type="button" id="add-allowance" class="btn btn-sm btn-secondary">+ Add Allowance</button>
+
+
+    <br><br>
+
     <button class="btn btn-primary" type="submit">Submit</button>
+
+
+    <script>
+        let allowanceIndex = {{ $salary_structure->allowances->count() ?? 1 }};
+
+        document.getElementById('add-allowance').addEventListener('click', function() {
+            const template = document.querySelector('#allowance-template .allowance-row');
+            const clone = template.cloneNode(true);
+
+            // Update name attributes dynamically
+            clone.querySelector('.allowance-type').setAttribute('name', `allowances[${allowanceIndex}][type]`);
+            clone.querySelector('.allowance-amount').setAttribute('name', `allowances[${allowanceIndex}][amount]`);
+
+            document.getElementById('allowances').appendChild(clone);
+            allowanceIndex++;
+        });
+
+        // Remove allowance row (event delegation)
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('remove-allowance')) {
+                e.target.closest('.allowance-row').remove();
+            }
+        });
+
+        
+    </script>
+
 </form>
