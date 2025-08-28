@@ -27,6 +27,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\QuotationController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SalaryStructureController;
+use App\Http\Controllers\StaffClaimController;
 use App\Http\Controllers\SalaryRecordController;
 use App\Http\Controllers\SalaryReportController;
 use App\Http\Controllers\SalesReportController;
@@ -99,6 +100,10 @@ Route::resource('salary-records', SalaryRecordController::class);
 // Salary Structures
 Route::resource('salary-structures', SalaryStructureController::class);
 Route::post('salary-structures', [SalaryStructureController::class, 'fetchSalaryStructure'])->name('salary-structures.fetch');
+
+// Staff Claims
+Route::resource('staff-claims', StaffClaimController::class);
+Route::post('staff-claims', [StaffClaimController::class, 'fetchStaffClaim'])->name('staff-claims.fetch');
 
 
 Route::resource('caregiver-payments', CaregiverPaymentController::class);

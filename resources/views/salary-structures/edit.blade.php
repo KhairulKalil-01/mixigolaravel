@@ -15,7 +15,7 @@
                                 @include('salary-structures.partials.form', [
                                     'action' => route('salary-structures.update', $salary_structure->id),
                                     'method' => 'PUT',
-                                    'salary_structure' => $salary_structure,
+
                                 ])
                             </div>
                         </div>
