@@ -26,4 +26,14 @@ class Staff extends Model
     {
         return $this->hasOne(SalaryStructure::class);
     }
+
+    public function claims()
+    {
+        return $this->hasMany(StaffClaim::class);
+    }
+
+    public function overtimes()
+    {
+        return $this->hasMany(StaffOvertime::class);
+    }
 }

@@ -37,7 +37,6 @@ class RefundController extends Controller
                 'refund_number' => $refund->refund_number,
                 'client_name' => $refund->invoice->client->name ?? '-',
                 'amount' => $refund->amount,
-                'status' => $refund->status,
                 'status_label' => $refund->status_label,
                 'reason' => $refund->reason_label,
             ];
