@@ -98,7 +98,7 @@ class PermissionSeeder extends Seeder
             ['name' => 'View Salary Record', 'slug' => 'salary-records.show', 'visible_in_menu' => '0', 'module_id' => '5'],
             ['name' => 'Edit Salary Record', 'slug' => 'salary-records.edit', 'visible_in_menu' => '0', 'module_id' => '5'],
             ['name' => 'Delete Salary Record', 'slug' => 'salary-records.destroy', 'visible_in_menu' => '0', 'module_id' => '5'],
-    
+
             // Salary Assign - Salary  Structures
             ['name' => 'Salary Structures', 'slug' => 'salary-structures.index', 'visible_in_menu' => '1', 'module_id' => '5'],
             ['name' => 'View Salary Structure', 'slug' => 'salary-structures.show', 'visible_in_menu' => '0', 'module_id' => '5'],
@@ -111,6 +111,12 @@ class PermissionSeeder extends Seeder
             ['name' => 'View Staff Claim', 'slug' => 'staff-claims.show', 'visible_in_menu' => '0', 'module_id' => '5'],
             ['name' => 'Edit Staff Claim', 'slug' => 'staff-claims.edit', 'visible_in_menu' => '0', 'module_id' => '5'],
             ['name' => 'Delete Staff Claim', 'slug' => 'staff-claims.destroy', 'visible_in_menu' => '0', 'module_id' => '5'],
+
+            // Claim Approvals
+            ['name' => 'Claim Approvals', 'slug' => 'claim-approvals.index', 'visible_in_menu' => '1', 'module_id' => '5'],
+            ['name' => 'View Claim Approval', 'slug' => 'claim-approvals.show', 'visible_in_menu' => '0', 'module_id' => '5'],
+            ['name' => 'Edit Claim Approval', 'slug' => 'claim-approvals.edit', 'visible_in_menu' => '0', 'module_id' => '5'],
+
 
             // Caregiver Payments
             ['name' => 'Caregiver Payments', 'slug' => 'caregiver-payments.index', 'visible_in_menu' => '1', 'module_id' => '5'],
