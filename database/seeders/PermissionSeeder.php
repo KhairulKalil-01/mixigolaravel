@@ -117,6 +117,19 @@ class PermissionSeeder extends Seeder
             ['name' => 'View Claim Approval', 'slug' => 'claim-approvals.show', 'visible_in_menu' => '0', 'module_id' => '5'],
             ['name' => 'Edit Claim Approval', 'slug' => 'claim-approvals.edit', 'visible_in_menu' => '0', 'module_id' => '5'],
 
+            // Staff Overtime
+            ['name' => 'Staff Overtimes', 'slug' => 'staff-overtimes.index', 'visible_in_menu' => '1', 'module_id' => '5'],
+            ['name' => 'Create Staff Overtime', 'slug' => 'staff-overtimes.create', 'visible_in_menu' => '0', 'module_id' => '5'],
+            ['name' => 'View Staff Overtime', 'slug' => 'staff-overtimes.show', 'visible_in_menu' => '0', 'module_id' => '5'],
+            ['name' => 'Edit Staff Overtime', 'slug' => 'staff-overtimes.edit', 'visible_in_menu' => '0', 'module_id' => '5'],
+            ['name' => 'Delete Staff Overtime', 'slug' => 'staff-overtimes.destroy', 'visible_in_menu' => '0', 'module_id' => '5'],
+
+            // Overtime Approvals
+            ['name' => 'Staff Overtime Approvals', 'slug' => 'staff-overtime-approvals.index', 'visible_in_menu' => '1', 'module_id' => '5'],
+            ['name' => 'Create Staff Overtime Approval', 'slug' => 'staff-overtime-approvals.create', 'visible_in_menu' => '0', 'module_id' => '5'],
+            ['name' => 'View Staff Overtime Approval', 'slug' => 'staff-overtime-approvals.show', 'visible_in_menu' => '0', 'module_id' => '5'],
+            ['name' => 'Edit Staff Overtime Approval', 'slug' => 'staff-overtime-approvals.edit', 'visible_in_menu' => '0', 'module_id' => '5'],
+            ['name' => 'Delete Staff Overtime Approval', 'slug' => 'staff-overtime-approvals.destroy', 'visible_in_menu' => '0', 'module_id' => '5'],
 
             // Caregiver Payments
             ['name' => 'Caregiver Payments', 'slug' => 'caregiver-payments.index', 'visible_in_menu' => '1', 'module_id' => '5'],
@@ -195,12 +208,7 @@ class PermissionSeeder extends Seeder
             ['name' => 'Edit Client Payment', 'slug' => 'client-payments.edit', 'visible_in_menu' => '0', 'module_id' => '8'],
             ['name' => 'Delete Client Payment', 'slug' => 'client-payments.destroy', 'visible_in_menu' => '0', 'module_id' => '8'],
 
-            // Overtimes
-            ['name' => 'Overtimes', 'slug' => 'overtimes.index', 'visible_in_menu' => '1', 'module_id' => '5'],
-            ['name' => 'Create Overtime', 'slug' => 'overtimes.create', 'visible_in_menu' => '0', 'module_id' => '5'],
-            ['name' => 'View Overtime', 'slug' => 'overtimes.show', 'visible_in_menu' => '0', 'module_id' => '5'],
-            ['name' => 'Edit Overtime', 'slug' => 'overtimes.edit', 'visible_in_menu' => '0', 'module_id' => '5'],
-            ['name' => 'Delete Overtime', 'slug' => 'overtimes.destroy', 'visible_in_menu' => '0', 'module_id' => '5'],
+
 
             // Service Receipts
             ['name' => 'Service Receipts', 'slug' => 'service-receipts.index', 'visible_in_menu' => '1', 'module_id' => '8'],

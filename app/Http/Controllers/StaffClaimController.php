@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use App\Models\StaffClaim;
 use App\Models\Staff;
-use App\StaffClaimStatus;
 use Illuminate\Http\Request;
 
 class StaffClaimController extends Controller

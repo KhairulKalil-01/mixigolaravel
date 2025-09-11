@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('staff_id');
             $table->foreign('staff_id')->references('id')->on('staffs')->onDelete('cascade');
-            $table->date('overtime_date');
             $table->datetime('start_time');
             $table->datetime('end_time');
             $table->decimal('hours', 5, 2);
-            $table->decimal('rate', 8, 2);
+            $table->decimal('hourly_rate', 8, 2);
+            $table->decimal('multiplier', 8, 2)->default(1.50);
             $table->decimal('amount', 10, 2);
             $table->integer('status')->default(0); // 0 = Pending, 1 = Approved, 2 = Rejected, 3 = Paid/Completed
             $table->text('remarks')->nullable();
