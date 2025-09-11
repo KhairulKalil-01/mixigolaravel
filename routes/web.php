@@ -21,7 +21,7 @@ use App\Http\Controllers\CreditNoteController;
 use App\Http\Controllers\RefundController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\OperationReportController;
-use App\Http\Controllers\OvertimeController;
+use App\Http\Controllers\OvertimeApprovalController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\QuotationController;
@@ -29,6 +29,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SalaryStructureController;
 use App\Http\Controllers\StaffClaimController;
 use App\Http\Controllers\ClaimApprovalController;
+use App\Http\Controllers\StaffOvertimeController;
 use App\Http\Controllers\SalaryRecordController;
 use App\Http\Controllers\SalaryReportController;
 use App\Http\Controllers\SalesReportController;
@@ -110,10 +111,15 @@ Route::post('fetch-staff-claims', [StaffClaimController::class, 'fetchClaimsBySt
 Route::resource('claim-approvals', ClaimApprovalController::class)->except(['create', 'store', 'destroy']);
 Route::post('fetch-claim-approvals', [ClaimApprovalController::class, 'fetchClaimApprovals'])->name('claim-approvals.fetch');
 
+// Staff Overtimes
+Route::resource('staff-overtimes', StaffOvertimeController::class);
+Route::post('fetch-staff-overtimes', [StaffOvertimeController::class, 'fetchStaffOvertimes'])->name('staff-overtimes.fetch');
 
+// Overtime Approvals
+Route::resource('staff-overtime-approvals', OvertimeApprovalController::class);
+Route::post('fetch-overtimes', [OvertimeApprovalController::class, 'fetchOvertimes'])->name('overtimes.fetch');
 
 Route::resource('caregiver-payments', CaregiverPaymentController::class);
-Route::resource('overtimes', OvertimeController::class);
 
 // Staff
 Route::resource('staff', StaffController::class);
