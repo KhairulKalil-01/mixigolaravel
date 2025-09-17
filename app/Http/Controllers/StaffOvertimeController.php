@@ -108,12 +108,17 @@ class StaffOvertimeController extends Controller
         return view('staff-overtimes.show', compact('overtime'));
     }
 
-    public function edit(StaffOvertime $staffOvertime)
+    // No edit and update for this module
+    /*     public function edit(StaffOvertime $staffOvertime)
     {
+       if ($staffOvertime->status != 0) {
+            return redirect()->route('staff-overtimes.index')->with('error', 'Can only edit pending overtime.');
+        }
+
         $overtime = $staffOvertime;
         $hourlyRate = $this->getHourlyRate();
         return view('staff-overtimes.edit', compact('overtime', 'hourlyRate'));
-    }
+    } 
 
     public function update(Request $request, StaffOvertime $staff_overtime)
     {
@@ -142,13 +147,13 @@ class StaffOvertimeController extends Controller
 
         return redirect()->route('staff-overtimes.index')->with('success', 'Overtime record updated successfully.');
     }
-
-     public function destroy(StaffOvertime $staff_overtime)
+ */
+    public function destroy(StaffOvertime $staff_overtime)
     {
         if ($staff_overtime->status != 0) { // Not Pending
             return response()->json([
                 'success' => false,
-                'message' => 'This claim has been approved/paid and cannot be deleted.'
+                'message' => 'Can only delete pending overtime.'
             ], 400); // 400 Bad Request
         }
 

@@ -117,12 +117,7 @@
                             buttons +=
                                 `<a href="/staff-overtimes/${row.id}" class="btn btn-info viewBtn">View</a>&nbsp;`;
                         @endcan
-
-                        @can('Edit Staff Overtime')
-                            buttons +=
-                                `<a href="/staff-overtimes/${row.id}/edit" class="btn btn-primary editBtn">Edit</a>&nbsp;`;
-                        @endcan
-
+                        /* No edit for overtime request (Only create/delete)*/
                         @can('Delete Staff Overtime')
                             buttons +=
                                 `<button class="btn btn-danger deleteBtn" data-id="${row.id}">Delete</button>`;
