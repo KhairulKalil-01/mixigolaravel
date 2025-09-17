@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\StaffClaimStatus;
 use App\ClaimPaymentMethod;
-
 use Illuminate\Database\Eloquent\Model;
 
 class StaffClaim extends Model

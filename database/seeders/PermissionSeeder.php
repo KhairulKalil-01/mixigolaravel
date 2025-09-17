@@ -131,6 +131,18 @@ class PermissionSeeder extends Seeder
             ['name' => 'Edit Staff Overtime Approval', 'slug' => 'staff-overtime-approvals.edit', 'visible_in_menu' => '0', 'module_id' => '5'],
             ['name' => 'Delete Staff Overtime Approval', 'slug' => 'staff-overtime-approvals.destroy', 'visible_in_menu' => '0', 'module_id' => '5'],
 
+            // Staff Salary Advances
+            ['name' => 'Staff Advances', 'slug' => 'staff-salary-advances.index', 'visible_in_menu' => '1', 'module_id' => '5'],
+            ['name' => 'Create Staff Advance', 'slug' => 'staff-salary-advances.create', 'visible_in_menu' => '0', 'module_id' => '5'],
+            ['name' => 'View Staff Advance', 'slug' => 'staff-salary-advances.show', 'visible_in_menu' => '0', 'module_id' => '5'],
+            ['name' => 'Edit Staff Advance', 'slug' => 'staff-salary-advances.edit', 'visible_in_menu' => '0', 'module_id' => '5'],
+            ['name' => 'Delete Staff Advance', 'slug' => 'staff-salary-advances.destroy', 'visible_in_menu' => '0', 'module_id' => '5'],
+
+            // Staff Salary Advance Approvals
+            ['name' => 'Staff Advance Approvals', 'slug' => 'staff-salary-advance-approvals.index', 'visible_in_menu' => '1', 'module_id' => '5'],
+            ['name' => 'View Staff Advance Approval', 'slug' => 'staff-salary-advance-approvals.show', 'visible_in_menu' => '0', 'module_id' => '5'],
+            ['name' => 'Edit Staff Advance Approval', 'slug' => 'staff-salary-advance-approvals.edit', 'visible_in_menu' => '0', 'module_id' => '5'],
+
             // Caregiver Payments
             ['name' => 'Caregiver Payments', 'slug' => 'caregiver-payments.index', 'visible_in_menu' => '1', 'module_id' => '5'],
             ['name' => 'Create Caregiver Payment', 'slug' => 'caregiver-payments.create', 'visible_in_menu' => '0', 'module_id' => '5'],
