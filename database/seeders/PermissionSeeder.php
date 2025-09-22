@@ -92,12 +92,12 @@ class PermissionSeeder extends Seeder
             ['name' => 'Edit Service Pricings', 'slug' => 'service-pricings.edit', 'visible_in_menu' => '0', 'module_id' => '4'],
             ['name' => 'Delete Service Pricings', 'slug' => 'service-pricings.destroy', 'visible_in_menu' => '0', 'module_id' => '4'],
 
-            // Salary Records
-            ['name' => 'Salary Records', 'slug' => 'salary-records.index', 'visible_in_menu' => '1', 'module_id' => '5'],
-            ['name' => 'Create Salary Record', 'slug' => 'salary-records.create', 'visible_in_menu' => '0', 'module_id' => '5'],
-            ['name' => 'View Salary Record', 'slug' => 'salary-records.show', 'visible_in_menu' => '0', 'module_id' => '5'],
-            ['name' => 'Edit Salary Record', 'slug' => 'salary-records.edit', 'visible_in_menu' => '0', 'module_id' => '5'],
-            ['name' => 'Delete Salary Record', 'slug' => 'salary-records.destroy', 'visible_in_menu' => '0', 'module_id' => '5'],
+            // Salary Records //Rename to Staff Payroll Batches
+            ['name' => 'Staff Payroll Batches', 'slug' => 'staff-payroll-batches.index', 'visible_in_menu' => '1', 'module_id' => '5'],
+            ['name' => 'Create Staff Payroll Batch', 'slug' => 'staff-payroll-batches.create', 'visible_in_menu' => '0', 'module_id' => '5'],
+            ['name' => 'View Staff Payroll Batch', 'slug' => 'staff-payroll-batches.show', 'visible_in_menu' => '0', 'module_id' => '5'],
+            ['name' => 'Edit Staff Payroll Batch', 'slug' => 'staff-payroll-batches.edit', 'visible_in_menu' => '0', 'module_id' => '5'],
+            ['name' => 'Delete Staff Payroll Batch', 'slug' => 'staff-payroll-batches.destroy', 'visible_in_menu' => '0', 'module_id' => '5'],
 
             // Salary Assign - Salary  Structures
             ['name' => 'Salary Structures', 'slug' => 'salary-structures.index', 'visible_in_menu' => '1', 'module_id' => '5'],
