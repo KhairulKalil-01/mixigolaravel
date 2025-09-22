@@ -22,6 +22,9 @@ use App\Http\Controllers\RefundController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\OperationReportController;
 use App\Http\Controllers\StaffOvertimeApprovalController;
+use App\Http\Controllers\StaffPayrollBatchController;
+use App\Http\Controllers\StaffSalaryAdvanceController;
+use App\Http\Controllers\StaffSalaryAdvanceApprovalController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\QuotationController;
@@ -120,6 +123,21 @@ Route::post('fetch-staff-overtimes', [StaffOvertimeController::class, 'fetchStaf
 Route::resource('staff-overtime-approvals', StaffOvertimeApprovalController::class);
 Route::post('fetch-overtimes', [StaffOvertimeApprovalController::class, 'fetchOvertimes'])->name('overtimes.fetch');
 
+
+// Staff Payrolls
+Route::resource('staff-payroll-batches', StaffPayrollBatchController::class);
+Route::post('fetch-staff-payrolls', [StaffPayrollBatchController::class, 'fetchStaffPayrollBatches'])->name('staff-payroll-batches.fetch');
+Route::get('/payrolls/{payroll}/download-pdf', [StaffPayrollBatchController::class, 'downloadPdf'])->name('payrolls.download_pdf');
+
+// Staff Salary Advances
+Route::resource('staff-salary-advances', StaffSalaryAdvanceController::class);
+Route::post('fetch-staff-advances', [StaffSalaryAdvanceController::class, 'fetchStaffAdvances'])->name('staff-salary-advances.fetch');
+
+// Staff Salary Advance Approvals
+Route::resource('staff-salary-advance-approvals', StaffSalaryAdvanceApprovalController::class);
+Route::post('fetch-all-staff-advances', [StaffSalaryAdvanceApprovalController::class, 'fetchAllStaffAdvances'])->name('all-staff-advances.fetch');
+
+
 Route::resource('caregiver-payments', CaregiverPaymentController::class);
 
 // Staff
@@ -141,7 +159,6 @@ Route::get('/credit-notes/{credit_note}/download-pdf', [CreditNoteController::cl
 Route::resource('refunds', RefundController::class);
 Route::post('fetch-refunds', [RefundController::class, 'fetchRefund'])->name('refunds.fetch');
 Route::get('/refunds/{refund}/download-pdf', [RefundController::class, 'downloadPdf'])->name('refunds.download_pdf');
-//Route::get('refunds', [RefundController::class, 'index'])->name('refunds.index')->middleware(['auth', PermissionMiddleware::class . ':View Salary Record']);
 
 Route::resource('jobs', JobController::class);
 

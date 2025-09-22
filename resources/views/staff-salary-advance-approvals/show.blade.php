@@ -13,7 +13,7 @@
                     <div class="col-12 col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Staff Overtime Details</h4>
+                                <h4>Salary Advance Details (admin view)</h4>
                             </div>
                             <div class="card-body">
                                 <table class="table table-bordered" style="width:100%">
@@ -21,54 +21,44 @@
                                         <tr>
                                             <th>Staff Name</th>
                                             <td>
-                                                {{ $overtime->staff->full_name ?? 'N/A' }}
+                                                {{ $advance->staff->full_name ?? 'N/A' }}
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <th>Overtime Date</th>
-                                            <td>
-                                                {{ $overtime->start_time->format('Y-m-d') ?? 'N/A' }}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>Start time</th>
-                                            <td>{{ $overtime->start_time }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>End time</th>
-                                            <td>{{ $overtime->end_time }}</td>
-                                        </tr>
+
                                         <tr>
                                             <th>Amount</th>
                                             <td>
-                                                RM {{ number_format($overtime->amount, 2) }}
+                                                RM {{ number_format($advance->amount, 2) }}
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <th>Hour</th>
-                                            <td>
-                                                {{ $overtime->hours }}-hour
-                                            </td>
-                                        </tr>
-                                        
+
                                         {{--  <tr>
                                             <th> Description</th>
-                                            <td> {{ $overtime->description }}</td>
+                                            <td> {{ $advance->description }}</td>
                                         </tr> --}}
 
-                                    
+                                        <tr>
+                                            <th>Request Reason</th>
+                                            <td>{{ $advance->request_reason }}</td>
+                                        </tr>
                                         <tr>
                                             <th>Status</th>
-                                            <td>{{ $overtime->status_label }}</td>
+                                            <td>{{ $advance->status_label }}</td>
                                         </tr>
                                         <tr>
                                             <th>Approval By</th>
-                                            <td>{{ $overtime->approvedByUser?->staff?->full_name ?? 'No Approval Yet' }}</td>
+                                            <td>{{ $advance->approvedByUser?->staff?->full_name ?? 'No Approval Yet' }}</td>
                                         </tr>
                                         <tr>
-                                            <th>Approved at</th>
+                                            <th>Approval at</th>
                                             <td>
-                                                {{ $overtime->approvedBy->approved_at ?? 'N/A' }}
+                                                {{ $advance->approved_at ?? 'N/A' }}
+                                            </td>
+                                        </tr>
+                                         <tr>
+                                            <th>Approval Remarks</th>
+                                            <td>
+                                                {{ $advance->approval_remarks }}
                                             </td>
                                         </tr>
                                     </tbody>

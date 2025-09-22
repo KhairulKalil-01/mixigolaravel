@@ -36,4 +36,9 @@ class Staff extends Model
     {
         return $this->hasMany(StaffOvertime::class);
     }
+
+    public function payrolls()
+    {
+        return $this->hasMany(StaffPayrollBatch::class);
+    }
 }
