@@ -41,4 +41,10 @@ class Invoice extends Model
         $status = InvoiceStatus::tryFrom($this->payment_status);
         return $status?->label() ?? 'Unknown';
     }
+
+    public function commissionClaim()
+    {
+        return $this->hasOne(commissionClaim::class);
+    }
+
 }

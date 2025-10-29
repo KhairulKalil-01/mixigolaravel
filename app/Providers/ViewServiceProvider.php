@@ -28,8 +28,17 @@ class ViewServiceProvider extends ServiceProvider
             $user = Auth::user();
             if (!$user) return;
 
-            $permissions = $user->getAllPermissions()->load('module')->groupBy('module.name');
-            
+            // Group user permissions by module name
+            $permissions = $user->getAllPermissions()
+                ->load('module')
+                ->groupBy('module.name')
+                ->sortBy(function ($permissions, $moduleName) {
+                    return $permissions->first()->module->sorted ?? 0;
+                })
+                ->map(function ($permissions) {
+                    return $permissions->sortBy('sorted');
+                });
+
             $view->with('permissionsByModule', $permissions);
         });
     }

@@ -51,34 +51,34 @@ class PermissionSeeder extends Seeder
             ['name' => 'Delete User', 'slug' => 'users.destroy', 'visible_in_menu' => '0', 'module_id' => '3'],
 
             // Branches
-            ['name' => 'Branches', 'slug' => 'branches.index', 'visible_in_menu' => '1', 'module_id' => '4'],
-            ['name' => 'Create Branch', 'slug' => 'branches.create', 'visible_in_menu' => '0', 'module_id' => '4'],
-            ['name' => 'View Branch', 'slug' => 'branches.show', 'visible_in_menu' => '0', 'module_id' => '4'],
-            ['name' => 'Edit Branch', 'slug' => 'branches.edit', 'visible_in_menu' => '0', 'module_id' => '4'],
-            ['name' => 'Delete Branch', 'slug' => 'branches.destroy', 'visible_in_menu' => '0', 'module_id' => '4'],
+            ['name' => 'Branches', 'slug' => 'branches.index', 'visible_in_menu' => '1', 'module_id' => '11'],
+            ['name' => 'Create Branch', 'slug' => 'branches.create', 'visible_in_menu' => '0', 'module_id' => '11'],
+            ['name' => 'View Branch', 'slug' => 'branches.show', 'visible_in_menu' => '0', 'module_id' => '11'],
+            ['name' => 'Edit Branch', 'slug' => 'branches.edit', 'visible_in_menu' => '0', 'module_id' => '11'],
+            ['name' => 'Delete Branch', 'slug' => 'branches.destroy', 'visible_in_menu' => '0', 'module_id' => '11'],
 
             // Departments
-            ['name' => 'Departments', 'slug' => 'departments.index', 'visible_in_menu' => '1', 'module_id' => '4'],
-            ['name' => 'Create Department', 'slug' => 'departments.create', 'visible_in_menu' => '0', 'module_id' => '4'],
-            ['name' => 'View Department', 'slug' => 'departments.show', 'visible_in_menu' => '0', 'module_id' => '4'],
-            ['name' => 'Edit Department', 'slug' => 'departments.edit', 'visible_in_menu' => '0', 'module_id' => '4'],
-            ['name' => 'Delete Department', 'slug' => 'departments.destroy', 'visible_in_menu' => '0', 'module_id' => '4'],
+            ['name' => 'Departments', 'slug' => 'departments.index', 'visible_in_menu' => '1', 'module_id' => '11'],
+            ['name' => 'Create Department', 'slug' => 'departments.create', 'visible_in_menu' => '0', 'module_id' => '11'],
+            ['name' => 'View Department', 'slug' => 'departments.show', 'visible_in_menu' => '0', 'module_id' => '11'],
+            ['name' => 'Edit Department', 'slug' => 'departments.edit', 'visible_in_menu' => '0', 'module_id' => '11'],
+            ['name' => 'Delete Department', 'slug' => 'departments.destroy', 'visible_in_menu' => '0', 'module_id' => '11'],
 
             // Designations
-            ['name' => 'Designations', 'slug' => 'designations.index', 'visible_in_menu' => '1', 'module_id' => '4'],
-            ['name' => 'Create Designation', 'slug' => 'designations.create', 'visible_in_menu' => '0', 'module_id' => '4'],
-            ['name' => 'View Designation', 'slug' => 'designations.show', 'visible_in_menu' => '0', 'module_id' => '4'],
-            ['name' => 'Edit Designation', 'slug' => 'designations.edit', 'visible_in_menu' => '0', 'module_id' => '4'],
-            ['name' => 'Delete Designation', 'slug' => 'designations.destroy', 'visible_in_menu' => '0', 'module_id' => '4'],
+            ['name' => 'Designations', 'slug' => 'designations.index', 'visible_in_menu' => '1', 'module_id' => '11'],
+            ['name' => 'Create Designation', 'slug' => 'designations.create', 'visible_in_menu' => '0', 'module_id' => '11'],
+            ['name' => 'View Designation', 'slug' => 'designations.show', 'visible_in_menu' => '0', 'module_id' => '11'],
+            ['name' => 'Edit Designation', 'slug' => 'designations.edit', 'visible_in_menu' => '0', 'module_id' => '11'],
+            ['name' => 'Delete Designation', 'slug' => 'designations.destroy', 'visible_in_menu' => '0', 'module_id' => '11'],
 
             // Roles
-            ['name' => 'Roles', 'slug' => 'roles.index', 'visible_in_menu' => '1', 'module_id' => '4'],
-            ['name' => 'Create Role', 'slug' => 'roles.create', 'visible_in_menu' => '0', 'module_id' => '4'],
-            ['name' => 'View Role', 'slug' => 'roles.show', 'visible_in_menu' => '0', 'module_id' => '4'],
-            ['name' => 'Edit Role', 'slug' => 'roles.edit', 'visible_in_menu' => '0', 'module_id' => '4'],
-            ['name' => 'Delete Role', 'slug' => 'roles.destroy', 'visible_in_menu' => '0', 'module_id' => '4'],
+            ['name' => 'Roles', 'slug' => 'roles.index', 'visible_in_menu' => '1', 'module_id' => '11'],
+            ['name' => 'Create Role', 'slug' => 'roles.create', 'visible_in_menu' => '0', 'module_id' => '11'],
+            ['name' => 'View Role', 'slug' => 'roles.show', 'visible_in_menu' => '0', 'module_id' => '11'],
+            ['name' => 'Edit Role', 'slug' => 'roles.edit', 'visible_in_menu' => '0', 'module_id' => '11'],
+            ['name' => 'Delete Role', 'slug' => 'roles.destroy', 'visible_in_menu' => '0', 'module_id' => '11'],
 
-            // Permissions
+            // Permissions (to be deleted)
             ['name' => 'Permissions', 'slug' => 'permissions.index', 'visible_in_menu' => '0', 'module_id' => '4'],
             ['name' => 'Create Permission', 'slug' => 'permissions.create', 'visible_in_menu' => '0', 'module_id' => '4'],
             ['name' => 'View Permission', 'slug' => 'permissions.show', 'visible_in_menu' => '0', 'module_id' => '4'],
@@ -86,11 +86,11 @@ class PermissionSeeder extends Seeder
             ['name' => 'Delete Permission', 'slug' => 'permissions.destroy', 'visible_in_menu' => '0', 'module_id' => '4'],
 
             // Service Pricings
-            ['name' => 'Service Pricings', 'slug' => 'service-pricings.index', 'visible_in_menu' => '1', 'module_id' => '4'],
-            ['name' => 'Create Service Pricings', 'slug' => 'service-pricings.create', 'visible_in_menu' => '0', 'module_id' => '4'],
-            ['name' => 'View Service Pricings', 'slug' => 'service-pricings.show', 'visible_in_menu' => '0', 'module_id' => '4'],
-            ['name' => 'Edit Service Pricings', 'slug' => 'service-pricings.edit', 'visible_in_menu' => '0', 'module_id' => '4'],
-            ['name' => 'Delete Service Pricings', 'slug' => 'service-pricings.destroy', 'visible_in_menu' => '0', 'module_id' => '4'],
+            ['name' => 'Service Pricings', 'slug' => 'service-pricings.index', 'visible_in_menu' => '1', 'module_id' => '10'],
+            ['name' => 'Create Service Pricings', 'slug' => 'service-pricings.create', 'visible_in_menu' => '0', 'module_id' => '10'],
+            ['name' => 'View Service Pricings', 'slug' => 'service-pricings.show', 'visible_in_menu' => '0', 'module_id' => '10'],
+            ['name' => 'Edit Service Pricings', 'slug' => 'service-pricings.edit', 'visible_in_menu' => '0', 'module_id' => '10'],
+            ['name' => 'Delete Service Pricings', 'slug' => 'service-pricings.destroy', 'visible_in_menu' => '0', 'module_id' => '10'],
 
             // Salary Records //Rename to Staff Payroll Batches
             ['name' => 'Staff Payroll Batches', 'slug' => 'staff-payroll-batches.index', 'visible_in_menu' => '1', 'module_id' => '5'],
@@ -199,12 +199,39 @@ class PermissionSeeder extends Seeder
             ['name' => 'Edit Refund', 'slug' => 'refunds.edit', 'visible_in_menu' => '0', 'module_id' => '8'],
             ['name' => 'Delete Refund', 'slug' => 'refunds.destroy', 'visible_in_menu' => '0', 'module_id' => '8'],
 
-            // Jobs
-            ['name' => 'Jobs', 'slug' => 'jobs.index', 'visible_in_menu' => '1', 'module_id' => '9'],
-            ['name' => 'Create Job', 'slug' => 'jobs.create', 'visible_in_menu' => '0', 'module_id' => '9'],
-            ['name' => 'View Job', 'slug' => 'jobs.show', 'visible_in_menu' => '0', 'module_id' => '9'],
-            ['name' => 'Edit Job', 'slug' => 'jobs.edit', 'visible_in_menu' => '0', 'module_id' => '9'],
-            ['name' => 'Delete Job', 'slug' => 'jobs.destroy', 'visible_in_menu' => '0', 'module_id' => '9'],
+            /*  Sales module_id = 9 */
+            // Sales Commission
+            ['name' => 'Commission Claims', 'slug' => 'commission-claims.index', 'visible_in_menu' => '1', 'module_id' => '9'],
+            ['name' => 'Create Commission Claim', 'slug' => 'commission-claims.create', 'visible_in_menu' => '0', 'module_id' => '9'],
+            ['name' => 'View Commission Claim', 'slug' => 'commission-claims.show', 'visible_in_menu' => '0', 'module_id' => '9'],
+            ['name' => 'Edit Commission Claim', 'slug' => 'commission-claims.edit', 'visible_in_menu' => '0', 'module_id' => '9'],
+            ['name' => 'Delete Commission Claim', 'slug' => 'commission-claims.destroy', 'visible_in_menu' => '0', 'module_id' => '9'],
+
+            // Sales Commission Approvals
+            ['name' => 'Commission Approvals', 'slug' => 'commission-approvals.index', 'visible_in_menu' => '1', 'module_id' => '9'],
+            ['name' => 'View Commission Approval', 'slug' => 'commission-approvals.show', 'visible_in_menu' => '0', 'module_id' => '9'],
+            ['name' => 'Edit Commission Approval', 'slug' => 'commission-approvals.edit', 'visible_in_menu' => '0', 'module_id' => '9'],
+
+            // Commission Batches
+            ['name' => 'Commission Batches', 'slug' => 'commission-batches.index', 'visible_in_menu' => '1', 'module_id' => '9'],
+            ['name' => 'Create Commission Batch', 'slug' => 'commission-batches.create', 'visible_in_menu' => '0', 'module_id' => '9'],
+            ['name' => 'View Commission Batch', 'slug' => 'commission-batches.show', 'visible_in_menu' => '0', 'module_id' => '9'],
+            ['name' => 'Edit Commission Batch', 'slug' => 'commission-batches.edit', 'visible_in_menu' => '0', 'module_id' => '9'],
+            ['name' => 'Delete Commission Batch', 'slug' => 'commission-batches.destroy', 'visible_in_menu' => '0', 'module_id' => '9'],
+
+            // External Agents
+            ['name' => 'External Agents', 'slug' => 'external-agents.index', 'visible_in_menu' => '1', 'module_id' => '9'],
+            ['name' => 'Create External Agent', 'slug' => 'external-agents.create', 'visible_in_menu' => '0', 'module_id' => '9'],
+            ['name' => 'View External Agent', 'slug' => 'external-agents.show', 'visible_in_menu' => '0', 'module_id' => '9'],
+            ['name' => 'Edit External Agent', 'slug' => 'external-agents.edit', 'visible_in_menu' => '0', 'module_id' => '9'],
+            ['name' => 'Delete External Agent', 'slug' => 'external-agents.destroy', 'visible_in_menu' => '0', 'module_id' => '9'],
+
+            // Jobs (remove later)
+            ['name' => 'Jobs', 'slug' => 'jobs.index', 'visible_in_menu' => '1', 'module_id' => '4'],
+            ['name' => 'Create Job', 'slug' => 'jobs.create', 'visible_in_menu' => '0', 'module_id' => '4'],
+            ['name' => 'View Job', 'slug' => 'jobs.show', 'visible_in_menu' => '0', 'module_id' => '4'],
+            ['name' => 'Edit Job', 'slug' => 'jobs.edit', 'visible_in_menu' => '0', 'module_id' => '4'],
+            ['name' => 'Delete Job', 'slug' => 'jobs.destroy', 'visible_in_menu' => '0', 'module_id' => '4'],
 
             // Caregivers
             ['name' => 'Caregivers', 'slug' => 'caregivers.index', 'visible_in_menu' => '1', 'module_id' => '7'],

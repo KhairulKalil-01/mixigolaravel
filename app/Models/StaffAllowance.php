@@ -11,6 +11,6 @@ class StaffAllowance extends Model
 
     public function salaryStructure()
     {
-        return $this->belonngsTo(SalaryStructure::class);
+        return $this->belongsTo(SalaryStructure::class);
     }
 }

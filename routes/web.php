@@ -19,6 +19,10 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\CreditNoteController;
 use App\Http\Controllers\RefundController;
+use App\Http\Controllers\CommissionClaimController;
+use App\Http\Controllers\CommissionApprovalController;
+use App\Http\Controllers\CommissionBatchController;
+use App\Http\Controllers\ExternalAgentController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\OperationReportController;
 use App\Http\Controllers\StaffOvertimeApprovalController;
@@ -126,8 +130,10 @@ Route::post('fetch-overtimes', [StaffOvertimeApprovalController::class, 'fetchOv
 
 // Staff Payrolls
 Route::resource('staff-payroll-batches', StaffPayrollBatchController::class);
-Route::post('fetch-staff-payrolls', [StaffPayrollBatchController::class, 'fetchStaffPayrollBatches'])->name('staff-payroll-batches.fetch');
-Route::get('/payrolls/{payroll}/download-pdf', [StaffPayrollBatchController::class, 'downloadPdf'])->name('payrolls.download_pdf');
+Route::get('staff-payroll-batches/{batch}/staff/{payroll}', [StaffPayrollBatchController::class, 'staffShow'])->name('staff-payroll-batches.staff_show');
+Route::post('fetch-staff-payroll-records', [StaffPayrollBatchController::class, 'fetchStaffPayrollRecords'])->name('staff-payroll-records.fetch');
+Route::get('/staff-payroll-batches/{batch}/staff/{payroll}/download-pdf', [StaffPayrollBatchController::class, 'downloadPdf'])->name('payrolls.download_pdf');
+
 
 // Staff Salary Advances
 Route::resource('staff-salary-advances', StaffSalaryAdvanceController::class);
@@ -160,7 +166,24 @@ Route::resource('refunds', RefundController::class);
 Route::post('fetch-refunds', [RefundController::class, 'fetchRefund'])->name('refunds.fetch');
 Route::get('/refunds/{refund}/download-pdf', [RefundController::class, 'downloadPdf'])->name('refunds.download_pdf');
 
-Route::resource('jobs', JobController::class);
+// Sales Commissions
+Route::resource('commission-claims', CommissionClaimController::class);
+Route::post('fetch-commission-claims', [CommissionClaimController::class, 'fetchCommissionClaim'])->name('commission-claims.fetch');
+
+// Sales Commission Approvals
+Route::resource('commission-approvals', CommissionApprovalController::class);
+Route::post('fetch-commission-approvals', [CommissionApprovalController::class, 'fetchCommissionApproval'])->name('commission-approvals.fetch');
+
+// Commission Batches THIS
+Route::resource('commission-batches', CommissionBatchController::class); // change controller
+Route::post('fetch-commission-batches', [CommissionBatchController::class, 'fetchCommissionBatch'])->name('commission-batches.fetch');
+
+// External Agents
+Route::resource('external-agents', ExternalAgentController::class);
+Route::post('fetch-external-agents', [ExternalAgentController::class, 'fetchExternalAgent'])->name('external-agents.fetch');
+
+
+Route::resource('jobs', JobController::class); // remove later
 
 // Client Payments
 Route::resource('client-payments', ClientPaymentController::class);
