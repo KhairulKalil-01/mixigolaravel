@@ -57,7 +57,7 @@ class SalaryStructureController extends Controller
     {
         $staff = Staff::findOrFail($id);
 
-        $salary_history = $staff->salaryStructure()
+        $salary_history = $staff->salaryStructures()
             ->with('allowances')
             ->orderBy('effective_to', 'asc')
             ->get();

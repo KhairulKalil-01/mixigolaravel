@@ -14,4 +14,14 @@ class ExternalAgent extends Model
     {
         return $this->belongsTo(BankList::class, 'bank_id');
     }
+
+    public function commissionClaims()
+    {
+        return $this->hasMany(CommissionClaim::class);
+    }
+
+    public function commissionBatchRecords()
+    {
+        return $this->hasMany(CommissionBatchRecord::class);
+    }
 }
