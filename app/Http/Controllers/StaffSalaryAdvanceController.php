@@ -10,6 +10,7 @@ class StaffSalaryAdvanceController extends Controller
 {
     public function __construct()
     {
+        //Spaties Permission Middleware
         $this->middleware(['auth', PermissionMiddleware::class . ':View Staff Advance'])->only(['index', 'show', 'fetchStaffAdvances']);
         $this->middleware(['auth', PermissionMiddleware::class . ':Create Staff Advance'])->only(['create', 'store']);
         //$this->middleware(['auth', PermissionMiddleware::class . ':Edit Staff Advance'])->only(['edit', 'update']);

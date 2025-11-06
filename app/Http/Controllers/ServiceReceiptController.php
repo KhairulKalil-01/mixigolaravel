@@ -8,6 +8,7 @@ class ServiceReceiptController extends Controller
 {
     public function __construct()
     {
+        //Spaties Permission Middleware
         $this->middleware(['auth', PermissionMiddleware::class . ':View Service Receipt'])->only(['index', 'show', 'downloadPdf', 'fetchServiceRceipt']);
         $this->middleware(['auth', PermissionMiddleware::class . ':Create Service Receipt'])->only(['create', 'store']);
         $this->middleware(['auth', PermissionMiddleware::class . ':Edit Service Receipt'])->only(['edit', 'update']);

@@ -13,6 +13,7 @@ class CaregiverController extends Controller
 {
     public function __construct()
     {
+        //Spaties Permission Middleware
         $this->middleware(['auth', PermissionMiddleware::class . ':View Caregiver'])->only(['index', 'show', 'fetchCaregiver']);
         $this->middleware(['auth', PermissionMiddleware::class . ':Create Caregiver'])->only(['create', 'store']);
         $this->middleware(['auth', PermissionMiddleware::class . ':Edit Caregiver'])->only(['edit', 'update']);

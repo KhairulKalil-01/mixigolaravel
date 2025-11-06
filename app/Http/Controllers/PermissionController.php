@@ -10,6 +10,7 @@ class PermissionController extends Controller
 {
     public function __construct()
     {
+        //Spaties Permission Middleware
         $this->middleware(['auth', PermissionMiddleware::class . ':View Permission'])->only(['index', 'show']);
         $this->middleware(['auth', PermissionMiddleware::class . ':Create Permission'])->only(['create', 'store']);
         $this->middleware(['auth', PermissionMiddleware::class . ':Edit Permission'])->only(['edit', 'update']);

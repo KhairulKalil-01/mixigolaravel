@@ -13,6 +13,7 @@ class SalaryStructureController extends Controller
 {
     public function __construct()
     {
+        //Spaties Permission Middleware
         $this->middleware(['auth', PermissionMiddleware::class . ':View Salary Structure'])->only(['index', 'show', 'fetchSalaryStructure']);
         $this->middleware(['auth', PermissionMiddleware::class . ':Create Salary Structure'])->only(['create', 'store']);
         $this->middleware(['auth', PermissionMiddleware::class . ':Edit Salary Structure'])->only(['edit', 'update']);

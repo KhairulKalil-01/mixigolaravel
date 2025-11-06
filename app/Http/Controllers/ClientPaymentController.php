@@ -16,6 +16,7 @@ class ClientPaymentController extends Controller
 {
     public function __construct()
     {
+        //Spaties Permission Middleware
         $this->middleware(['auth', PermissionMiddleware::class . ':View Client Payment'])->only(['index', 'show', 'downloadPdf', 'fetchClientPayment']);
         $this->middleware(['auth', PermissionMiddleware::class . ':Create Client Payment'])->only(['create', 'store']);
         $this->middleware(['auth', PermissionMiddleware::class . ':Edit Client Payment'])->only(['edit', 'update']);

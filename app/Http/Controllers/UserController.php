@@ -13,6 +13,7 @@ class UserController extends Controller
 {
     public function __construct()
     {
+        //Spaties Permission Middleware
         $this->middleware(['auth', PermissionMiddleware::class . ':View User'])->only(['index', 'show', 'fetchUser']);
         $this->middleware(['auth', PermissionMiddleware::class . ':Create User'])->only(['create', 'store']);
         $this->middleware(['auth', PermissionMiddleware::class . ':Edit User'])->only(['edit', 'update']);

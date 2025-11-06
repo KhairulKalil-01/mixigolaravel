@@ -9,6 +9,7 @@ class ServicePricingController extends Controller
 {
     public function __construct()
     {
+        //Spaties Permission Middleware
         $this->middleware(['auth', PermissionMiddleware::class . ':View Service Pricings'])->only(['index', 'show', 'fetchServicePricings']);
         $this->middleware(['auth', PermissionMiddleware::class . ':Create Service Pricings'])->only(['create', 'store']);
         $this->middleware(['auth', PermissionMiddleware::class . ':Edit Service Pricings'])->only(['edit', 'update']);
