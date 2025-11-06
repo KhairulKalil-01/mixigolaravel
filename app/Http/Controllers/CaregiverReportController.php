@@ -9,6 +9,7 @@ class CaregiverReportController extends Controller
 {
     public function __construct()
     {
+        //Spaties Permission Middleware
         $this->middleware(['auth', PermissionMiddleware::class . ':Caregiver Report']);
         
     }

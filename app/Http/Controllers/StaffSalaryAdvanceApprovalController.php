@@ -11,6 +11,7 @@ class StaffSalaryAdvanceApprovalController extends Controller
 {
     public function __construct()
     {
+        //Spaties Permission Middleware
         $this->middleware(['auth', PermissionMiddleware::class . ':View Staff Advance Approval'])->only(['index', 'show', 'fetchAllStaffAdvances']);
         //$this->middleware(['auth', PermissionMiddleware::class . ':Create Staff Advance Approval'])->only(['create', 'store']);
         $this->middleware(['auth', PermissionMiddleware::class . ':Edit Staff Advance Approval'])->only(['edit', 'update']);

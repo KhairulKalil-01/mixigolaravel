@@ -8,6 +8,7 @@ class CaregiverPaymentController extends Controller
 {
     public function __construct()
     {
+        //Spaties Permission Middleware
         $this->middleware(['auth', PermissionMiddleware::class . ':View Caregiver Payment'])->only(['index', 'show', 'downloadPdf', 'fetchCaregiverPayment']);
         $this->middleware(['auth', PermissionMiddleware::class . ':Create Caregiver Payment'])->only(['create', 'store']);
         $this->middleware(['auth', PermissionMiddleware::class . ':Edit Caregiver Payment'])->only(['edit', 'update']);

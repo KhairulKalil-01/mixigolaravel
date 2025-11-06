@@ -15,6 +15,7 @@ class RefundController extends Controller
 {
     public function __construct()
     {
+        //Spaties Permission Middleware
         $this->middleware(['auth', PermissionMiddleware::class . ':View Refund'])->only(['index', 'show', 'downloadPdf', 'fetchRefund']);
         $this->middleware(['auth', PermissionMiddleware::class . ':Create Refund'])->only(['create', 'store']);
         $this->middleware(['auth', PermissionMiddleware::class . ':Edit Refund'])->only(['edit', 'update']);

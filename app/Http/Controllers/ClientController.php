@@ -11,6 +11,7 @@ class ClientController extends Controller
 {
     public function __construct()
     {
+        //Spaties Permission Middleware
         $this->middleware(['auth', PermissionMiddleware::class . ':View Client'])->only(['index', 'show', 'fetchClient']);
         $this->middleware(['auth', PermissionMiddleware::class . ':Create Client'])->only(['create', 'store']);
         $this->middleware(['auth', PermissionMiddleware::class . ':Edit Client'])->only(['edit', 'update']);

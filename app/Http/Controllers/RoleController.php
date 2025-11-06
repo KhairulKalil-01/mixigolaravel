@@ -12,6 +12,7 @@ class RoleController extends Controller
 {
     public function __construct()
     {
+        //Spaties Permission Middleware
         $this->middleware(['auth', PermissionMiddleware::class . ':View Role'])->only(['index', 'show', 'fetchRoles']);
         $this->middleware(['auth', PermissionMiddleware::class . ':Create Role'])->only(['create', 'store']);
         $this->middleware(['auth', PermissionMiddleware::class . ':Edit Role'])->only(['edit', 'update']);

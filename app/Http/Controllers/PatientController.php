@@ -12,6 +12,7 @@ class PatientController extends Controller
 {
     public function __construct()
     {
+        //Spaties Permission Middleware
         $this->middleware(['auth', PermissionMiddleware::class . ':View Patient'])->only(['index', 'show', 'fetchPatient']);
         $this->middleware(['auth', PermissionMiddleware::class . ':Create Patient'])->only(['create', 'store']);
         $this->middleware(['auth', PermissionMiddleware::class . ':Edit Patient'])->only(['edit', 'update']);

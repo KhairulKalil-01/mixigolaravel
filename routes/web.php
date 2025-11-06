@@ -174,9 +174,12 @@ Route::post('fetch-commission-claims', [CommissionClaimController::class, 'fetch
 Route::resource('commission-approvals', CommissionApprovalController::class);
 Route::post('fetch-commission-approvals', [CommissionApprovalController::class, 'fetchCommissionApproval'])->name('commission-approvals.fetch');
 
-// Commission Batches THIS
+// Commission Batches
 Route::resource('commission-batches', CommissionBatchController::class); // change controller
 Route::post('fetch-commission-batches', [CommissionBatchController::class, 'fetchCommissionBatch'])->name('commission-batches.fetch');
+Route::get('commission-batches/{batch}/record/{record}', [CommissionBatchController::class, 'commissionShow'])->name('commission-batches.commission_show');
+// Commissin Batch RECORDs
+Route::post('fetch-commission-batch-records', [CommissionBatchController::class, 'fetchCommissionBatchRecord'])->name('commission-batch-records.fetch');
 
 // External Agents
 Route::resource('external-agents', ExternalAgentController::class);

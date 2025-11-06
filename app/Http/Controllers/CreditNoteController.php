@@ -14,6 +14,7 @@ class CreditNoteController extends Controller
 {
     public function __construct()
     {
+        //Spaties Permission Middleware
         $this->middleware(['auth', PermissionMiddleware::class . ':View Credit Note'])->only(['index', 'show', 'downloadPdf', 'fetchCreditNote']);
         $this->middleware(['auth', PermissionMiddleware::class . ':Create Credit Note'])->only(['create', 'store']);
         $this->middleware(['auth', PermissionMiddleware::class . ':Edit Credit Note'])->only(['edit', 'update']);

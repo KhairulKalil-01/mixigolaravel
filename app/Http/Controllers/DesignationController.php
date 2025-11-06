@@ -10,6 +10,7 @@ class DesignationController extends Controller
 {
     public function __construct()
     {
+        //Spaties Permission Middleware
         $this->middleware(['auth', PermissionMiddleware::class . ':View Designation'])->only(['index', 'show', 'fetchDesignations']);
         $this->middleware(['auth', PermissionMiddleware::class . ':Create Designation'])->only(['create', 'store']);
         $this->middleware(['auth', PermissionMiddleware::class . ':Edit Designation'])->only(['edit', 'update']);

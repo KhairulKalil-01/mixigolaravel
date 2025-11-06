@@ -12,6 +12,7 @@ class ClaimApprovalController extends Controller
 {
     public function __construct()
     {
+        //Spaties Permission Middleware
         $this->middleware(['auth', PermissionMiddleware::class . ':View Claim Approval'])->only(['index', 'show', 'fetchClaimsByStaff']);
         $this->middleware(['auth', PermissionMiddleware::class . ':Edit Claim Approval'])->only(['edit', 'update']);
     }

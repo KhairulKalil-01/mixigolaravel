@@ -15,6 +15,7 @@ class QuotationController extends Controller
 {
     public function __construct()
     {
+        //Spaties Permission Middleware
         $this->middleware(['auth', PermissionMiddleware::class . ':View Quotation'])->only(['index', 'show', 'downloadPdf', 'fetchQuotation']);
         $this->middleware(['auth', PermissionMiddleware::class . ':Create Quotation'])->only(['create', 'store']);
         $this->middleware(['auth', PermissionMiddleware::class . ':Edit Quotation'])->only(['edit', 'update']);
