@@ -10,6 +10,7 @@ class DepartmentController extends Controller
 {
     public function __construct()
     {
+        //Spaties Permission Middleware
         $this->middleware(['auth', PermissionMiddleware::class . ':View Department'])->only(['index', 'show', 'fetchDepartments']);
         $this->middleware(['auth', PermissionMiddleware::class . ':Create Department'])->only(['create', 'store']);
         $this->middleware(['auth', PermissionMiddleware::class . ':Edit Department'])->only(['edit', 'update']);

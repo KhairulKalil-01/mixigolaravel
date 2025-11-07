@@ -9,6 +9,7 @@ class JobController extends Controller
 {
     public function __construct()
     {
+        //Spaties Permission Middleware
         $this->middleware(['auth', PermissionMiddleware::class . ':View Job'])->only(['index', 'show', 'downloadPdf', 'fetchJob']);
         $this->middleware(['auth', PermissionMiddleware::class . ':Create Job'])->only(['create', 'store']);
         $this->middleware(['auth', PermissionMiddleware::class . ':Edit Job'])->only(['edit', 'update']);

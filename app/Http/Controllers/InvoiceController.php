@@ -13,6 +13,7 @@ class InvoiceController extends Controller
 {
     public function __construct()
     {
+        //Spaties Permission Middleware
         $this->middleware(['auth', PermissionMiddleware::class . ':View Invoice'])->only(['index', 'show', 'downloadPdf', 'fetchInvoice']);
         $this->middleware(['auth', PermissionMiddleware::class . ':Create Invoice'])->only(['create', 'store']);
         $this->middleware(['auth', PermissionMiddleware::class . ':Edit Invoice'])->only(['edit', 'update']);
