@@ -117,8 +117,6 @@
                             buttons +=
                                 `<a href="/salary-structures/${row.id}/edit" class="btn btn-primary editBtn">Edit</a>&nbsp;`;
                         @endcan
-                        buttons +=
-                            `<a href="/salary-structures/${row.id}/history" class="btn btn-success editBtn">Create Payslip</a>&nbsp;`;
                         return buttons;
                     }
                 }]

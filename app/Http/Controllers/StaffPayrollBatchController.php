@@ -14,6 +14,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 
+
 class StaffPayrollBatchController extends Controller
 {
     public function __construct()
@@ -21,7 +22,7 @@ class StaffPayrollBatchController extends Controller
         //Spaties Permission Middleware
         $this->middleware(['auth', PermissionMiddleware::class . ':View Staff Payroll Batch'])->only(['index', 'show', 'fetchStaffPayrollRecords', 'staffShow']);
         $this->middleware(['auth', PermissionMiddleware::class . ':Create Staff Payroll Batch'])->only(['store']);
-        $this->middleware(['auth', PermissionMiddleware::class . ':Edit Staff Payroll Batch'])->only(['edit', 'update']);
+        $this->middleware(['auth', PermissionMiddleware::class . ':Edit Staff Payroll Batch'])->only(['edit', 'update', 'staffEdit', 'staffUpdate', 'approve']);
         $this->middleware(['auth', PermissionMiddleware::class . ':Delete Staff Payroll Batch'])->only(['destroy']);
     }
 
@@ -70,27 +71,17 @@ class StaffPayrollBatchController extends Controller
         ]);
 
         // 2. For each active staff, create payroll record
-        $staffList = Staff::with(['currentSalaryStructure', 'claims', 'overtimes', 'salaryAdvances'])
+        $staffList = Staff::with(['currentSalaryStructure', 'overtimes', 'salaryAdvances'])
             ->where('is_active', true)
             ->get();
 
         foreach ($staffList as $staff) {
-            $totalAllowance = 0;
-            $totalOvertime = 0;
-            $totalClaim = 0;
-            $totalAdvance = 0;
-            $totalDeduction = 0;
 
             // 3. Create payroll record for each staff
             $payrollRecord = StaffPayrollRecord::create([
                 'staff_payroll_batch_id' => $batch->id,
                 'staff_id' => $staff->id,
                 'basic_salary' => $staff->currentSalaryStructure->base_salary ?? 0,
-                'overtime_total' => 0,
-                'allowances_total' => 0,
-                'claims_total' => 0,
-                'deductions_total' => 0,
-                'net_salary' => 0,
                 'status' => 0,
             ]);
 
@@ -100,7 +91,7 @@ class StaffPayrollBatchController extends Controller
                 StaffPayrollRecordItem::create([
                     'staff_payroll_record_id' => $payrollRecord->id,
                     'type'        => 1, // earning
-                    'description' => 'Base Salary',
+                    'description' => 'Earned Salary',
                     'amount'      => $baseSalary,
                 ]);
             }
@@ -119,7 +110,6 @@ class StaffPayrollBatchController extends Controller
                     'description' => 'Allowance: ' . $allowance->allowance_type,
                     'amount'      => $allowance->amount,
                 ]);
-                $totalAllowance += $allowance->amount;
             }
 
             // 6. Overtime
@@ -131,23 +121,6 @@ class StaffPayrollBatchController extends Controller
                     'description' => 'Overtime on ' . ($overtime->start_time ? $overtime->start_time->format('Y-m-d') : 'N/A'),
                     'amount'      => $overtime->amount,
                 ]);
-                $totalOvertime += $overtime->amount;
-            }
-
-            // 7. Claims
-            $claims = $staff->claims()
-                ->where('status', 1)
-                ->where('payment_method', 3) // payroll claims only
-                ->get();
-
-            foreach ($claims as $claim) {
-                StaffPayrollRecordItem::create([
-                    'staff_payroll_record_id' => $payrollRecord->id,
-                    'type'        => 1,
-                    'description' => 'Claim: ' . $claim->claim_type,
-                    'amount'      => $claim->amount,
-                ]);
-                $totalClaim += $claim->amount;
             }
 
             // 8. Salary Advances (deductions)
@@ -163,39 +136,26 @@ class StaffPayrollBatchController extends Controller
                     'description' => 'Salary Advance',
                     'amount'      => $advance->amount,
                 ]);
-                $totalAdvance += $advance->amount;
 
                 $advance->update(['payroll_id' => $payrollRecord->id]); // mark as used
             }
 
-            // 9. Calculate statutory deductions (EPF, SOCSO, etc.)
-            $grossSalary = $baseSalary + $totalAllowance + $totalOvertime + $totalClaim;
-
-            // Example: EPF
+            // 9. EPF based on total earnings
+            $totalEarnings = $payrollRecord->items()->where('type', 1)->sum('amount'); // type 1 =  earnings
             $epfPercentage = $staff->currentSalaryStructure->epf_employee ?? 0;
-            $epfDeduction = $grossSalary * ($epfPercentage / 100);
+            $epfDeduction = $totalEarnings * ($epfPercentage / 100);
+
             if ($epfDeduction > 0) {
                 StaffPayrollRecordItem::create([
                     'staff_payroll_record_id' => $payrollRecord->id,
-                    'type'        => 2,
+                    'type' => 2, // deduction
                     'description' => 'EPF Employee Contribution',
-                    'amount'      => $epfDeduction,
+                    'amount' => $epfDeduction,
                 ]);
             }
 
             // TODO: Add SOCSO, EIS, PCB, etc. here
-            // e.g., $socsoDeduction = ...; $eisDeduction = ...;
 
-            $totalDeduction = $epfDeduction + $totalAdvance; // + socso, eis, pcb etc.
-
-            // 10. Update payroll record
-            $payrollRecord->update([
-                'overtime_total'   => $totalOvertime,
-                'allowances_total' => $totalAllowance,
-                'claims_total'     => $totalClaim,
-                'deductions_total' => $totalDeduction,
-                'net_salary'       => ($grossSalary - $totalDeduction),
-            ]);
         }
 
         return response()->json([
@@ -212,6 +172,20 @@ class StaffPayrollBatchController extends Controller
         $staffPayrolls = StaffPayrollRecord::with('staff')->where('staff_payroll_batch_id', $staffPayrollBatch->id)->get();
 
         return view('staff-payroll-batches.show', compact('batch', 'staffPayrolls'));
+    }
+
+    public function approve($id)
+    {
+        $batch = StaffPayrollBatch::findOrFail($id);
+
+        // Update status
+        $batch->status = 1; // Approved
+        $batch->save();
+
+        return response()->json([
+            'message' => 'Batch approved successfully!',
+            'status' => $batch->status,
+        ]);
     }
 
     public function fetchStaffPayrollRecords(Request $request)
@@ -231,7 +205,6 @@ class StaffPayrollBatchController extends Controller
                 'basic_salary' => number_format($record->basic_salary, 2),
                 'overtime_total' => number_format($record->overtime_total, 2),
                 'allowances_total' => number_format($record->allowances_total, 2),
-                'claims_total' => number_format($record->claims_total, 2),
                 'deductions_total' => number_format($record->deductions_total, 2),
                 'net_salary' => number_format($record->net_salary, 2),
                 'status' => $record->status_record_label,
@@ -249,6 +222,57 @@ class StaffPayrollBatchController extends Controller
         $payroll->load(['items', 'staff', 'staff.currentSalaryStructure', 'staff.department']);
         return view('staff-payroll-batches.staff_show', compact('batch', 'payroll'));
     }
+
+    public function staffEdit(StaffPayrollBatch $batch, StaffPayrollRecord $payroll)
+    {
+        // Show the edit form for a specific staff payroll record within a batch
+        $earned_salary = $payroll->items()->where('description', 'Earned Salary')->value('amount'); // Get the earned salary 
+        $payroll->load(['items', 'staff']);
+        return view('staff-payroll-batches.staff_edit', compact('batch', 'payroll', 'earned_salary'));
+    }
+
+    public function staffUpdate(Request $request, StaffPayrollBatch $batch, StaffPayrollRecord $payroll)
+    {
+        $validated = $request->validate([
+            'earned_salary' => 'required|numeric|min:0',
+        ]);
+
+        // 1. Update or create the related 'Earned Salary' item
+        $earnedItem = $payroll->items()->where('description', 'Earned Salary')->first();
+
+        if ($earnedItem) {
+            $earnedItem->update(['amount' => $validated['earned_salary']]);
+        } else {
+            $payroll->items()->create([
+                'type' => 1, // earning
+                'description' => 'Earned Salary',
+                'amount' => $validated['earned_salary'],
+            ]);
+        }
+
+        // 2. Recalculate EPF based on total earnings
+        $totalEarnings = $payroll->items()->where('type', 1)->sum('amount');
+        $epfPercentage = $payroll->staff->currentSalaryStructure->epf_employee ?? 0;
+        $epfDeduction = $totalEarnings * ($epfPercentage / 100);
+
+        // 3. Update existing EPF based on total earnings
+        $epfItem = $payroll->items()->where('description', 'EPF Employee Contribution')->first();
+
+        if ($epfItem) {
+            $epfItem->update(['amount' => $epfDeduction]);
+        } else {
+            $payroll->items()->create([
+                'type' => 2,
+                'description' => 'EPF Employee Contribution',
+                'amount' => $epfDeduction,
+            ]);
+        }
+
+        return redirect()
+            ->route('staff-payroll-batches.staff_show', [$batch, $payroll])
+            ->with('success', 'Staff payroll updated successfully.');
+    }
+
 
     // Generate PDF
     public function downloadPdf($id)

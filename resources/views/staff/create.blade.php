@@ -17,7 +17,8 @@
                                     'method' => 'POST',
                                     'staff' => null,
                                     'branches' => $branches ?? [],
-                                    'departments' => $departments ?? []
+                                    'departments' => $departments ?? [],
+                                    'banks' => $banks ?? []
                                 ])
                             </div>
                         </div>

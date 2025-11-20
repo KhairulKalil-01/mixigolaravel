@@ -27,4 +27,9 @@ class Client extends Model
     {
         return $this->hasMany(Invoice::class);
     }
+
+    public function prepaidRecords()
+    {
+        return $this->hasMany(PrepaidRecord::class);
+    }
 }

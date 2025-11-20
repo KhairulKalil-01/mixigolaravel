@@ -45,8 +45,10 @@
                                         </tr>
 
                                         <tr>
-                                            <th colspan="2" style="text-align:center; background-color:#56a9e5;">Earnings</th>
-                                            <th colspan="2" style="text-align:center; background-color:#eba57d;">Deductions</th>
+                                            <th colspan="2" style="text-align:center; background-color:#56a9e5;">Earnings
+                                            </th>
+                                            <th colspan="2" style="text-align:center; background-color:#eba57d;">
+                                                Deductions</th>
                                         </tr>
                                         <th style="background-color:#d5cdcd;">Description</th>
                                         <th style="background-color:#d5cdcd;">Amount</th>
@@ -87,10 +89,20 @@
                                     </tbody>
                                 </table>
                                 <br>
-                                <a href="{{ route('payrolls.download_pdf', [$payroll->id, $batch->id]) }}"
-                                    class="btn btn-primary" target="_blank">
-                                    Download Payslip
-                                </a>
+                                @if ($batch->status == 1)
+                                    <a href="{{ route('payrolls.download_pdf', [$payroll->id, $batch->id]) }}"
+                                        class="btn btn-primary" target="_blank">
+                                        Download Payslip
+                                    </a>
+                                @endif
+                                @if ($batch->status !== 1)
+                                    @can('Edit Staff Payroll Batch')
+                                        <a href=" {{ route('staff-payroll-batches.staff_edit', [$batch->id, $payroll->id]) }}"
+                                            class="btn btn-primary viewBtn">Edit</a>
+                                    @endcan
+                                @endif
+                                <a href="{{ route('staff-payroll-batches.show', $batch->id) }}"
+                                    class="btn btn-secondary">Back</a>
                             </div>
                         </div>
 
