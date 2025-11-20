@@ -23,7 +23,6 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Staff </th>
-                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -80,27 +79,6 @@
                         data: "staff_name"
                     },
                     {
-                        data: "status",
-                        render: function(data, type, row) {
-                            let badgeClass = "";
-                            switch (data) {
-                                case "Paid":
-                                    badgeClass = "badge badge-success";
-                                    break;
-                                case "Approved":
-                                    badgeClass = "badge badge-primary";
-                                    break;
-                                case "Pending":
-                                    badgeClass = "badge badge-warning";
-                                    break;
-                                default:
-                                    badgeClass = "badge badge-secondary";
-                            }
-                            return `<span class="${badgeClass}">${data}</span>`;
-                        }
-
-                    },
-                    {
                         data: null
                     }
                 ],
@@ -108,7 +86,7 @@
                     [0, "asc"]
                 ],
                 columnDefs: [{
-                    targets: 3,
+                    targets: 2,
                     orderable: false,
                     render: function(data, type, row, meta) {
                         let buttons = "";
@@ -117,10 +95,12 @@
                             buttons +=
                                 `<a href="/staff-payroll-batches/${row.batch_id}/staff/${row.id}" class="btn btn-info viewBtn">View</a>&nbsp;`;
                         @endcan
-                        @can('Edit Staff Payroll Batch')
-                            buttons +=
-                                `<a href="/staff-payroll-batches/${row.id}/edit" class="btn btn-primary editBtn">Approval</a>&nbsp;`;
-                        @endcan
+                        @if ($batch->status !== 1)
+                            @can('Edit Staff Payroll Batch')
+                                buttons +=
+                                    `<a href="/staff-payroll-batches/${row.batch_id}/staff/${row.id}/edit" class="btn btn-primary viewBtn">Edit</a>&nbsp;`;
+                            @endcan
+                        @endif
                         return buttons;
                     }
                 }]

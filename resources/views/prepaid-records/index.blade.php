@@ -13,16 +13,16 @@
                     <div class="col-12 col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>My Claims</h4>
+                                <h4>Prepaid Records</h4>
                             </div>
                             <div class="card-body">
-                                <table id="claimsTable" class="display dataTable cell-border" style="width:100%">
+                                <table id="prepaidRecordTable" class="display dataTable cell-border" style="width:100%">
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Staff </th>
-                                            <th>Type</th>
-                                            <th>Amount</th>
+                                            <th>Inv Num.</th>
+                                            <th>Client</th>
+                                            <th>Package Hours</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
@@ -42,25 +42,12 @@
 
     <!-- Initialize DataTable -->
     <script>
-        var table_claim = "#claimsTable";
+        var table_prepaid = "#prepaidRecordTable";
 
         $(document).ready(function() {
             var buttons = ["copy", "csv", "excel", "pdf", "colvis", "pageLength"];
-            @can('Create Staff Claim')
-                buttons.push({
-                    text: "Create New Claim",
-                    attr: {
-                        title: "Create",
-                        id: "create"
-                    },
-                    className: "btn-primary",
-                    action: function(e, dt, node, config) {
-                        window.location.href = "{{ route('staff-claims.create') }}";
-                    }
-                });
-            @endcan
 
-            var table = $(table_claim).DataTable({
+            var table = $(table_prepaid).DataTable({
                 destroy: true,
                 scrollX: true,
                 lengthChange: false,
@@ -76,7 +63,7 @@
                 serverMethod: "POST",
                 bDeferRender: true,
                 ajax: {
-                    url: "{{ route('staff-claims.fetch') }}",
+                    url: "{{ route('prepaid-records.fetch') }}",
                     type: "POST",
                     data: {
                         _token: "{{ csrf_token() }}",
@@ -89,13 +76,13 @@
                         }
                     },
                     {
-                        data: "staff_name"
+                        data: "invoice_number"
                     },
                     {
-                        data: "claim_type"
+                        data: 'client_name'
                     },
                     {
-                        data: "amount"
+                        data: "package_hour"
                     },
                     {
                         data: "status"
@@ -113,49 +100,14 @@
                     render: function(data, type, row, meta) {
                         let buttons = "";
 
-                        @can('View Staff Claim')
+                        @can('View Prepaid Record')
                             buttons +=
-                                `<a href="/staff-claims/${row.id}" class="btn btn-info viewBtn">View</a>&nbsp;`;
+                                `<a href="/prepaid-records/${row.id}" class="btn btn-info viewBtn">View</a>&nbsp;`;
                         @endcan
-
-                        @can('Delete Staff Claim')
-                            buttons +=
-                                `<button class="btn btn-danger deleteBtn" data-id="${row.id}">Delete</button>`;
-                        @endcan
-
                         return buttons;
                     }
                 }]
             });
-
-            // AJAX DELETE
-            $(table_claim + " tbody").on("click", ".deleteBtn", function() {
-                let claimId = $(this).data("id");
-                let url = `/staff-claims/${claimId}`;
-                let csrfToken = "{{ csrf_token() }}";
-
-                if (confirm("Are you sure you want to delete this claim?")) {
-                    $.ajax({
-                        url: url,
-                        type: 'DELETE',
-                        data: {
-                            _token: csrfToken
-                        },
-                        success: function(response) {
-                            alert(response.message || 'Claim deleted successfully.');
-                            table.ajax.reload(); // Refresh the table
-                        },
-                        error: function(xhr) {
-                            let res = xhr.responseJSON;
-                            if (res && res.message) {
-                                alert(res.message);
-                            } else {
-                                alert('Failed to delete the claim.');
-                            }
-                        }
-                    });
-                }
-            });
-        });
+        }); 
     </script>
 @endsection

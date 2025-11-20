@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BankList;
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use App\Models\Staff;
 use App\Models\Branch;
 use App\Models\Department;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class StaffController extends Controller
 {
@@ -42,8 +44,9 @@ class StaffController extends Controller
     public function create()
     {
         $departments = Department::all();
+        $banks = BankList::all();
         $branches = Branch::all();
-        return view('staff.create', compact('branches', 'departments'));
+        return view('staff.create', compact('branches', 'departments', 'banks'));
     }
 
     public function store(Request $request)
@@ -55,6 +58,14 @@ class StaffController extends Controller
             'marital_status' => 'nullable|string|max:50',
             'department_id' => 'required|exists:departments,id',
             'branch_id' => 'required|exists:branches,id',
+
+            'base_salary' => 'nullable|numeric',
+            'socso_no' => 'nullable|string',
+            'epf_no' => 'nullable|string',
+            'income_tax_no' => 'nullable|string',
+            'bank_id' => 'nullable|exists:bank_lists,id',
+            'bank_acc_no' => 'nullable|string',
+
             'joining_date' => 'required|date',
             'ic_num' => 'required|string|max:15',
             'passport' => 'nullable|string|max:255',
@@ -65,14 +76,14 @@ class StaffController extends Controller
             'present_address' => 'nullable|string|max:255',
         ];
 
-        /* // If current user is admin, allow login credentials creation
-        if (auth()->user()->hasAnyRole(['admin', 'superadmin'])) {
+        // If current user is admin, allow login credentials creation
+        if (auth()->user()->hasAnyRole(['admin', 'superadmin', 'humanresource'])) {
             $rules = array_merge($rules, [
                 'name'     => 'required|string|max:255|unique:users,name',
                 'email'    => 'required|email|max:255|unique:users,email',
                 'password' => 'required|string|min:8',
             ]);
-        } */
+        }
 
         $validated = $request->validate($rules);
 
@@ -84,6 +95,14 @@ class StaffController extends Controller
             'marital_status' => $validated['marital_status'] ?? null,
             'department_id' => $validated['department_id'],
             'branch_id' => $validated['branch_id'],
+
+            'base_salary' => $validated['base_salary'] ?? null,
+            'socso_no' => $validated['socso_no'] ?? null,
+            'epf_no' => $validated['epf_no'] ?? null,
+            'income_tax_no' => $validated['income_tax_no'] ?? null,
+            'bank_id' => $validated['bank_id'] ?? null,
+            'bank_acc_no' => $validated['bank_acc_no'] ?? null,
+
             'joining_date' => $validated['joining_date'],
             'ic_num' => $validated['ic_num'],
             'passport' => $validated['passport'] ?? null,
@@ -95,7 +114,7 @@ class StaffController extends Controller
         ]);
 
         // If admin, also create user account
-        /* if (auth()->user()->hasAnyRole(['admin', 'superadmin'])) {
+        if (auth()->user()->hasAnyRole(['admin', 'superadmin'])) {
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
@@ -104,7 +123,7 @@ class StaffController extends Controller
 
         $staff->user_id = $user->id;
         $staff->save();
-    } */
+    }
 
         return redirect()->route('staff.index')->with('success', 'Staff created successfully.');
     }
@@ -120,7 +139,8 @@ class StaffController extends Controller
         $staff = Staff::findOrFail($id);
         $departments = Department::all();
         $branches = Branch::all();
-        return view('staff.edit', compact('staff', 'branches', 'departments'));
+        $banks = BankList::all();
+        return view('staff.edit', compact('staff', 'branches', 'departments', 'banks'));
     }
 
     public function update(Request $request, string $id)
@@ -135,6 +155,14 @@ class StaffController extends Controller
             'marital_status' => 'nullable|string|max:50',
             'department_id' => 'required|exists:departments,id',
             'branch_id' => 'required|exists:branches,id',
+
+            'base_salary' => 'nullable|numeric',
+            'socso_no' => 'nullable|string',
+            'epf_no' => 'nullable|string',
+            'income_tax_no' => 'nullable|string',
+            'bank_id' => 'nullable|exists:bank_lists,id',
+            'bank_acc_no' => 'nullable|string',
+
             'joining_date' => 'required|date',
             'ic_num' => 'required|string|max:15',
             'passport' => 'nullable|string|max:255',
@@ -164,6 +192,14 @@ class StaffController extends Controller
             'marital_status' => $validated['marital_status'] ?? null,
             'department_id' => $validated['department_id'],
             'branch_id' => $validated['branch_id'],
+
+            'base_salary' => $validated['base_salary'] ?? null,
+            'socso_no' => $validated['socso_no'] ?? null,
+            'epf_no' => $validated['epf_no'] ?? null,
+            'income_tax_no' => $validated['income_tax_no'] ?? null,
+            'bank_id' => $validated['bank_id'] ?? null,
+            'bank_acc_no' => $validated['bank_acc_no'] ?? null,
+
             'joining_date' => $validated['joining_date'],
             'ic_num' => $validated['ic_num'] ?? null,
             'emergency_contact' => $validated['emergency_contact'] ?? null,

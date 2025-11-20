@@ -1,3 +1,14 @@
+{{-- show any error --}}
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul class="mb-0">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
 <form action="{{ $action }}" method="POST">
     @csrf
     @if ($method === 'PUT')
@@ -11,8 +22,8 @@
     <!-- Full Name -->
     <div class="form-group">
         <label class="form-label">Full Name <span class="text-danger">*</span></label>
-        <input type="text" name="full_name" class="form-control" value="{{ old('full_name', $staff->full_name ?? '') }}"
-            required>
+        <input type="text" name="full_name" class="form-control"
+            value="{{ old('full_name', $staff->full_name ?? '') }}" required>
     </div>
 
     <!-- Gender -->
@@ -28,7 +39,7 @@
     <!-- Religion -->
     <div class="form-group">
         <label class="form-label">Religion</label>
-        <select name="religion" id="religion" class="form-control" required>
+        <select name="religion" id="religion" class="form-control">
             <option value="">-- Select Religion --</option>
             <option value="Islam" {{ old('religion', $staff->religion ?? '') == 'Islam' ? 'selected' : '' }}>Islam
             </option>
@@ -86,6 +97,53 @@
         </select>
     </div>
 
+    {{-- base_salary --}}
+    <div class="form-group">
+        <label class="form-label">Base Salary</label>
+        <input type="text" name="base_salary" class="form-control"
+            value="{{ old('base_salary', $staff->base_salary ?? '') }}">
+    </div>
+
+    {{-- socso_no --}}
+    <div class="form-group">
+        <label class="form-label">SOCSO Number</label>
+        <input type="text" name="socso_no" class="form-control"
+            value="{{ old('socso_no', $staff->socso_no ?? '') }}">
+    </div>
+
+    {{-- epf_no --}}
+    <div class="form-group">
+        <label class="form-label">EPF Number</label>
+        <input type="text" name="epf_no" class="form-control" value="{{ old('epf_no', $staff->epf_no ?? '') }}">
+    </div>
+
+    {{-- income_tax_no --}}
+    <div class="form-group">
+        <label class="form-label">Income Tax Number</label>
+        <input type="text" name="income_tax_no" class="form-control"
+            value="{{ old('income_tax_no', $staff->income_tax_no ?? '') }}">
+    </div>
+
+    {{-- Select bank (bank_id) --}}
+    <div class="form-group ">
+        <label class="form-label">Bank</label>
+        <select name="bank_id" class="form-control">
+            <option value="">-- Select Bank --</option>
+            @foreach ($banks as $bank)
+                <option value="{{ $bank->id }}"
+                    {{ old('bank_id', $staff->bank_id ?? '') == $bank->id ? 'selected' : '' }}>
+                    {{ $bank->bank_name }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+
+    {{-- bank_acc_no --}}
+    <div class="form-group">
+        <label class="form-label">Bank Account Number</label>
+        <input type="text" name="bank_acc_no" class="form-control"
+            value="{{ old('bank_acc_no', $staff->bank_acc_no ?? '') }}">
+    </div>
 
     <!-- Department -->
     <div class="form-group ">
@@ -105,14 +163,14 @@
     <div class="form-group ">
         <label class="form-label">Join Date<span class="text-danger">*</span></label>
         <input type="date" name="joining_date" id="joining_date" class="form-control"
-            value="{{ old('joining_date', optional(optional($staff)->joining_date ? \Carbon\Carbon::parse(optional($staff)->joining_date) : null)->format('Y-m-d')) }}">
+            value="{{ old('joining_date', isset($staff->joining_date) ? $staff->joining_date->format('Y-m-d') : '') }}">
     </div>
 
     <!-- Present Address -->
     <div class="form-group">
         <label class="form-label">Current Address</label>
         <input type="text" name="present_address" class="form-control"
-             value="{{ old('present_address', $staff->present_address ?? '') }}">
+            value="{{ old('present_address', $staff->present_address ?? '') }}">
     </div>
 
     <!-- Permanent Address -->

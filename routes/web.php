@@ -24,6 +24,7 @@ use App\Http\Controllers\CommissionApprovalController;
 use App\Http\Controllers\CommissionBatchController;
 use App\Http\Controllers\ExternalAgentController;
 use App\Http\Controllers\JobController;
+use App\Http\Controllers\PrepaidRecordController;
 use App\Http\Controllers\OperationReportController;
 use App\Http\Controllers\StaffOvertimeApprovalController;
 use App\Http\Controllers\StaffPayrollBatchController;
@@ -104,7 +105,7 @@ Route::post('fetch-roles', [RoleController::class, 'fetchRoles'])->name('roles.f
 // Service pricings
 Route::resource('service-pricings', ServicePricingController::class);
 Route::post('fetch-service-pricings', [ServicePricingController::class, 'fetchServicePricings'])->name('service-pricings.fetch');
-
+// 
 Route::resource('salary-records', SalaryRecordController::class);
 
 // Salary Structures
@@ -131,8 +132,13 @@ Route::post('fetch-overtimes', [StaffOvertimeApprovalController::class, 'fetchOv
 // Staff Payrolls
 Route::resource('staff-payroll-batches', StaffPayrollBatchController::class);
 Route::get('staff-payroll-batches/{batch}/staff/{payroll}', [StaffPayrollBatchController::class, 'staffShow'])->name('staff-payroll-batches.staff_show');
+Route::get('staff-payroll-batches/{batch}/staff/{payroll}/edit', [StaffPayrollBatchController::class, 'staffEdit'])->name('staff-payroll-batches.staff_edit');
+Route::put('staff-payroll-batches/{batch}/staff/{payroll}',[StaffPayrollBatchController::class, 'staffUpdate'])->name('staff-payroll-batches.staff_update');
+
 Route::post('fetch-staff-payroll-records', [StaffPayrollBatchController::class, 'fetchStaffPayrollRecords'])->name('staff-payroll-records.fetch');
 Route::get('/staff-payroll-batches/{batch}/staff/{payroll}/download-pdf', [StaffPayrollBatchController::class, 'downloadPdf'])->name('payrolls.download_pdf');
+Route::post('/staff-payroll-batches/{batch}/approve', [StaffPayrollBatchController::class, 'approve'])->name('staff-payroll-batches.approve');
+
 
 
 // Staff Salary Advances
@@ -185,8 +191,13 @@ Route::post('fetch-commission-batch-records', [CommissionBatchController::class,
 Route::resource('external-agents', ExternalAgentController::class);
 Route::post('fetch-external-agents', [ExternalAgentController::class, 'fetchExternalAgent'])->name('external-agents.fetch');
 
+// Jobs
+Route::resource('jobs', JobController::class); // remove later - might not delete later. 
 
-Route::resource('jobs', JobController::class); // remove later
+// Prepaid Records
+Route::resource('prepaid-records', PrepaidRecordController::class);
+Route::post('fetch-prepaid-records', [PrepaidRecordController::class, 'fetchPrepaidRecord'])->name('prepaid-records.fetch');
+
 
 // Client Payments
 Route::resource('client-payments', ClientPaymentController::class);

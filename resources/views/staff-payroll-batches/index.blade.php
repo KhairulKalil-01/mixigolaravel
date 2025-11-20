@@ -39,10 +39,20 @@
                                                         </p>
                                                     </div>
                                                     <div class="align-self-center">
-                                                        <a href="{{ route('staff-payroll-batches.show', $batch) }}" class="btn btn-info">
+                                                        @if ($batch->status !== 1)
+                                                            <a href="javascript:void(0);"
+                                                                class="btn btn-success approve-btn"
+                                                                data-id="{{ $batch->id }}">
+                                                                Approve
+                                                            </a>
+                                                        @endif
+                                                        <a href="{{ route('staff-payroll-batches.show', $batch) }}"
+                                                            class="btn btn-info">
                                                             View Details
                                                         </a>
+
                                                     </div>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -78,6 +88,28 @@
                 },
                 error: function(xhr) {
                     alert(xhr.responseJSON.message);
+                }
+            });
+        });
+
+
+        $(document).on('click', '.approve-btn', function() {
+            var batchId = $(this).data('id');
+
+            if (!confirm('Are you sure you want to approve this payroll batch?')) return;
+
+            $.ajax({
+                url: '/staff-payroll-batches/' + batchId + '/approve',
+                type: 'POST',
+                data: {
+                    _token: "{{ csrf_token() }}"
+                },
+                success: function(response) {
+                    alert(response.message);
+                    location.reload();
+                },
+                error: function(xhr) {
+                    alert(xhr.responseJSON?.message || 'Error approving batch');
                 }
             });
         });

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\InvoiceStatus;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Invoice extends Model
@@ -45,6 +46,11 @@ class Invoice extends Model
     public function commissionClaim()
     {
         return $this->hasOne(commissionClaim::class);
+    }
+
+    public function prepaidRecords()
+    {
+        return $this->hasMany(PrepaidRecord::class);
     }
 
 }
