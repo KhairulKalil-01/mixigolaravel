@@ -201,7 +201,6 @@
     </div>
     <br>
 
-    @if ($method !== 'PUT')
         <hr class="my-4">
 
         <br>
@@ -230,7 +229,6 @@
             <label class="form-label">Password {!! $method !== 'PUT' ? '<span class="text-danger">*</span>' : '' !!}</label>
             <input type="password" name="password" class="form-control" {{ $method !== 'PUT' ? 'required' : '' }}>
         </div>
-    @endif
 
     <!-- Submit Button -->
     <div class="form-group mt-4">

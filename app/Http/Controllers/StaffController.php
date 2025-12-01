@@ -114,7 +114,7 @@ class StaffController extends Controller
         ]);
 
         // If admin, also create user account
-        if (auth()->user()->hasAnyRole(['admin', 'superadmin'])) {
+        if (auth()->user()->hasAnyRole(['admin', 'superadmin', 'humanresource'])) {
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
@@ -173,14 +173,14 @@ class StaffController extends Controller
             'present_address' => 'nullable|string|max:255',
         ];
 
-        /*  // If current user is admin, allow login credentials update
+         // If current user is admin, allow login credentials update
         if (auth()->user()->hasAnyRole(['admin', 'superadmin'])) {
             $rules = array_merge($rules, [
                 'name'     => 'required|string|max:255|unique:users,name,' . $staff->user_id,
                 'email'    => 'required|email|max:255|unique:users,email,' . $staff->user_id,
                 'password' => 'nullable|string|min:8',
             ]);
-        } */
+        } 
 
         $validated = $request->validate($rules);
 
@@ -211,7 +211,7 @@ class StaffController extends Controller
         ]);
 
         // If admin, update user credentials
-        /* if (auth()->user()->hasAnyRole(['admin', 'superadmin']) && $staff->user) {
+         if (auth()->user()->hasAnyRole(['admin', 'superadmin']) && $staff->user) {
             $staff->user->name  = $validated['name'];
             $staff->user->email = $validated['email'];
 
@@ -220,7 +220,7 @@ class StaffController extends Controller
             }
 
             $staff->user->save();
-        } */
+        }
 
         return redirect()->route('staff.index')->with('success', 'Staff updated successfully.');
     }
