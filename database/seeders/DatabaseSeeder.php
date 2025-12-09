@@ -1,0 +1,39 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\BankList;
+use App\Models\Nationality;
+use App\Models\ServicePricing;
+//use App\Models\Designation;
+//use App\Models\User;
+// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+
+class DatabaseSeeder extends Seeder
+{
+    /**
+     * Seed the application's database.
+     */
+    public function run(): void
+    {
+        // User::factory(10)->create();
+        /* User::factory()->create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+        ]); */
+
+        $this->call([
+            ModulesTableSeeder::class,
+            PermissionSeeder::class,
+            RoleSeeder::class,
+            DepartmentSeeder::class,
+            DesignationSeeder::class,
+            BranchSeeder::class,
+            Nationality::class,
+            StaffSeeder::class,
+            BankListSeeder::class,
+            ServicePricingSeeder::class,
+        ]);
+    }
+}
