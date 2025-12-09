@@ -9,3 +9,18 @@
 /.github export-ignore
 CHANGELOG.md export-ignore
 .styleci.yml export-ignore
+
+# Treat Blade templates as PHP for GitHub linguist
+*.blade.php linguist-language=PHP
+
+# Ignore Pug files in language statistics
+*.pug linguist-vendored
+
+# Ignore compiled/minified JS/CSS
+*.min.js linguist-vendored
+*.min.css linguist-vendored
+
+# Ignore vendor/dependency folders
+vendor/** linguist-vendored
+node_modules/** linguist-vendored
+public/** linguist-vendored
