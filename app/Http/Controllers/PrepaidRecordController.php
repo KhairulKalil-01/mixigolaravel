@@ -23,7 +23,7 @@ class PrepaidRecordController extends Controller
         $prepaidRecords = PrepaidRecord::with('client', 'invoice')->select('prepaid_records.*')->get()->map(function ($record) {
             return [
                 'id' => $record->id,
-            
+
                 'invoice_number' => $record->invoice ? $record->invoice->invoice_number : 'N/A',
                 'client_name' => $record->invoice?->client?->name ?? 'N/A',
                 'package_hour' => $record->package_hour,
@@ -34,6 +34,53 @@ class PrepaidRecordController extends Controller
         });
 
         return response()->json(['data' => $prepaidRecords]);
+    }
+
+    public function getPrepaids($invoiceId)
+    {
+        // Fetch prepaid rows tied to invoice + tied quotation_item
+        $prepaids = PrepaidRecord::where('invoice_id', $invoiceId)
+            ->with([
+                'prepaidDeductions',
+                'quotationItem' => function ($q) {
+                    $q->select('id', 'quotation_id', 'service_name', 'unit_price');
+                }
+            ])
+            ->get();
+
+        $data = [];
+
+        foreach ($prepaids as $pre) {
+
+            // total used hours from deductions table
+            $used = $pre->prepaidDeductions->sum('deducted_hour');
+
+            // remaining hours
+            $remaining = $pre->package_hour - $used;
+
+            // extract correct quotation item (guaranteed because we linked it)
+            $item = $pre->quotationItem;
+
+            if (!$item) {
+                continue; // safety guard: skip if no linked item
+            }
+
+            // correct price per hour
+            $pricePerHour = $item->unit_price / $pre->package_hour;
+
+            $data[] = [
+                'id'             => $pre->id,
+                'service_name'   => $item->service_name,
+                'package_hour'   => $pre->package_hour,
+                'unit_price'     => $item->unit_price,
+                'status'         => $pre->status_label ?? $pre->status,
+                'description'    => $pre->description,
+                'remaining_hour' => $remaining,
+                'price_per_hour' => round($pricePerHour, 2),
+            ];
+        }
+
+        return response()->json(['data' => $data]);
     }
 
     /**

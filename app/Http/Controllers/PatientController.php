@@ -34,6 +34,15 @@ class PatientController extends Controller
         ]);
     }
 
+    //API to get patients for a specific client
+    public function getPatients($clientId)
+    {
+        $client = Client::findOrFail($clientId);
+        $patients = $client->patients()->select('patients.id', 'patients.name')->get();
+
+        return response()->json(['data' => $patients]);
+    }
+
     public function create()
     {
         $branches = Branch::all();

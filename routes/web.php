@@ -23,7 +23,7 @@ use App\Http\Controllers\CommissionClaimController;
 use App\Http\Controllers\CommissionApprovalController;
 use App\Http\Controllers\CommissionBatchController;
 use App\Http\Controllers\ExternalAgentController;
-use App\Http\Controllers\JobController;
+use App\Http\Controllers\ServiceJobController;
 use App\Http\Controllers\PrepaidRecordController;
 use App\Http\Controllers\OperationReportController;
 use App\Http\Controllers\StaffOvertimeApprovalController;
@@ -158,6 +158,7 @@ Route::post('fetch-staff', [StaffController::class, 'fetchStaff'])->name('staff.
 
 
 // Invoices
+Route::get('client/{id}/invoices', [InvoiceController::class, 'getInvoices'])->name('client.invoices.get');
 Route::resource('invoices', InvoiceController::class);
 Route::post('fetch-invoices', [InvoiceController::class, 'fetchInvoice'])->name('invoices.fetch');
 Route::get('/invoices/{invoice}/download-pdf', [InvoiceController::class, 'downloadPdf'])->name('invoices.download_pdf');
@@ -192,9 +193,16 @@ Route::resource('external-agents', ExternalAgentController::class);
 Route::post('fetch-external-agents', [ExternalAgentController::class, 'fetchExternalAgent'])->name('external-agents.fetch');
 
 // Jobs
-Route::resource('jobs', JobController::class); // remove later - might not delete later. 
+//Route::resource('jobs', JobController::class); // remove later - might not delete later. 
+
+// Service Jobs
+Route::resource('service-jobs', ServiceJobController::class);
+Route::post('fetch-service-jobs', [ServiceJobController::class, 'fetchJob'])->name('service-jobs.fetch');
+// Pending jobs
+Route::get('/service-jobs/pending', [ServiceJobController::class, 'pendingJobs'])->name('service-jobs.pending');
 
 // Prepaid Records
+Route::get('/invoice/{id}/prepaids', [PrepaidRecordController::class, 'getPrepaids'])->name('invoice.prepaids.get');
 Route::resource('prepaid-records', PrepaidRecordController::class);
 Route::post('fetch-prepaid-records', [PrepaidRecordController::class, 'fetchPrepaidRecord'])->name('prepaid-records.fetch');
 
@@ -209,8 +217,10 @@ Route::resource('service-receipts', ServiceReceiptController::class);
 // Client
 Route::resource('clients', ClientController::class);
 Route::post('fetch-clients', [ClientController::class, 'fetchClient'])->name('clients.fetch');
+Route::get('get-clients', [ClientController::class, 'getClients'])->name('clients.get');
 
 // Patient
+Route::get('client/{id}/patients', [PatientController::class, 'getPatients'])->name('client.patients.get');
 Route::resource('patients', PatientController::class);
 Route::post('fetch-patients', [PatientController::class, 'fetchPatient'])->name('patients.fetch');
 
@@ -220,5 +230,6 @@ Route::post('fetch-quotations', [QuotationController::class, 'fetchQuotation'])-
 Route::get('/quotations/{quotation}/download-pdf', [QuotationController::class, 'downloadPdf'])->name('quotations.download_pdf');
 
 // Caregivers
+Route::get('/get-caregivers', [CaregiverController::class, 'getCaregivers'])->name('caregivers.get_all');
 Route::resource('caregivers', CaregiverController::class);
 Route::post('fetch-caregivers', [CaregiverController::class, 'fetchCaregiver'])->name('caregivers.fetch');

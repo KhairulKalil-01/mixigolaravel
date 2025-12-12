@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -36,5 +37,27 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
         $this->middleware('auth')->only('logout');
+    }
+
+    // Store API token in session after authentication
+    protected function authenticated($request, $user)
+    {
+        $token = $user->createToken('browser')->plainTextToken;
+        session(['api_token' => $token]);
+    }
+
+    // Revoke API tokens on logout
+
+    public function logout(Request $request)
+    {
+        // Delete all tokens for this user
+        $request->user()->tokens()->delete();
+
+        auth()->logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/login');
     }
 }

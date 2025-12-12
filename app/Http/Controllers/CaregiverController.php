@@ -8,6 +8,7 @@ use App\Models\Branch;
 use App\Models\BankList;
 use Illuminate\Http\Request;
 use App\EmploymentType;
+use Carbon\Carbon;
 
 class CaregiverController extends Controller
 {
@@ -40,6 +41,40 @@ class CaregiverController extends Controller
                 'nationality' => $caregiver->nationality,
             ];
         });
+        return response()->json(['data' => $caregivers]);
+    }
+
+    // API to get available caregivers within a datetime range
+    public function available(Request $request)
+    {
+        $request->validate([
+            'start_datetime' => 'required|date',
+            'end_datetime' => 'required|date|after:start_datetime',
+        ]);
+
+        $start = Carbon::parse($request->start_datetime);
+        $end = Carbon::parse($request->end_datetime);
+
+        $caregivers = Caregiver::whereDoesntHave('jobs', function ($q) use ($start, $end) {
+            $q->where(function ($q2) use ($start, $end) {
+                $q2->whereBetween('start_datetime', [$start, $end])
+                    ->orWhereBetween('end_datetime', [$start, $end])
+                    ->orWhere(function ($q3) use ($start, $end) {
+                        $q3->where('start_datetime', '<', $start)
+                            ->where('end_datetime', '>', $end);
+                    });
+            });
+        })->select('id', 'name', 'payout_per_hour')->get();
+
+        return response()->json(['data' => $caregivers]);
+    }
+
+    // API to get all caregivers
+    public function getCaregivers(Request $request)
+    {
+        $caregivers = Caregiver::select('id', 'name', 'rate_per_hour')
+        ->where('is_active', 1)
+        ->get();
         return response()->json(['data' => $caregivers]);
     }
 

@@ -24,6 +24,7 @@ class ClientController extends Controller
         return view('clients.index', compact('clients'));
     }
 
+    // for datatable AJAX fetch
     public function fetchClient(Request $request)
     {
         $clients = Client::with('patients')->get();
@@ -31,6 +32,14 @@ class ClientController extends Controller
         return response()->json([
             'data' => $clients
         ]);
+    }
+
+    // API to get all clients
+    public function getClients()
+    {
+        $clients = Client::all();
+        
+        return response()->json(['data' => $clients]);
     }
 
     public function create()

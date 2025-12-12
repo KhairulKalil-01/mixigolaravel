@@ -52,6 +52,33 @@ class InvoiceController extends Controller
         return response()->json(['data' => $invoices]);
     }
 
+    public function getInvoices($clientId)
+    {
+        $invoices = Invoice::where('client_id', $clientId)
+            ->with([
+                'quotation.items.servicePricing'
+            ])
+            ->get();
+
+        $data = $invoices->map(function ($invoice) {
+            $firstItem = $invoice->quotation?->items->first();
+            $pricePerHour = 0;
+
+            if ($firstItem && $firstItem->servicePricing && $firstItem->servicePricing->number_of_hours > 0) {
+                $pricePerHour = $firstItem->unit_price / $firstItem->servicePricing->number_of_hours;
+            }
+
+            return [
+                'invoice_id' => $invoice->id,
+                'invoice_number' => $invoice->invoice_number,
+                'total_price' => $invoice->total_amount,
+                'price_per_hour' => $pricePerHour
+            ];
+        });
+
+        return response()->json(['data' => $data]);
+    }
+
     public function store(Request $request)
     {
         $year = now()->year;

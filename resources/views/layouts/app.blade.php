@@ -7,6 +7,7 @@
 </head>
 
 <body>
+    <div id="global-progress-bar" style="position: fixed; top: 0; left: 0; width: 0%; height: 3px; background-color: #007bff; z-index: 9999;"></div>
     @auth
         @include('partials.header')
 
@@ -95,6 +96,15 @@
     @include('partials.scripts')
     @yield('scripts')
     @stack('scripts')
+    <script defer>
+        document.addEventListener('DOMContentLoaded', () => {
+            window.startProgressBar();
+            // Simulate some loading time, then end the progress bar
+            setTimeout(() => {
+                window.endProgressBar();
+            }, 1500); // 1.5 seconds
+        });
+    </script>
 </body>
 
 </html>
