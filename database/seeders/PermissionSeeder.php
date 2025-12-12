@@ -226,12 +226,13 @@ class PermissionSeeder extends Seeder
             ['name' => 'Edit External Agent', 'slug' => 'external-agents.edit', 'visible_in_menu' => '0', 'module_id' => '9'],
             ['name' => 'Delete External Agent', 'slug' => 'external-agents.destroy', 'visible_in_menu' => '0', 'module_id' => '9'],
 
-            // Jobs (remove later) - all jobs
-            ['name' => 'Jobs', 'slug' => 'jobs.index', 'visible_in_menu' => '1', 'module_id' => '4'],
-            ['name' => 'Create Job', 'slug' => 'jobs.create', 'visible_in_menu' => '0', 'module_id' => '4'],
-            ['name' => 'View Job', 'slug' => 'jobs.show', 'visible_in_menu' => '0', 'module_id' => '4'],
-            ['name' => 'Edit Job', 'slug' => 'jobs.edit', 'visible_in_menu' => '0', 'module_id' => '4'],
-            ['name' => 'Delete Job', 'slug' => 'jobs.destroy', 'visible_in_menu' => '0', 'module_id' => '4'],
+            // Jobs - all jobs
+            ['name' => 'Jobs', 'slug' => 'service-jobs.index', 'visible_in_menu' => '1', 'module_id' => '4'],
+            ['name' => 'Jobs Pending', 'slug' => 'service-jobs.pending', 'visible_in_menu' => '1', 'module_id' => '4'],
+            ['name' => 'Create Job', 'slug' => 'service-jobs.create', 'visible_in_menu' => '0', 'module_id' => '4'],
+            ['name' => 'View Job', 'slug' => 'service-jobs.show', 'visible_in_menu' => '0', 'module_id' => '4'],
+            ['name' => 'Edit Job', 'slug' => 'service-jobs.edit', 'visible_in_menu' => '0', 'module_id' => '4'],
+            ['name' => 'Delete Job', 'slug' => 'service-jobs.destroy', 'visible_in_menu' => '0', 'module_id' => '4'],
 
             // Prepaid records - track balance for prepaid services
             ['name' => 'Prepaid Records', 'slug' => 'prepaid-records.index', 'visible_in_menu' => '1', 'module_id' => '4'],
