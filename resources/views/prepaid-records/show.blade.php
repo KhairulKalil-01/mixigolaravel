@@ -65,8 +65,7 @@
                                         </div>
                                     </div>
                                 </div>
-
-
+                                
                                 {{-- CHANGE TO DATATABLE WITH <<VIEW>> TO VIEW JOB, IN JOB THERE  WILL VIEW AND PRINT BUTTON (SERVICE RECEIPT)? --}}
                                 <div class="col-12 col-md-12">
                                     <div class="card">
