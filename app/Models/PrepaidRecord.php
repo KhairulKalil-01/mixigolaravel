@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Prepaid;
 use App\PrepaidRecordStatus;
 use Illuminate\Database\Eloquent\Model;
 
@@ -25,7 +24,22 @@ class PrepaidRecord extends Model
         return $this->belongsTo(Invoice::class);
     }
 
+    public function quotationItem()
+    {
+        return $this->belongsTo(QuotationItem::class);
+    }
+
+    public function serviceJobs()
+    {
+        return $this->hasMany(ServiceJob::class);
+    }
+
     //calculated 
+    public function getRemainingHourAttribute()
+    {
+        return $this->package_hour - $this->prepaidDeductions()->sum('deducted_hour');
+    }
+
     public function totalDeductedHour()
     {
         return $this->prepaidDeductions()->sum('deducted_hour');
@@ -36,7 +50,6 @@ class PrepaidRecord extends Model
         return $this->package_hour - $this->totalDeductedHour();
     }
 
-    // getter
     public function getStatusLabelAttribute(): string
     {
         $status = PrepaidRecordStatus::tryFrom($this->status);

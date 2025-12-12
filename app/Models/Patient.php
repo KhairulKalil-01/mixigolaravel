@@ -20,7 +20,12 @@ class Patient extends Model
     }
 
     public function branch()
-{
-    return $this->belongsTo(Branch::class);
-}
+    {
+        return $this->belongsTo(Branch::class);
+    }
+
+    public function serviceJobs()
+    {
+        return $this->hasMany(ServiceJob::class);
+    }
 }

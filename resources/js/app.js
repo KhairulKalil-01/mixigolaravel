@@ -1,4 +1,5 @@
 import './bootstrap';
+import './progress';
 //import $ from 'jquery'; wajib comment
 //import 'datatables.net-bs5'; takde pun takpe
 

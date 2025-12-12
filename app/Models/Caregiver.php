@@ -10,6 +10,7 @@ class Caregiver extends Model
 {
     protected $guarded = [];
 
+
     public function getEmploymentTypeLabelAttribute(): string
     {
         $employmentType = EmploymentType::tryFrom($this->employment_type);
@@ -32,4 +33,8 @@ class Caregiver extends Model
         return $this->belongsTo(Nationality::class, 'nationality');
     }
     
+    public function serviceJobs()
+    {
+        return $this->hasMany(ServiceJob::class);
+    }
 }
